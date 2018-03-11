@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        
+        <title>Virtual farma</title>
+        
+        <!--Import jQuery before materialize.js-->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        
+        <h:outputStylesheet name="css/shards.css"/>
+        <h:outputStylesheet name="css/fontawesome.css"/>
+        <h:outputStylesheet name="bootstrap/css/bootstrap.min.css"/>
+        <h:outputScript name="bootstrap/js/bootstrap.js" />
+        <h:outputScript name="js/shards.min.js"/>
+      
+        
+    </h:head>
+    <h:body>
+
+        <h:form>
+            <h:panelGrid columns="2" cellpadding="5">
+                  
+                <div class="ui-inputgroup">
+                    <span class="ui-inputgroup-addon"><i class="fas fa-user"></i></span>
+                    <h:outputText value="User " />
+                    <p:inputText id="user" value="#{indexController.username}" />      
+                </div>
+                <div class="ui-inputgroup">
+                    <span class="ui-inputgroup-addon"><i class="fas fa-key"></i></span>
+                    <h:outputText value="Password " />
+                    <p:password id="password" value="#{indexController.password}" />      
+                </div>
+            </h:panelGrid>
+            <p:commandButton value="Login" actionListener="#{indexController.login}" oncomplete="handleLoginRequest(xhr, status, args)" />
+        </h:form>
+                 
+       
+        
+     
+        
+        
+        
+       
+    </h:body>
+</html>
+
