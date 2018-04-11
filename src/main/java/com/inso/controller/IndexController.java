@@ -5,23 +5,31 @@
  */
 package com.inso.controller;
 
+import com.inso.EJB.PacientesFacadeLocal;
+import com.inso.model.Pacientes;
 import java.awt.event.ActionEvent;
 import java.io.Serializable;
 import javax.annotation.ManagedBean;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import org.primefaces.PrimeFaces;
 /**
  *
  * @author Eva
  */
-@ManagedBean
+@Named
+@ViewScoped
 public class IndexController implements Serializable{
     //Todo esto no va a ir aqui, va a ir en la pantalla que añada farmacias
     //TODO buscar como crear patron fachada
-    //@EJB
-    //private FarmaciaFacadeLocal farmaciaEJB;       //Clase que me permite acceder al patron fachada
-    //private Farmacia farmacia;
+    @EJB
+    private PacientesFacadeLocal pacienteEJB;       //Clase que me permite acceder al patron fachada
+    
+    private Pacientes paciente;
     
     private String username;
     private String password;
@@ -39,7 +47,7 @@ public class IndexController implements Serializable{
     }
     
     public void setPassword(String password){
-        this.password = password;
+        this.password= password;
     }
     
     public void login(ActionEvent event) {
@@ -54,11 +62,15 @@ public class IndexController implements Serializable{
             loggedIn = false;
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Loggin Error", "Invalid credentials");
         }
-         
+        //Metodo de buscar usuario
         FacesContext.getCurrentInstance().addMessage(null, message);
         PrimeFaces.current().ajax().addCallbackParam("loggedIn", loggedIn);
     }  
     
+    @PostConstruct
+    public void init(){
+        paciente = new Pacientes();
+    }
     
     
 }

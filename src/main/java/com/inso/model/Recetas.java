@@ -8,6 +8,7 @@ package com.inso.model;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -71,7 +72,7 @@ public class Recetas implements Serializable {
     @Column(name = "NumEnvases")
     private int numEnvases;
     @JoinColumn(name = "DNI_Paciente", referencedColumnName = "DNI", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(cascade = CascadeType.ALL)
     private Pacientes pacientes;
     @JoinColumn(name = "DNI_Medico", referencedColumnName = "DNI", insertable = false, updatable = false)
     @ManyToOne(optional = false)

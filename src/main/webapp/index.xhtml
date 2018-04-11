@@ -6,15 +6,7 @@
     <h:head>
         
         <title>Virtual farma</title>
-        
-        <!--Import jQuery before materialize.js-->
-        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-        
-        <h:outputStylesheet name="css/shards.css"/>
-        <h:outputStylesheet name="css/fontawesome.css"/>
-        <h:outputStylesheet name="bootstrap/css/bootstrap.min.css"/>
-        <h:outputScript name="bootstrap/js/bootstrap.js" />
-        <h:outputScript name="js/shards.min.js"/>
+             
       
         
     </h:head>
@@ -22,7 +14,14 @@
 
         <h:form>
             <h:panelGrid columns="2" cellpadding="5">
-                  
+                <div class="form-group col-md-6">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                </div>
                 <div class="ui-inputgroup">
                     <span class="ui-inputgroup-addon"><i class="fas fa-user"></i></span>
                     <h:outputText value="User " />
@@ -34,7 +33,8 @@
                     <p:password id="password" value="#{indexController.password}" />      
                 </div>
             </h:panelGrid>
-            <p:commandButton value="Login" actionListener="#{indexController.login}" oncomplete="handleLoginRequest(xhr, status, args)" />
+            <p:commandButton value="Login" actionListener="#{indexController.login()}" oncomplete="handleLoginRequest(xhr, status, args)" />
+            <h:commandLink action="initWindow" value="Dale aqui colega"/>
         </h:form>
                  
        
@@ -43,7 +43,8 @@
         
         
         
-       
+        <h:outputScript name="bootstrap/js/bootstrap.js" />
+        <h:outputScript name="js/shards.min.js"/> 
     </h:body>
 </html>
 

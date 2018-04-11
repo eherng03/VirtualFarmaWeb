@@ -15,6 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author Eva
  */
 @Stateless
+@TransactionalA
 public class FarmaciaFacade extends AbstractFacade<Farmacia> implements FarmaciaFacadeLocal {
 
     @PersistenceContext(unitName = "ViartualFarma_Persistence_Unit")
