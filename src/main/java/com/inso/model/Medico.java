@@ -28,15 +28,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "medicos")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Medico.findAll", query = "SELECT m FROM Medicos m")
-    , @NamedQuery(name = "Medico.findByDni", query = "SELECT m FROM Medicos m WHERE m.dni = :dni")
-    , @NamedQuery(name = "Medico.findByNombre", query = "SELECT m FROM Medicos m WHERE m.nombre = :nombre")
-    , @NamedQuery(name = "Medico.findByNumeroSS", query = "SELECT m FROM Medicos m WHERE m.numeroSS = :numeroSS")
-    , @NamedQuery(name = "Medico.findByDireccion", query = "SELECT m FROM Medicos m WHERE m.direccion = :direccion")
-    , @NamedQuery(name = "Medico.findByEmail", query = "SELECT m FROM Medicos m WHERE m.email = :email")
-    , @NamedQuery(name = "Medico.findByCentroMedico", query = "SELECT m FROM Medicos m WHERE m.centroMedico = :centroMedico")
-    , @NamedQuery(name = "Medico.findByPassword", query = "SELECT m FROM Medicos m WHERE m.password = :password")})
 public class Medico implements Serializable {
 
     private static final long serialVersionUID = 1L;

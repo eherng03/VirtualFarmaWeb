@@ -23,6 +23,8 @@ public interface PacientesFacadeLocal {
     void remove(Pacientes pacientes);
 
     Pacientes find(Object id);
+    
+    Pacientes findByUsernameAndPass(String user, String pass);
 
     List<Pacientes> findAll();
 

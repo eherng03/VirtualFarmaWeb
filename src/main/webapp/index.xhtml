@@ -30,9 +30,10 @@
                 <div class="ui-inputgroup">
                     <span class="ui-inputgroup-addon"><i class="fas fa-key"></i></span>
                     <h:outputText value="Password " />
-                    <p:password id="password" value="#{indexController.password}" />      
+                    <p:password id="password" value="#{indexController.password}" feedback = "true"/>      
                 </div>
             </h:panelGrid>
+            
             <p:commandButton value="Login" actionListener="#{indexController.login()}" oncomplete="handleLoginRequest(xhr, status, args)" />
             <h:commandLink action="initWindow" value="Dale aqui colega"/>
         </h:form>

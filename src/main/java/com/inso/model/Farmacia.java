@@ -5,87 +5,76 @@
  */
 package com.inso.model;
 
-import com.inso.Utils.DataChecks;
-import com.inso.exceptions.AlreadyExistException;
-import com.inso.exceptions.InvalidCIFException;
-import com.inso.exceptions.InvalidCuentaException;
-import com.inso.exceptions.InvalidNameException;
-import com.inso.exceptions.InvalidPasswordException;
-import com.inso.exceptions.InvalidTelefoneException;
 import java.io.Serializable;
-import java.sql.SQLException;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Eva
  */
 @Entity
-@Table(name = "farmacias", catalog = "virtualfarma", schema = "")
+@Table(name = "farmacias")
+@XmlRootElement
 public class Farmacia implements Serializable {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "farmacia")
-    private Collection<Productos> productosCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 9)
-    @Column(name = "CIF", nullable = false, length = 9)
+    @Column(name = "CIF")
     private String cif;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
-    @Column(name = "Nombre", nullable = false, length = 100)
+    @Column(name = "Nombre")
     private String nombre;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 200)
-    @Column(name = "Horario", nullable = false, length = 200)
+    @Column(name = "Horario")
     private String horario;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
-    @Column(name = "Direccion", nullable = false, length = 100)
+    @Column(name = "Direccion")
     private String direccion;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 24)
-    @Column(name = "NumeroCuenta", nullable = false, length = 24)
+    @Column(name = "NumeroCuenta")
     private String numeroCuenta;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
-    @Column(name = "NombreDueno", nullable = false, length = 100)
+    @Column(name = "NombreDueno")
     private String nombreDueno;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 9)
-    @Column(name = "Telefono", nullable = false, length = 9)
+    @Column(name = "Telefono")
     private String telefono;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(name = "email", nullable = false, length = 20)
+    @Column(name = "email")
     private String email;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(name = "Password", nullable = false, length = 20)
+    @Column(name = "Password")
     private String password;
-   
+
     public Farmacia() {
     }
 
@@ -93,60 +82,17 @@ public class Farmacia implements Serializable {
         this.cif = cif;
     }
 
-    public Farmacia(String nombre, String cif, String horario, String direccion, 
-			String numeroCuenta, String nombreDueno, String telefono, String email, String password, boolean nuevo) throws InvalidNameException, InvalidCIFException, InvalidCuentaException, InvalidTelefoneException, InvalidPasswordException, SQLException, AlreadyExistException {
-		if(checkDatos(nombre, cif, numeroCuenta, nombreDueno, telefono, password)){
-			this.nombre = nombre;
-			this.cif = cif;
-			this.horario = horario;
-			this.direccion = direccion;
-			this.numeroCuenta = numeroCuenta;
-			this.nombreDueno = nombreDueno;
-			this.telefono = telefono;
-			this.email = email;
-			this.password = password;
-			
-		}
-	}
-    
-     /**
-	 * Comprueba la estructura de los datos introducidos en la creacion de la farmacia
-	 * @param nombre
-	 * @param cif
-	 * @param cuenta
-	 * @param nombreDueno
-	 * @param telefono
-	 * @param password
-	 * @return
-	 * @throws InvalidNameException
-	 * @throws InvalidCIFException
-	 * @throws InvalidCuentaException
-	 * @throws InvalidTelefoneException
-	 * @throws InvalidPasswordException
-	 */
-	private boolean checkDatos(String nombre, String cif, String cuenta,
-			String nombreDueno, String telefono, String password) throws InvalidNameException, InvalidCIFException, InvalidCuentaException, InvalidTelefoneException, InvalidPasswordException {
-		if(!DataChecks.getInstance().checkCadenaLetrasNumerosOEspacios(nombre)){
-			throw new InvalidNameException();
-		}
-		if(!DataChecks.getInstance().checkCIF(cif)){
-			throw new InvalidCIFException();
-		}
-		if(!DataChecks.getInstance().checkCuentaBancaria(cuenta)){
-			throw new InvalidCuentaException();
-		}
-		if(!DataChecks.getInstance().checkCadenaLetrasNumerosOEspacios(nombreDueno)){
-			throw new InvalidNameException();
-		}
-		if(!DataChecks.getInstance().checkTelefono(telefono)){
-			throw new InvalidTelefoneException();
-		}
-		if(!DataChecks.getInstance().checkCadenaLetrasNumerosOEspacios(password)){
-			throw new InvalidPasswordException();
-		}
-
-		return true;
-	}
+    public Farmacia(String cif, String nombre, String horario, String direccion, String numeroCuenta, String nombreDueno, String telefono, String email, String password) {
+        this.cif = cif;
+        this.nombre = nombre;
+        this.horario = horario;
+        this.direccion = direccion;
+        this.numeroCuenta = numeroCuenta;
+        this.nombreDueno = nombreDueno;
+        this.telefono = telefono;
+        this.email = email;
+        this.password = password;
+    }
 
     public String getCif() {
         return cif;
@@ -220,7 +166,6 @@ public class Farmacia implements Serializable {
         this.password = password;
     }
 
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -243,16 +188,7 @@ public class Farmacia implements Serializable {
 
     @Override
     public String toString() {
-        return "com.inso.EJB.Farmacias[ cif=" + cif + " ]";
-    }
-
-    @XmlTransient
-    public Collection<Productos> getProductosCollection() {
-        return productosCollection;
-    }
-
-    public void setProductosCollection(Collection<Productos> productosCollection) {
-        this.productosCollection = productosCollection;
+        return "com.inso.model.Farmacias[ cif=" + cif + " ]";
     }
     
 }

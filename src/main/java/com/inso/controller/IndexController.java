@@ -29,11 +29,22 @@ public class IndexController implements Serializable{
     @EJB
     private PacientesFacadeLocal pacienteEJB;       //Clase que me permite acceder al patron fachada
     
+    
     private Pacientes paciente;
+    
     
     private String username;
     private String password;
     
+    
+    @PostConstruct
+    public void init(){
+        paciente = new Pacientes();
+        username = "";
+        password = "";
+    }
+    
+  
     public String getUsername(){
         return this.username;
     }
@@ -51,7 +62,11 @@ public class IndexController implements Serializable{
     }
     
     public void login(ActionEvent event) {
-        FacesMessage message = null;
+        this.paciente = pacienteEJB.findByUsernameAndPass(username, password);
+        
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", username));
+        
+        /*FacesMessage message = null;
         boolean loggedIn = false;
          
         if(username != null && username.equals("admin") && password != null && password.equals("admin")) {
@@ -65,12 +80,10 @@ public class IndexController implements Serializable{
         //Metodo de buscar usuario
         FacesContext.getCurrentInstance().addMessage(null, message);
         PrimeFaces.current().ajax().addCallbackParam("loggedIn", loggedIn);
+*/
     }  
     
-    @PostConstruct
-    public void init(){
-        paciente = new Pacientes();
-    }
+    
     
     
 }

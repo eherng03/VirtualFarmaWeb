@@ -7,6 +7,7 @@ package com.inso.EJB;
 
 import com.inso.model.Farmacia;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -15,7 +16,6 @@ import javax.persistence.PersistenceContext;
  * @author Eva
  */
 @Stateless
-@TransactionalA
 public class FarmaciaFacade extends AbstractFacade<Farmacia> implements FarmaciaFacadeLocal {
 
     @PersistenceContext(unitName = "ViartualFarma_Persistence_Unit")

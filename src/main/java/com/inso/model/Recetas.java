@@ -28,18 +28,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "recetas")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Recetas.findAll", query = "SELECT r FROM Recetas r")
-    , @NamedQuery(name = "Recetas.findByDNIPaciente", query = "SELECT r FROM Recetas r WHERE r.recetasPK.dNIPaciente = :dNIPaciente")
-    , @NamedQuery(name = "Recetas.findByDNIMedico", query = "SELECT r FROM Recetas r WHERE r.recetasPK.dNIMedico = :dNIMedico")
-    , @NamedQuery(name = "Recetas.findByNombreMedicamento", query = "SELECT r FROM Recetas r WHERE r.recetasPK.nombreMedicamento = :nombreMedicamento")
-    , @NamedQuery(name = "Recetas.findByCronica", query = "SELECT r FROM Recetas r WHERE r.cronica = :cronica")
-    , @NamedQuery(name = "Recetas.findByFecha", query = "SELECT r FROM Recetas r WHERE r.recetasPK.fecha = :fecha")
-    , @NamedQuery(name = "Recetas.findByUnidadesToma", query = "SELECT r FROM Recetas r WHERE r.unidadesToma = :unidadesToma")
-    , @NamedQuery(name = "Recetas.findByFrecuencia", query = "SELECT r FROM Recetas r WHERE r.frecuencia = :frecuencia")
-    , @NamedQuery(name = "Recetas.findByDuracion", query = "SELECT r FROM Recetas r WHERE r.duracion = :duracion")
-    , @NamedQuery(name = "Recetas.findByInstrucciones", query = "SELECT r FROM Recetas r WHERE r.instrucciones = :instrucciones")
-    , @NamedQuery(name = "Recetas.findByNumEnvases", query = "SELECT r FROM Recetas r WHERE r.numEnvases = :numEnvases")})
 public class Recetas implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -25,12 +25,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "productos")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Productos.findAll", query = "SELECT p FROM Productos p")
-    , @NamedQuery(name = "Productos.findByCIFFarmacia", query = "SELECT p FROM Productos p WHERE p.productosPK.cIFFarmacia = :cIFFarmacia")
-    , @NamedQuery(name = "Productos.findByNombre", query = "SELECT p FROM Productos p WHERE p.productosPK.nombre = :nombre")
-    , @NamedQuery(name = "Productos.findByPrecio", query = "SELECT p FROM Productos p WHERE p.precio = :precio")
-    , @NamedQuery(name = "Productos.findByCuantia", query = "SELECT p FROM Productos p WHERE p.cuantia = :cuantia")})
 public class Productos implements Serializable {
 
     private static final long serialVersionUID = 1L;
