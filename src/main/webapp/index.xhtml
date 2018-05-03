@@ -4,43 +4,34 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
         <title>Virtual farma</title>
              
       
         
     </h:head>
     <h:body>
+        <div class="navbar navbar-inverse">
+            <div class="navbar-brand">JSF Bootstrap</div>
+        </div>
 
-        <h:form>
-            <h:panelGrid columns="2" cellpadding="5">
-                <div class="form-group col-md-6">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
-                        </div>
-                        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-                    </div>
-                </div>
-                <div class="ui-inputgroup">
-                    <span class="ui-inputgroup-addon"><i class="fas fa-user"></i></span>
-                    <h:outputText value="User " />
-                    <p:inputText id="user" value="#{indexController.username}" />      
-                </div>
-                <div class="ui-inputgroup">
-                    <span class="ui-inputgroup-addon"><i class="fas fa-key"></i></span>
-                    <h:outputText value="Password " />
-                    <p:password id="password" value="#{indexController.password}" feedback = "true"/>      
-                </div>
-            </h:panelGrid>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-md-3">
+                    <div class="form-login">
+                    <h4>Bienvenido a VirtualFarma</h4>
+                    <input type="text" id="userName" class="form-control input-sm chat-input" placeholder="username" value="#{indexController.username}"/>
             
-            <p:commandButton value="Login" actionListener="#{indexController.login()}" oncomplete="handleLoginRequest(xhr, status, args)" />
-            <h:commandLink action="initWindow" value="Dale aqui colega"/>
-        </h:form>
-                 
-       
+                    <input type="text" id="userPassword" class="form-control input-sm chat-input" placeholder="password" value="#{indexController.password}" feedback = "true"/>
+                  
+                    <p:commandButton value="Login" action="#{indexController.login()}" oncomplete="handleLoginRequest(xhr, status, args)" />
+                    </div>
+
+                </div>
+            </div>
+        </div>
         
-     
+            
         
         
         

@@ -61,10 +61,22 @@ public class IndexController implements Serializable{
         this.password= password;
     }
     
-    public void login(ActionEvent event) {
-        this.paciente = pacienteEJB.findByUsernameAndPass(username, password);
+    public String login() {
+        String direction = null;
+        try {
+            this.paciente = pacienteEJB.findByUsernameAndPass(username, password);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", username));
+            if(this.paciente == null){
+                //Sacarmensaje de error
+            }else{
+                //mensaje de bien
+                direction = "...?faces-redirect='tru'";
+            }
+        } catch (Exception e) {
+        }
+        return direction;
         
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", username));
+        
         
         /*FacesMessage message = null;
         boolean loggedIn = false;
@@ -81,9 +93,6 @@ public class IndexController implements Serializable{
         FacesContext.getCurrentInstance().addMessage(null, message);
         PrimeFaces.current().ajax().addCallbackParam("loggedIn", loggedIn);
 */
-    }  
-    
-    
-    
+    }     
     
 }
