@@ -22,7 +22,11 @@ public interface ProductosFacadeLocal {
 
     void remove(Productos productos);
 
+    void removeByCIFNombre(String cif, String nombre);
+    
     Productos find(Object id);
+    
+    Productos findByCIFNombre(String cif, String nombre);
 
     List<Productos> findAll();
 

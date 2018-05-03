@@ -21,10 +21,14 @@ public interface PacientesFacadeLocal {
     void edit(Pacientes pacientes);
 
     void remove(Pacientes pacientes);
+    
+    void removeByDNI(String DNI);
 
     Pacientes find(Object id);
     
     Pacientes findByUsernameAndPass(String user, String pass);
+    
+    Pacientes findByDNI(String dni);
 
     List<Pacientes> findAll();
 

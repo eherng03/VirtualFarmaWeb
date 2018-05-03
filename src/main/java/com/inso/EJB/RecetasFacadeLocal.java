@@ -21,8 +21,12 @@ public interface RecetasFacadeLocal {
     void edit(Recetas recetas);
 
     void remove(Recetas recetas);
+    
+    void removeIDs(String dniPaciente, String nombreMedicamento, String fecha);
 
     Recetas find(Object id);
+    
+    List<Recetas> findByDNI(String dni);
 
     List<Recetas> findAll();
 

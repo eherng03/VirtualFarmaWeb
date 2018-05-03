@@ -23,6 +23,10 @@ public interface FarmaciaFacadeLocal {
     void remove(Farmacia farmacia);
 
     Farmacia find(Object id);
+    
+    Farmacia findByUsernameAndPass(String user, String pass);
+    
+    Farmacia findByCIF(String cif);
 
     List<Farmacia> findAll();
 

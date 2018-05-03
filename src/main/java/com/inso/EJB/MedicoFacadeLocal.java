@@ -21,9 +21,15 @@ public interface MedicoFacadeLocal {
     void edit(Medico medico);
 
     void remove(Medico medico);
+    
+    void removeByDNI(String DNI);
 
     Medico find(Object id);
+    
+    Medico findByUsernameAndPass(String user, String pass);
 
+    Medico findByUsername(String user);
+    
     List<Medico> findAll();
 
     List<Medico> findRange(int[] range);
