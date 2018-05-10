@@ -52,5 +52,38 @@ public class PacientesFacade extends AbstractFacade<Pacientes> implements Pacien
         return paciente;
        
     }
+
+    @Override
+    public void removeByDNI(String dni) {
+        String consulta;
+        try {
+            consulta = "DELETE p FROM Pacientes p WHERE p.dni = ?1";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, dni);
+                     
+        } catch (Exception e) {
+            
+        }
+    }
+
+    @Override
+    public Pacientes findByDNI(String dni) {
+        String consulta;
+        Pacientes paciente = null;
+        try {
+            consulta = "SELECT p FROM Pacientes p WHERE p.dni = ?1";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, dni);
+            List<Pacientes> listaPacientes = query.getResultList();
+            
+            if(!listaPacientes.isEmpty()){
+                paciente = listaPacientes.get(0);
+            }
+            
+        } catch (Exception e) {
+            
+        }
+        return paciente;
+    }
     
 }

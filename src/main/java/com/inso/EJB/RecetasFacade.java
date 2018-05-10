@@ -5,10 +5,13 @@
  */
 package com.inso.EJB;
 
+import com.inso.model.Pacientes;
 import com.inso.model.Recetas;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +30,35 @@ public class RecetasFacade extends AbstractFacade<Recetas> implements RecetasFac
 
     public RecetasFacade() {
         super(Recetas.class);
+    }
+
+    @Override
+    public void removeIDs(String dniPaciente, String nombreMedicamento, String fecha) {
+        String consulta;
+        try {
+            consulta = "DELETE r FROM Recetas r WHERE r.dNIPaciente = ?1 AND r.nombreMedicamento = ?2 AND r.fecha = ?3";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, dniPaciente);
+            query.setParameter(2, nombreMedicamento);
+            query.setParameter(3, fecha);
+        } catch (Exception e) {
+            
+        }
+    }
+
+    @Override
+    public List<Recetas> findByDNI(String dni) {
+        String consulta;
+        List<Recetas> listaRecetas = null;
+        try {
+            consulta = "SELECT r FROM Recetas r WHERE r.dNIPaciente = ?1";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, dni);
+            listaRecetas = query.getResultList();      
+        } catch (Exception e) {
+            
+        }
+        return listaRecetas;
     }
     
 }

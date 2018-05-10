@@ -22,7 +22,7 @@ public interface PacientesFacadeLocal {
 
     void remove(Pacientes pacientes);
     
-    void removeByDNI(String DNI);
+    void removeByDNI(String dni);
 
     Pacientes find(Object id);
     

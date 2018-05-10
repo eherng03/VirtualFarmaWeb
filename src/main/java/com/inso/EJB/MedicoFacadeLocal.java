@@ -22,13 +22,13 @@ public interface MedicoFacadeLocal {
 
     void remove(Medico medico);
     
-    void removeByDNI(String DNI);
+    void removeByDNI(String dni);
 
     Medico find(Object id);
     
     Medico findByUsernameAndPass(String user, String pass);
 
-    Medico findByUsername(String user);
+    Medico findByDNI(String dni);
     
     List<Medico> findAll();
 
