@@ -5,11 +5,14 @@
  */
 package com.inso.controller;
 
+import com.inso.EJB.FarmaciaFacadeLocal;
+import com.inso.EJB.PacientesFacade;
 import com.inso.EJB.PacientesFacadeLocal;
+import com.inso.model.Farmacia;
 import com.inso.model.Pacientes;
 import java.awt.event.ActionEvent;
 import java.io.Serializable;
-import javax.annotation.ManagedBean;
+import javax.faces.bean.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -21,27 +24,33 @@ import org.primefaces.PrimeFaces;
  *
  * @author Eva
  */
-@Named
+@ManagedBean(name = "indexController", eager = true)
 @ViewScoped
 public class IndexController implements Serializable{
+    
     //Todo esto no va a ir aqui, va a ir en la pantalla que añada farmacias
     //TODO buscar como crear patron fachada
     @EJB
     private PacientesFacadeLocal pacienteEJB;       //Clase que me permite acceder al patron fachada
-    
-    
     private Pacientes paciente;
     
+    @EJB
+    private FarmaciaFacadeLocal farmaciaEJB;       //Clase que me permite acceder al patron fachada
+    private Farmacia farmacia;
     
     private String username;
     private String password;
-    
+    private String usertype;
+
+   
     
     @PostConstruct
     public void init(){
         paciente = new Pacientes();
+        pacienteEJB = new PacientesFacade();
         username = "";
         password = "";
+        usertype = "paciente";
     }
     
   
@@ -61,19 +70,47 @@ public class IndexController implements Serializable{
         this.password= password;
     }
     
+     public String getUsertype() {
+        return usertype;
+    }
+
+    public void setUsertype(String usertype) {
+        this.usertype = usertype;
+    }
+    
     public String login() {
         String direction = null;
         try {
-            this.paciente = pacienteEJB.findByUsernameAndPass(username, password);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", username));
-            if(this.paciente == null){
-                //Sacarmensaje de error
-            }else{
-                //mensaje de bien
-                direction = "...?faces-redirect='tru'";
+            if("paciente".equals(this.usertype)){
+                this.paciente = pacienteEJB.findByUsernameAndPass(username, password);
+              
+                //Añado el paciente como usuario de esta sesion para los menus
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", paciente);
+                if(this.paciente == null){
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Credenciales incorrectas."));
+                }else{
+                     direction = "/paciente/ventanaPaciente";
+                     return direction;
+                }
+            }else if(this.usertype == "farmacia"){
+                
+                this.farmacia = farmaciaEJB.findByUsernameAndPass(username, password);
+                
+                //Añado el paciente como usuario de esta sesion para los menus
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", farmacia);
+                if(this.paciente == null){
+                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Credenciales incorrectas."));
+                }else{
+                    direction = "/farmacia/ventanaFarmacia?faces-redirect=true";
+                }
+            }else if(this.usertype == "medico"){
+                //TODO medico
             }
+            
         } catch (Exception e) {
+            throw e;
         }
+        
         return direction;
         
         
