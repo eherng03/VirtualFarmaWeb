@@ -14,7 +14,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Eva
+ * @author Eva y Alba
  */
 @Stateless
 public class ProductosFacade extends AbstractFacade<Productos> implements ProductosFacadeLocal {
@@ -41,10 +41,10 @@ public class ProductosFacade extends AbstractFacade<Productos> implements Produc
         String consulta;
         Productos producto = null;
         try {
-            consulta = "SELECT p FROM Productos p WHERE p.cif = ?1 AND p.nombre = ?2";
+            consulta = "SELECT p FROM Productos p WHERE p.cif = :cif AND p.nombre = :nombre";
             Query query = em.createQuery(consulta);
-            query.setParameter(1, cif);
-            query.setParameter(2, nombre);
+            query.setParameter("cif", cif);
+            query.setParameter("nombre", nombre);
             List<Productos> listaProductos = query.getResultList();
             
             if(!listaProductos.isEmpty()){

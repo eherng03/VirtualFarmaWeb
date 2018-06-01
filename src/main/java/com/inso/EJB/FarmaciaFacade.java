@@ -15,7 +15,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Eva
+ * @author Eva y Alba
  */
 @Stateless
 public class FarmaciaFacade extends AbstractFacade<Farmacia> implements FarmaciaFacadeLocal {
@@ -37,10 +37,10 @@ public class FarmaciaFacade extends AbstractFacade<Farmacia> implements Farmacia
         String consulta;
         Farmacia farmacia = null;
         try {
-            consulta = "SELECT f FROM Farmacia f WHERE f.cif = ?1 AND f.password = ?2";
+            consulta = "SELECT f FROM Farmacia f WHERE f.cif = :user AND f.password = :pass";
             Query query = em.createQuery(consulta);
-            query.setParameter(1, user);
-            query.setParameter(2, pass);
+            query.setParameter("user", user);
+            query.setParameter("pass", pass);
             List<Farmacia> listaFarmacias = query.getResultList();
             
             if(!listaFarmacias.isEmpty()){
@@ -58,9 +58,9 @@ public class FarmaciaFacade extends AbstractFacade<Farmacia> implements Farmacia
         String consulta;
         Farmacia farmacia = null;
         try {
-            consulta = "SELECT f FROM Farmacia f WHERE f.cif = ?1";
+            consulta = "SELECT f FROM Farmacia f WHERE f.cif = :cif";
             Query query = em.createQuery(consulta);
-            query.setParameter(1, cif);
+            query.setParameter("cif", cif);
             List<Farmacia> listaFarmacias = query.getResultList();
             
             if(!listaFarmacias.isEmpty()){

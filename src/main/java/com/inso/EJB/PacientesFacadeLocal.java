@@ -11,7 +11,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author Eva
+ * @author Eva y Alba
  */
 @Local
 public interface PacientesFacadeLocal {

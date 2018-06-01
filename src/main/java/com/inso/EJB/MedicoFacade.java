@@ -14,7 +14,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Eva
+ * @author Eva y Alba
  */
 @Stateless
 public class MedicoFacade extends AbstractFacade<Medico> implements MedicoFacadeLocal {
@@ -35,9 +35,9 @@ public class MedicoFacade extends AbstractFacade<Medico> implements MedicoFacade
     public void removeByDNI(String dni) {
         String consulta;
         try {
-            consulta = "DELETE m FROM Medico m WHERE m.dni = ?1";
+            consulta = "DELETE m FROM Medico m WHERE m.dni = :dni";
             Query query = em.createQuery(consulta);
-            query.setParameter(1, dni);
+            query.setParameter("dni", dni);
             
         } catch (Exception e) {
             
