@@ -5,11 +5,18 @@
  */
 package com.inso.controller;
 
+import com.inso.EJB.FarmaciaFacade;
+import com.inso.EJB.FarmaciaFacadeLocal;
+import com.inso.EJB.MedicoFacade;
+import com.inso.EJB.MedicoFacadeLocal;
+import com.inso.EJB.PacientesFacade;
 import com.inso.EJB.PacientesFacadeLocal;
+import com.inso.model.Farmacia;
+import com.inso.model.Medico;
 import com.inso.model.Pacientes;
 import java.awt.event.ActionEvent;
 import java.io.Serializable;
-import javax.annotation.ManagedBean;
+import javax.faces.bean.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -21,27 +28,41 @@ import org.primefaces.PrimeFaces;
  *
  * @author Eva
  */
-@Named
+@ManagedBean(name = "indexController", eager = true)
 @ViewScoped
 public class IndexController implements Serializable{
+    
     //Todo esto no va a ir aqui, va a ir en la pantalla que añada farmacias
     //TODO buscar como crear patron fachada
     @EJB
     private PacientesFacadeLocal pacienteEJB;       //Clase que me permite acceder al patron fachada
-    
-    
     private Pacientes paciente;
     
+    @EJB
+    private FarmaciaFacadeLocal farmaciaEJB;       //Clase que me permite acceder al patron fachada
+    private Farmacia farmacia;
+    
+    @EJB
+    private MedicoFacadeLocal medicoEJB;       //Clase que me permite acceder al patron fachada
+    private Medico  medico;
     
     private String username;
     private String password;
-    
+    private String usertype;
+
+   
     
     @PostConstruct
     public void init(){
         paciente = new Pacientes();
+        farmacia = new Farmacia();
+        medico = new Medico();
+        pacienteEJB = new PacientesFacade();
+        farmaciaEJB = new FarmaciaFacade();
+        medicoEJB = new MedicoFacade();
         username = "";
         password = "";
+        usertype = "paciente";
     }
     
   
@@ -61,19 +82,63 @@ public class IndexController implements Serializable{
         this.password= password;
     }
     
+     public String getUsertype() {
+        return usertype;
+    }
+
+    public void setUsertype(String usertype) {
+        this.usertype = usertype;
+    }
+    
     public String login() {
         String direction = null;
         try {
-            this.paciente = pacienteEJB.findByUsernameAndPass(username, password);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", username));
-            if(this.paciente == null){
-                //Sacarmensaje de error
-            }else{
-                //mensaje de bien
-                direction = "...?faces-redirect='tru'";
+            //ADMIN SESION
+            if(username != null && username.equals("admin") && password != null && password.equals("admin")) {
+                direction = "/admin/ventanaAdmin";
+                return direction;
+            } else {
+                //PACIENTE SESION
+                if("paciente".equals(this.usertype)){
+                    this.paciente = pacienteEJB.findByUsernameAndPass(username, password);
+
+                    //Añado el paciente como usuario de esta sesion para los menus
+                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", paciente);
+                    if(this.paciente == null){
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Credenciales incorrectas."));
+                    }else{
+                         direction = "/paciente/ventanaPaciente";
+                         return direction;
+                    }
+                //FARMACIA SESION
+                }else if(this.usertype == "farmacia"){
+
+                    this.farmacia = farmaciaEJB.findByUsernameAndPass(username, password);
+
+                    //Añado el paciente como usuario de esta sesion para los menus
+                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", farmacia);
+                    if(this.farmacia == null){
+                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Credenciales incorrectas."));
+                    }else{
+                        direction = "/farmacia/ventanaFarmacia?faces-redirect=true";
+                    }
+                }else if(this.usertype == "medico"){
+                    this.medico = medicoEJB.findByUsernameAndPass(username, password);
+
+                    //Añado el paciente como usuario de esta sesion para los menus
+                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", medico);
+                    if(this.farmacia == null){
+                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Credenciales incorrectas."));
+                    }else{
+                        direction = "/medico/ventanaMedico?faces-redirect=true";
+                    }
+                }
             }
+            
         } catch (Exception e) {
+            throw e;
         }
+        
         return direction;
         
         

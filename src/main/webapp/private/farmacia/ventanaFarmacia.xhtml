@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui">
+    <h:head>
+        <title>Virtual farma - Farmacia</title>
+
+    </h:head>
+    
+    <h:body  style="padding-top: 50px; padding-bottom: 20px;">
+        <b:navBar brand="Virtual Farma" brandHref="#" fluid="true" fixed="top" inverse="true">
+            <b:navbarLinks>
+                <b:navLink value="Link" href="#"></b:navLink>
+                <b:navLink value="Link" href="#"></b:navLink>
+                <b:dropMenu value="Dropdown" iconAwesome="birthday-cake">
+                    <b:navLink value="Action" href="#"></b:navLink>
+                    <b:navLink value="Another action" href="#"></b:navLink>
+                    <b:navLink value="Something else here" href="#"></b:navLink>
+                    <b:navLink></b:navLink>
+                    <b:navLink header="Nav header"></b:navLink>
+                    <b:navLink value="Separated link" href="#"></b:navLink>
+                    <b:dropMenu value="Nested submenu" iconAwesome="birthday-cake" iconAlign="right">
+                        <b:navLink value="You can nest menus" href="#"></b:navLink>
+                        <b:dropMenu value="Nested sub-submenu">
+                            <b:navLink value="... as deep as ..." href="#"></b:navLink>
+                            <b:dropMenu value="Nested sub-sub-submenu">
+                                <b:navLink value="... you want!" href="#"></b:navLink>
+                            </b:dropMenu>
+                        </b:dropMenu>
+
+                    </b:dropMenu>
+                    <b:navLink value="One more separated link" href="#"></b:navLink>
+                </b:dropMenu>
+            </b:navbarLinks>
+           
+            <!-- Following line is needed for TBS 3.0.1 (panel content overflow issue) -->
+            <b:navbarLinks pull="right"><b:navLink value="    " href="#"></b:navLink></b:navbarLinks>
+          </b:navBar>
+    </body>
+</html>
