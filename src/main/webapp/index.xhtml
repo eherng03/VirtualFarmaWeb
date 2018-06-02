@@ -10,34 +10,37 @@
 
     </h:head>
     
-    <h:body  style="padding-top: 20px; padding-bottom: 20px;">
+    <h:body  style="padding-top: 50px; padding-bottom: 20px;">
         
-        <h:form  style="width:500px;margin: auto;border: none;">   
+        <h:form>   
             <p:messages autoUpdate="true" showDetail="true"/>
-            <p:panel>
-                <f:facet name="header" >
+            <p:panel style="width:500px;margin: auto;border: none;">
+                <p:panel style="align-content: center;border: none;margin: auto">
                     <p:graphicImage url="/resources/images/logo.png" style="width:450px"/>
-                </f:facet>
-           
-                <p:selectOneRadio id="usertype" value="#{indexController.usertype}" style="margin: auto">
-                    <f:selectItem itemLabel="Paciente" itemValue="paciente"/>
-                    <f:selectItem itemLabel="Farmacia" itemValue="farmacia" />
-                    <f:selectItem itemLabel="Médico" itemValue="medico" />
-                </p:selectOneRadio>
+                </p:panel>
+                
+                <p:panel  style="margin: auto; padding-top: 10px; border: none;">
+                    <p:selectOneRadio id="usertype" value="#{indexController.usertype}" style="margin: auto">
+                        <f:selectItem itemLabel="Paciente" itemValue="paciente"/>
+                        <f:selectItem itemLabel="Farmacia" itemValue="farmacia" />
+                        <f:selectItem itemLabel="Médico" itemValue="medico" />
+                    </p:selectOneRadio>
+                </p:panel>
 
 
-                <h:panelGrid columns="2" cellpadding="5" style="margin: auto">
+                <h:panelGrid style="margin: auto; " >
                     <h:outputLabel for="username" value="Nombre de usuario: " />
                     <p:inputText id="username" value="#{indexController.username}" required="true" label="username" />
-
+                    <br></br>
                     <h:outputLabel for="password" value="Contraseña: " />
                     <p:password id="password" value="#{indexController.password}" required="true" label="password" feedback = "true"/>
 
-
-                    <p:commandButton value="Iniciar sesión" action="#{indexController.login()}" style="margin: auto"/>
                     <br></br>
+                    <p:commandButton value="Iniciar sesión" action="#{indexController.login()}"/>
+                    <br></br> 
                     <h:outputLabel for="reg" value="¿Aún no tienes cuenta? "/>
                     <b:link id="reg" value=" Registrate" href="./public/registrar.xhtml"></b:link>
+
                 </h:panelGrid>
 
             </p:panel>

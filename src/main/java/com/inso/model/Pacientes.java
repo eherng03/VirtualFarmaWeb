@@ -68,6 +68,13 @@ public class Pacientes implements Serializable {
         this.numeroSS = numeroSS;
         this.password = password;
     }
+    
+    public Pacientes(Pacientes otroPaciente) {
+        this.dni = otroPaciente.dni;
+        this.nombre = otroPaciente.nombre;
+        this.numeroSS = otroPaciente.numeroSS;
+        this.password = otroPaciente.password;
+    }
 
     public String getDni() {
         return dni;
