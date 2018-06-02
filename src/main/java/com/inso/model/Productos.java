@@ -24,7 +24,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "productos")
-@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Productos.findByCIFNombre", query = "SELECT p FROM Productos p WHERE p.cif = :cif AND p.nombre = :nombre"),
+    @NamedQuery(name = "Productos.removeByCIFNombre", query = "DELETE p FROM Productos p WHERE p.cif = :cif AND p.nombre = :nombre"),
+})
 public class Productos implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -27,7 +27,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "recetas")
-@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Recetas.removeIDs", query = "DELETE r FROM Recetas r WHERE r.dNIPaciente = :dniPaciente AND r.nombreMedicamento = :nombreMedicamento AND r.fecha = :fecha"),
+    @NamedQuery(name = "Recetas.findByDNI", query = "SELECT r FROM Recetas r WHERE r.dNIPaciente = :dni"),
+})
 public class Recetas implements Serializable {
 
     private static final long serialVersionUID = 1L;

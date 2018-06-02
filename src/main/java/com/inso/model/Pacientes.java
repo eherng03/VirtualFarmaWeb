@@ -12,6 +12,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -25,7 +26,11 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "pacientes")
-@NamedQuery(name = "Pacientes.findByUserAndPass", query = "SELECT p FROM Pacientes p WHERE p.dni = :user AND p.password = :pass")
+@NamedQueries({
+    @NamedQuery(name = "Pacientes.findByUserAndPass", query = "SELECT p FROM Pacientes p WHERE p.dni = :user AND p.password = :pass"),
+    @NamedQuery(name = "Pacientes.removeByDNI", query = "DELETE p FROM Pacientes p WHERE p.dni = :dni"),
+    @NamedQuery(name = "Pacientes.findByDNI", query = "SELECT p FROM Pacientes p WHERE p.dni = :dni")
+})
 public class Pacientes implements Serializable {
 
     private static final long serialVersionUID = 1L;
