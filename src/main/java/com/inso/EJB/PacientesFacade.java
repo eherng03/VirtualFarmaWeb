@@ -37,9 +37,10 @@ public class PacientesFacade extends OwnEntityManager<Pacientes> implements Paci
     @Override
     public void removeByDNI(String dni) {
         try {
-            TypedQuery<Pacientes> query = getEntityManager().createNamedQuery("Pacientes.removeByDNI", Pacientes.class);
+            TypedQuery<Pacientes> query = getEntityManager().createNamedQuery("Pacientes.findByDNI", Pacientes.class);
             query.setParameter("dni", dni);
-            query.executeUpdate();
+            Pacientes result = query.getSingleResult();
+            remove(result);
         } catch (Exception e) {
             throw e;
         }

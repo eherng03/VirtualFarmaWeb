@@ -25,9 +25,10 @@ public class MedicoFacade extends OwnEntityManager<Medico> implements MedicoFaca
     @Override
     public void removeByDNI(String dni) {
         try {
-            TypedQuery<Medico> query = getEntityManager().createNamedQuery("Medico.removeByDNI", Medico.class);
+            TypedQuery<Medico> query = getEntityManager().createNamedQuery("Medico.findByDNI", Medico.class);
             query.setParameter("dni", dni);
-            query.executeUpdate();
+            Medico result = query.getSingleResult();
+            remove(result);
         } catch (Exception e) {
             
         }

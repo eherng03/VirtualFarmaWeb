@@ -25,10 +25,11 @@ public class ProductosFacade extends OwnEntityManager<Productos> implements Prod
     @Override
     public void removeByCIFNombre(String cif, String nombre) {
         try {
-            TypedQuery<Productos> query = getEntityManager().createNamedQuery("Productos.removeByCIFNombre", Productos.class);
+            TypedQuery<Productos> query = getEntityManager().createNamedQuery("Productos.findByCIFNombre", Productos.class);
             query.setParameter("cif", cif);
             query.setParameter("nombre", nombre);
-            query.executeUpdate();
+            Productos result = query.getSingleResult();
+            remove(result);
         } catch (Exception e) {
             throw e;
         }
