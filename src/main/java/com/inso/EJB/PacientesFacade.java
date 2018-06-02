@@ -6,13 +6,7 @@
 package com.inso.EJB;
 
 import com.inso.model.Pacientes;
-import java.util.List;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -42,35 +36,24 @@ public class PacientesFacade extends OwnEntityManager<Pacientes> implements Paci
 
     @Override
     public void removeByDNI(String dni) {
-        String consulta;
         try {
-            consulta = "DELETE p FROM Pacientes p WHERE p.dni = :dni";
-            Query query = getEntityManager().createQuery(consulta);
+            TypedQuery<Pacientes> query = getEntityManager().createNamedQuery("Pacientes.removeByDNI", Pacientes.class);
             query.setParameter("dni", dni);
-
+            query.executeUpdate();
         } catch (Exception e) {
-
+            throw e;
         }
     }
 
     @Override
     public Pacientes findByDNI(String dni) {
-        String consulta;
-        Pacientes paciente = null;
         try {
-            consulta = "SELECT p FROM Pacientes p WHERE p.dni = :dni";
-            Query query = getEntityManager().createQuery(consulta);
+            TypedQuery<Pacientes> query = getEntityManager().createNamedQuery("Pacientes.findByDNI", Pacientes.class);
             query.setParameter("dni", dni);
-            List<Pacientes> listaPacientes = query.getResultList();
-
-            if (!listaPacientes.isEmpty()) {
-                paciente = listaPacientes.get(0);
-            }
+            return query.getSingleResult();
 
         } catch (Exception e) {
-
+            throw e;
         }
-        return paciente;
     }
-
 }

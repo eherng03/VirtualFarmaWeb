@@ -5,12 +5,14 @@
  */
 package com.inso.EJB;
 
+import com.inso.model.Pacientes;
 import com.inso.model.Productos;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -22,28 +24,27 @@ public class ProductosFacade extends OwnEntityManager<Productos> implements Prod
 
     @Override
     public void removeByCIFNombre(String cif, String nombre) {
-        
+        try {
+            TypedQuery<Productos> query = getEntityManager().createNamedQuery("Productos.removeByCIFNombre", Productos.class);
+            query.setParameter("cif", cif);
+            query.setParameter("nombre", nombre);
+            query.executeUpdate();
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     @Override
     public Productos findByCIFNombre(String cif, String nombre) {
-        String consulta;
-        Productos producto = null;
         try {
-            consulta = "SELECT p FROM Productos p WHERE p.cif = :cif AND p.nombre = :nombre";
-            Query query = getEntityManager().createQuery(consulta);
+            TypedQuery<Productos> query = getEntityManager().createNamedQuery("Productos.findByCIFNombre", Productos.class);
             query.setParameter("cif", cif);
             query.setParameter("nombre", nombre);
-            List<Productos> listaProductos = query.getResultList();
             
-            if(!listaProductos.isEmpty()){
-                producto = listaProductos.get(0);
-            }
+            return query.getSingleResult();
             
         } catch (Exception e) {
-            
+            throw e;
         }
-        return producto;
     }
-    
 }
