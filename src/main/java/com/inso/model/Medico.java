@@ -23,11 +23,15 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Eva
+ * @author Eva y Alba
  */
 @Entity
 @Table(name = "medicos")
-@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Medico.removeByDNI", query = "DELETE m FROM Medico m WHERE m.dni = :dni"),
+    @NamedQuery(name = "Medico.findByUsernameAndPass", query = "SELECT m FROM Medico m WHERE m.dni = :dni AND m.password = :pass"),
+    @NamedQuery(name = "Medico.findByDNI", query = "SELECT m FROM Medico m WHERE m.dni = :dni")
+})
 public class Medico implements Serializable {
 
     private static final long serialVersionUID = 1L;
