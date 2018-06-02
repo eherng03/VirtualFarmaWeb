@@ -16,7 +16,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Eva
+ * @author Eva y Alba
  */
 @Stateless
 public class PacientesFacade extends AbstractFacade<Pacientes> implements PacientesFacadeLocal {
@@ -65,9 +65,9 @@ public class PacientesFacade extends AbstractFacade<Pacientes> implements Pacien
     public void removeByDNI(String dni) {
         String consulta;
         try {
-            consulta = "DELETE p FROM Pacientes p WHERE p.dni = ?1";
+            consulta = "DELETE p FROM Pacientes p WHERE p.dni = :dni";
             Query query = em.createQuery(consulta);
-            query.setParameter(1, dni);
+            query.setParameter("dni", dni);
                      
         } catch (Exception e) {
             
@@ -79,9 +79,9 @@ public class PacientesFacade extends AbstractFacade<Pacientes> implements Pacien
         String consulta;
         Pacientes paciente = null;
         try {
-            consulta = "SELECT p FROM Pacientes p WHERE p.dni = ?1";
+            consulta = "SELECT p FROM Pacientes p WHERE p.dni = :dni";
             Query query = em.createQuery(consulta);
-            query.setParameter(1, dni);
+            query.setParameter("dni", dni);
             List<Pacientes> listaPacientes = query.getResultList();
             
             if(!listaPacientes.isEmpty()){

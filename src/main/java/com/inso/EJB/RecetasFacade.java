@@ -15,7 +15,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Eva
+ * @author Eva y Alba
  */
 @Stateless
 public class RecetasFacade extends AbstractFacade<Recetas> implements RecetasFacadeLocal {
@@ -36,11 +36,11 @@ public class RecetasFacade extends AbstractFacade<Recetas> implements RecetasFac
     public void removeIDs(String dniPaciente, String nombreMedicamento, String fecha) {
         String consulta;
         try {
-            consulta = "DELETE r FROM Recetas r WHERE r.dNIPaciente = ?1 AND r.nombreMedicamento = ?2 AND r.fecha = ?3";
+            consulta = "DELETE r FROM Recetas r WHERE r.dNIPaciente = :dniPaciente AND r.nombreMedicamento = :nombreMedicamento AND r.fecha = :fecha";
             Query query = em.createQuery(consulta);
-            query.setParameter(1, dniPaciente);
-            query.setParameter(2, nombreMedicamento);
-            query.setParameter(3, fecha);
+            query.setParameter("dniPaciente", dniPaciente);
+            query.setParameter("nombreMedicamento", nombreMedicamento);
+            query.setParameter("fecha", fecha);
         } catch (Exception e) {
             
         }
@@ -51,9 +51,9 @@ public class RecetasFacade extends AbstractFacade<Recetas> implements RecetasFac
         String consulta;
         List<Recetas> listaRecetas = null;
         try {
-            consulta = "SELECT r FROM Recetas r WHERE r.dNIPaciente = ?1";
+            consulta = "SELECT r FROM Recetas r WHERE r.dNIPaciente = :dni";
             Query query = em.createQuery(consulta);
-            query.setParameter(1, dni);
+            query.setParameter("dni", dni);
             listaRecetas = query.getResultList();      
         } catch (Exception e) {
             
