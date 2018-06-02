@@ -26,11 +26,11 @@ public class ProductosFacade extends AbstractFacade<Productos> implements Produc
     protected EntityManager getEntityManager() {
         return em;
     }
-
+/*
     public ProductosFacade() {
         super(Productos.class);
     }
-
+*/
     @Override
     public void removeByCIFNombre(String cif, String nombre) {
         

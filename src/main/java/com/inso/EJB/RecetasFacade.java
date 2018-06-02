@@ -27,11 +27,11 @@ public class RecetasFacade extends AbstractFacade<Recetas> implements RecetasFac
     protected EntityManager getEntityManager() {
         return em;
     }
-
+/*
     public RecetasFacade() {
         super(Recetas.class);
     }
-
+*/
     @Override
     public void removeIDs(String dniPaciente, String nombreMedicamento, String fecha) {
         String consulta;

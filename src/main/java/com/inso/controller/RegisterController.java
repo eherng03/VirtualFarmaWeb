@@ -12,6 +12,7 @@ import com.inso.EJB.MedicoFacade;
 import com.inso.EJB.MedicoFacadeLocal;
 import com.inso.EJB.PacientesFacade;
 import com.inso.EJB.PacientesFacadeLocal;
+import com.inso.Utils.DataChecks;
 import com.inso.model.Farmacia;
 import com.inso.model.Medico;
 import com.inso.model.Pacientes;
@@ -103,26 +104,30 @@ public class RegisterController implements Serializable{
 
     
     public String registerPaciente() {
-       
-        
-        return "HOLA";
-        
-        
-        
-        /*FacesMessage message = null;
-        boolean loggedIn = false;
-         
-        if(username != null && username.equals("admin") && password != null && password.equals("admin")) {
-            loggedIn = true;
-            //Buscar en la bbdd
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome", username);
-        } else {
-            loggedIn = false;
-            message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Loggin Error", "Invalid credentials");
+        String direccion = "";
+        if(checkParametersPaciente()){
+           
         }
-        //Metodo de buscar usuario
-        FacesContext.getCurrentInstance().addMessage(null, message);
-        PrimeFaces.current().ajax().addCallbackParam("loggedIn", loggedIn);
-*/
+        
+        return direccion;
+  
+
     }     
+
+    private boolean checkParametersPaciente() {
+        DataChecks ch = DataChecks.getInstance();
+        if(!ch.checkDNI(dniPaciente)){
+             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "El DNI introducido no es válido."));
+            return false;
+        }
+        if(!ch.checkNumeroSS(ssPaciente)){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "El número de la Seguridad Social introducido no es válido."));
+            return false;
+        }
+        if(!ch.checkCadenaLetrasNumerosOEspacios(password)){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "La contraseñasolo puede contener letras o números."));
+            return false;
+        }
+        return true;
+    }
 }

@@ -27,11 +27,11 @@ public class FarmaciaFacade extends AbstractFacade<Farmacia> implements Farmacia
     protected EntityManager getEntityManager() {
         return em;
     }
-
+/*
     public FarmaciaFacade() {
         super(Farmacia.class);
     }
-
+*/
     @Override
     public Farmacia findByUsernameAndPass(String user, String pass) {
         String consulta;

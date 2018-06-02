@@ -13,57 +13,31 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
  * @author Eva y Alba
  */
 @Stateless
-public class PacientesFacade extends AbstractFacade<Pacientes> implements PacientesFacadeLocal {
-
-    EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("ViartualFarma_Persistence_Unit");
-    private EntityManager em = emfactory.createEntityManager();
+public class PacientesFacade extends OwnEntityManager<Pacientes> implements PacientesFacadeLocal {
 
     @Override
     public void edit(Pacientes entity) {
         super.edit(entity); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-
-    public PacientesFacade() {
-        super(Pacientes.class);
-    }
 
     @Override
     public Pacientes findByUsernameAndPass(String user, String pass) {
-        String consulta;
-        Pacientes paciente = null;
-        
         try {
-            
-            consulta = "SELECT p FROM Pacientes p WHERE p.dni = :user AND p.password = :pass";
-            Query query = this.em.createQuery(consulta, Pacientes.class);
+            TypedQuery<Pacientes> query = getEntityManager().createNamedQuery("Pacientes.findByUserAndPass", Pacientes.class);
             query.setParameter("user", user);
             query.setParameter("pass", pass);
-            
-            List<Pacientes> listaPacientes = query.getResultList();
-            
-            if(!listaPacientes.isEmpty()){
-                paciente = new Pacientes(listaPacientes.get(0));
-                //Pacientes o = listaPacientes.get(0);
-                //SEGUIR
-                int a = 0;
-            }
-            
+
+            return query.getSingleResult();
         } catch (Exception e) {
             throw e;
         }
-        return paciente;
-       
     }
 
     @Override
@@ -71,11 +45,11 @@ public class PacientesFacade extends AbstractFacade<Pacientes> implements Pacien
         String consulta;
         try {
             consulta = "DELETE p FROM Pacientes p WHERE p.dni = :dni";
-            Query query = em.createQuery(consulta);
+            Query query = getEntityManager().createQuery(consulta);
             query.setParameter("dni", dni);
-                     
+
         } catch (Exception e) {
-            
+
         }
     }
 
@@ -85,18 +59,18 @@ public class PacientesFacade extends AbstractFacade<Pacientes> implements Pacien
         Pacientes paciente = null;
         try {
             consulta = "SELECT p FROM Pacientes p WHERE p.dni = :dni";
-            Query query = em.createQuery(consulta);
+            Query query = getEntityManager().createQuery(consulta);
             query.setParameter("dni", dni);
             List<Pacientes> listaPacientes = query.getResultList();
-            
-            if(!listaPacientes.isEmpty()){
+
+            if (!listaPacientes.isEmpty()) {
                 paciente = listaPacientes.get(0);
             }
-            
+
         } catch (Exception e) {
-            
+
         }
         return paciente;
     }
-    
+
 }

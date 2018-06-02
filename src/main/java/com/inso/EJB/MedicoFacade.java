@@ -26,11 +26,11 @@ public class MedicoFacade extends AbstractFacade<Medico> implements MedicoFacade
     protected EntityManager getEntityManager() {
         return em;
     }
-
+/*
     public MedicoFacade() {
         super(Medico.class);
     }
-
+*/
     @Override
     public void removeByDNI(String dni) {
         String consulta;
