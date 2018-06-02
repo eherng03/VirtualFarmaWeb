@@ -28,7 +28,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "pacientes")
 @NamedQueries({
     @NamedQuery(name = "Pacientes.findByUserAndPass", query = "SELECT p FROM Pacientes p WHERE p.dni = :user AND p.password = :pass"),
-    @NamedQuery(name = "Pacientes.removeByDNI", query = "DELETE p FROM Pacientes p WHERE p.dni = :dni"),
     @NamedQuery(name = "Pacientes.findByDNI", query = "SELECT p FROM Pacientes p WHERE p.dni = :dni")
 })
 public class Pacientes implements Serializable {

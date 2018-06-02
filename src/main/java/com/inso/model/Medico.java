@@ -28,7 +28,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "medicos")
 @NamedQueries({
-    @NamedQuery(name = "Medico.removeByDNI", query = "DELETE m FROM Medico m WHERE m.dni = :dni"),
     @NamedQuery(name = "Medico.findByUsernameAndPass", query = "SELECT m FROM Medico m WHERE m.dni = :dni AND m.password = :pass"),
     @NamedQuery(name = "Medico.findByDNI", query = "SELECT m FROM Medico m WHERE m.dni = :dni")
 })
