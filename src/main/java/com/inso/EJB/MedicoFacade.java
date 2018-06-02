@@ -6,11 +6,13 @@
 package com.inso.EJB;
 
 import com.inso.model.Medico;
+import com.inso.model.Pacientes;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -22,12 +24,10 @@ public class MedicoFacade extends OwnEntityManager<Medico> implements MedicoFaca
 
     @Override
     public void removeByDNI(String dni) {
-        String consulta;
         try {
-            consulta = "DELETE m FROM Medico m WHERE m.dni = :dni";
-            Query query = getEntityManager().createQuery(consulta);
+            TypedQuery<Medico> query = getEntityManager().createNamedQuery("Medico.removeByDNI", Medico.class);
             query.setParameter("dni", dni);
-            
+            query.executeUpdate();
         } catch (Exception e) {
             
         }
@@ -38,10 +38,9 @@ public class MedicoFacade extends OwnEntityManager<Medico> implements MedicoFaca
         String consulta;
         Medico medico = null;
         try {
-            consulta = "SELECT m FROM Medicos m WHERE m.dni = ?1 AND m.password = ?2";
-            Query query = getEntityManager().createQuery(consulta);
-            query.setParameter(1, user);
-            query.setParameter(2, pass);
+            TypedQuery<Medico> query = getEntityManager().createNamedQuery("Medico.findByUsernameAndPass", Medico.class);
+            query.setParameter("dni", user);
+            query.setParameter("pass", pass);
             List<Medico> listaMedicos = query.getResultList();
             
             if(!listaMedicos.isEmpty()){
@@ -59,9 +58,8 @@ public class MedicoFacade extends OwnEntityManager<Medico> implements MedicoFaca
         String consulta;
         Medico medico = null;
         try {
-            consulta = "SELECT m FROM Medico m WHERE m.dni = ?1";
-            Query query = getEntityManager().createQuery(consulta);
-            query.setParameter(1, dni);
+            TypedQuery<Medico> query = getEntityManager().createNamedQuery("Medico.findByDNI", Medico.class);
+            query.setParameter("dni", dni);
             List<Medico> listaMedicos = query.getResultList();
             
             if(!listaMedicos.isEmpty()){

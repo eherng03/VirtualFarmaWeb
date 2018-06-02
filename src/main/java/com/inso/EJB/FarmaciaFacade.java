@@ -6,12 +6,14 @@
 package com.inso.EJB;
 
 import com.inso.model.Farmacia;
+import com.inso.model.Medico;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -25,8 +27,7 @@ public class FarmaciaFacade extends OwnEntityManager<Farmacia> implements Farmac
         String consulta;
         Farmacia farmacia = null;
         try {
-            consulta = "SELECT f FROM Farmacia f WHERE f.cif = :user AND f.password = :pass";
-            Query query = getEntityManager().createQuery(consulta);
+            TypedQuery<Farmacia> query = getEntityManager().createNamedQuery("Farmacia.findByUsernameAndPass", Farmacia.class);
             query.setParameter("user", user);
             query.setParameter("pass", pass);
             List<Farmacia> listaFarmacias = query.getResultList();
@@ -46,8 +47,7 @@ public class FarmaciaFacade extends OwnEntityManager<Farmacia> implements Farmac
         String consulta;
         Farmacia farmacia = null;
         try {
-            consulta = "SELECT f FROM Farmacia f WHERE f.cif = :cif";
-            Query query = getEntityManager().createQuery(consulta);
+            TypedQuery<Farmacia> query = getEntityManager().createNamedQuery("Farmacia.findByCIF", Farmacia.class);
             query.setParameter("cif", cif);
             List<Farmacia> listaFarmacias = query.getResultList();
             
