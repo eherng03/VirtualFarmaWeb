@@ -46,13 +46,17 @@ public class PacientesFacade extends AbstractFacade<Pacientes> implements Pacien
         try {
             
             consulta = "SELECT p FROM Pacientes p WHERE p.dni = :user AND p.password = :pass";
-            Query query = this.em.createQuery(consulta);
+            Query query = this.em.createQuery(consulta, Pacientes.class);
             query.setParameter("user", user);
             query.setParameter("pass", pass);
-            List<Pacientes> listaPacientes = (List<Pacientes>)query.getResultList();
+            
+            List<Pacientes> listaPacientes = query.getResultList();
             
             if(!listaPacientes.isEmpty()){
                 paciente = new Pacientes(listaPacientes.get(0));
+                //Pacientes o = listaPacientes.get(0);
+                //SEGUIR
+                int a = 0;
             }
             
         } catch (Exception e) {

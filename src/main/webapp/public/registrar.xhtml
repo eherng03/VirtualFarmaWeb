@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:b="http://bootsfaces.net/ui">
     <h:head>
-        <title>Virtual farma</title>
+        <title>Registro</title>
 
     </h:head>
     
@@ -20,54 +20,68 @@
                 </p:panel>
                 
                 <p:tabView orientation="left">
-                    <p:tab title="Godfather Part I">                    
-                        <h:panelGrid columns="2" cellpadding="10">
-                            <p:graphicImage name="demo/images/godfather/godfather1.jpg" />
-                            <h:outputText
-                                value="The story begins as Don Vito Corleone, the head of a New York Mafia family, oversees his daughter's wedding. 
-                                His beloved son Michael has just come home from the war, but does not intend to become part of his father's business.
-                                Through Michael's life the nature of the family business becomes clear. The business of the family is just like the head of the family, kind and benevolent to those who give respect, 
-                                but given to ruthless violence whenever anything stands against the good of the family." />
+                    <p:tab title="Registrarse como paciente">                    
+                        <h:panelGrid columns="2" cellpadding="10" cellspacing="10" >
+                            <h:outputLabel for="dni" value="DNI: " />
+                            <p:inputText id="dni" value="#{registerController.dniPaciente}" required="true" label="DNI" />
+
+                            <h:outputLabel for="name" value="Nombre y apellidos: " />
+                            <p:inputText id="name" value="#{registerController.nombrePaciente}" required="true" label="Nombre" />
+
+                            <h:outputLabel for="numeroSS" value="Número de la Seguridad Social: " />
+                            <p:inputText id="numeroSS" value="#{registerController.ssPaciente}" required="true" label="numeroSS" />
+                             
+                            <h:outputLabel for="password" value="Contraseña: " />
+                            <p:password id="password" value="#{registerController.password}" required="true" label="password" feedback = "true"/>
+                            
+                            <p:commandButton value="Continuar" action="#{registerController.registerPaciente()}"/>
                         </h:panelGrid>
                     </p:tab>
-                    <p:tab title="Godfather Part II">
-                        <h:panelGrid columns="2" cellpadding="10">
-                            <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
-                            <h:outputText value="Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film, The_Godfather, parallels the young Vito Corleone's rise with his son Michael's spiritual fall, deepening The_Godfather's depiction of the dark side of the American dream. 
-                            In the early 1900s, the child Vito flees his Sicilian village for America after the local Mafia kills his family. Vito struggles to make a living, legally or illegally, for his wife and growing brood in Little Italy, 
-                            killing the local Black Hand Fanucci after he demands his customary cut of the tyro's business. With Fanucci gone, Vito's communal stature grows." />
+                    
+                    
+                    
+                    <p:tab title="Registrarse como médico">
+                        <h:panelGrid columns="2" cellpadding="10" cellspacing="10" >
+                            <h:outputLabel for="dni" value="DNI: " />
+                            <p:inputText id="dni" value="#{registerController.dniPaciente}" required="true" label="DNI" />
+
+                            <h:outputLabel for="name" value="Nombre y apellidos: " />
+                            <p:inputText id="name" value="#{registerController.nombrePaciente}" required="true" label="Nombre" />
+
+                            <h:outputLabel for="numeroSS" value="Número de la Seguridad Social: " />
+                            <p:inputText id="numeroSS" value="#{registerController.ssPaciente}" required="true" label="numeroSS" />
+                            
+                            <h:outputLabel for="password" value="Contraseña: " />
+                            <p:password id="password" value="#{registerController.password}" required="true" label="password" feedback = "true"/>
+                            
+                            <h:outputLabel for="centromedico" value="Centro médico: " />
+                            <p:inputText id="centromedico" value="#{registerController.ssPaciente}" required="true" label="centromedico" />
+                            
+                            <h:outputLabel for="direccion" value="Dirección: " />
+                            <p:inputText id="direccion" value="#{registerController.ssPaciente}" required="true" label="centromedico" />
+                            
+                            <p:commandButton value="Continuar" action="#{registerController.registerPaciente()}"/>
                         </h:panelGrid>
                     </p:tab>
-                    <p:tab title="Godfather Part III">
-                        <h:panelGrid columns="2" cellpadding="10">
-                            <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
-                            <h:outputText value="After a break of more than 15 years, director Francis Ford Coppola and writer Mario Puzo returned to the well for this third and final story of the fictional Corleone crime family. 
-                                Two decades have passed, and crime kingpin Michael Corleone, now divorced from his wife Kay has nearly succeeded in keeping his promise that his family would one day be completely legitimate." />
+                    
+                    <p:tab title="Registrarse como farmacia">
+                        <h:panelGrid columns="2" cellpadding="10" cellspacing="10" >
+                            <h:outputLabel for="dni" value="DNI: " />
+                            <p:inputText id="dni" value="#{registerController.dniPaciente}" required="true" label="DNI" />
+
+                            <h:outputLabel for="name" value="Nombre y apellidos: " />
+                            <p:inputText id="name" value="#{registerController.nombrePaciente}" required="true" label="Nombre" />
+
+                            <h:outputLabel for="numeroSS" value="Número de la Seguridad Social: " />
+                            <p:inputText id="numeroSS" value="#{registerController.ssPaciente}" required="true" label="numeroSS" />
+                            
+                            <h:outputLabel for="password" value="Contraseña: " />
+                            <p:password id="password" value="#{registerController.password}" required="true" label="password" feedback = "true"/>
+                            
+                            <p:commandButton value="Continuar" action="#{registerController.registerPaciente()}"/>
                         </h:panelGrid>
                     </p:tab>
                 </p:tabView>
-           
-                <p:selectOneRadio id="usertype" value="#{indexController.usertype}" style="margin: auto">
-                    <f:selectItem itemLabel="Paciente" itemValue="paciente"/>
-                    <f:selectItem itemLabel="Farmacia" itemValue="farmacia" />
-                    <f:selectItem itemLabel="Médico" itemValue="medico" />
-                </p:selectOneRadio>
-
-
-                <h:panelGrid columns="2" cellpadding="5" style="margin: auto">
-                    <h:outputLabel for="username" value="Nombre de usuario: " />
-                    <p:inputText id="username" value="#{indexController.username}" required="true" label="username" />
-
-                    <h:outputLabel for="password" value="Contraseña: " />
-                    <p:password id="password" value="#{indexController.password}" required="true" label="password" feedback = "true"/>
-
-
-                    <p:commandButton value="Iniciar sesión" action="#{indexController.login()}" style="margin: auto"/>
-                    <br></br>
-                    <h:outputLabel for="reg" value="¿Aún no tienes cuenta? "/>
-                    <b:link id="reg" value=" Registrate" href="./public/registrar.xhtml"></b:link>
-                </h:panelGrid>
-
             </p:panel>
         </h:form>
      
