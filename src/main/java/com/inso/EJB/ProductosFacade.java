@@ -17,20 +17,9 @@ import javax.persistence.Query;
  * @author Eva y Alba
  */
 @Stateless
-public class ProductosFacade extends AbstractFacade<Productos> implements ProductosFacadeLocal {
+public class ProductosFacade extends OwnEntityManager<Productos> implements ProductosFacadeLocal {
 
-    @PersistenceContext(unitName = "ViartualFarma_Persistence_Unit")
-    private EntityManager em;
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-/*
-    public ProductosFacade() {
-        super(Productos.class);
-    }
-*/
     @Override
     public void removeByCIFNombre(String cif, String nombre) {
         
@@ -42,7 +31,7 @@ public class ProductosFacade extends AbstractFacade<Productos> implements Produc
         Productos producto = null;
         try {
             consulta = "SELECT p FROM Productos p WHERE p.cif = :cif AND p.nombre = :nombre";
-            Query query = em.createQuery(consulta);
+            Query query = getEntityManager().createQuery(consulta);
             query.setParameter("cif", cif);
             query.setParameter("nombre", nombre);
             List<Productos> listaProductos = query.getResultList();

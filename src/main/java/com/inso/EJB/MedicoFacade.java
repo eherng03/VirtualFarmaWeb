@@ -17,26 +17,15 @@ import javax.persistence.Query;
  * @author Eva y Alba
  */
 @Stateless
-public class MedicoFacade extends AbstractFacade<Medico> implements MedicoFacadeLocal {
+public class MedicoFacade extends OwnEntityManager<Medico> implements MedicoFacadeLocal {
 
-    @PersistenceContext(unitName = "ViartualFarma_Persistence_Unit")
-    private EntityManager em;
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-/*
-    public MedicoFacade() {
-        super(Medico.class);
-    }
-*/
     @Override
     public void removeByDNI(String dni) {
         String consulta;
         try {
             consulta = "DELETE m FROM Medico m WHERE m.dni = :dni";
-            Query query = em.createQuery(consulta);
+            Query query = getEntityManager().createQuery(consulta);
             query.setParameter("dni", dni);
             
         } catch (Exception e) {
@@ -50,7 +39,7 @@ public class MedicoFacade extends AbstractFacade<Medico> implements MedicoFacade
         Medico medico = null;
         try {
             consulta = "SELECT m FROM Medicos m WHERE m.dni = ?1 AND m.password = ?2";
-            Query query = em.createQuery(consulta);
+            Query query = getEntityManager().createQuery(consulta);
             query.setParameter(1, user);
             query.setParameter(2, pass);
             List<Medico> listaMedicos = query.getResultList();
@@ -71,7 +60,7 @@ public class MedicoFacade extends AbstractFacade<Medico> implements MedicoFacade
         Medico medico = null;
         try {
             consulta = "SELECT m FROM Medico m WHERE m.dni = ?1";
-            Query query = em.createQuery(consulta);
+            Query query = getEntityManager().createQuery(consulta);
             query.setParameter(1, dni);
             List<Medico> listaMedicos = query.getResultList();
             

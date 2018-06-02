@@ -18,27 +18,15 @@ import javax.persistence.Query;
  * @author Eva y Alba
  */
 @Stateless
-public class FarmaciaFacade extends AbstractFacade<Farmacia> implements FarmaciaFacadeLocal {
+public class FarmaciaFacade extends OwnEntityManager<Farmacia> implements FarmaciaFacadeLocal {
 
-    @PersistenceContext(unitName = "ViartualFarma_Persistence_Unit")
-    private EntityManager em;
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-/*
-    public FarmaciaFacade() {
-        super(Farmacia.class);
-    }
-*/
     @Override
     public Farmacia findByUsernameAndPass(String user, String pass) {
         String consulta;
         Farmacia farmacia = null;
         try {
             consulta = "SELECT f FROM Farmacia f WHERE f.cif = :user AND f.password = :pass";
-            Query query = em.createQuery(consulta);
+            Query query = getEntityManager().createQuery(consulta);
             query.setParameter("user", user);
             query.setParameter("pass", pass);
             List<Farmacia> listaFarmacias = query.getResultList();
@@ -59,7 +47,7 @@ public class FarmaciaFacade extends AbstractFacade<Farmacia> implements Farmacia
         Farmacia farmacia = null;
         try {
             consulta = "SELECT f FROM Farmacia f WHERE f.cif = :cif";
-            Query query = em.createQuery(consulta);
+            Query query = getEntityManager().createQuery(consulta);
             query.setParameter("cif", cif);
             List<Farmacia> listaFarmacias = query.getResultList();
             

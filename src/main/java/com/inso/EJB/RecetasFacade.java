@@ -18,26 +18,14 @@ import javax.persistence.Query;
  * @author Eva y Alba
  */
 @Stateless
-public class RecetasFacade extends AbstractFacade<Recetas> implements RecetasFacadeLocal {
+public class RecetasFacade extends OwnEntityManager<Recetas> implements RecetasFacadeLocal {
 
-    @PersistenceContext(unitName = "ViartualFarma_Persistence_Unit")
-    private EntityManager em;
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-/*
-    public RecetasFacade() {
-        super(Recetas.class);
-    }
-*/
     @Override
     public void removeIDs(String dniPaciente, String nombreMedicamento, String fecha) {
         String consulta;
         try {
             consulta = "DELETE r FROM Recetas r WHERE r.dNIPaciente = :dniPaciente AND r.nombreMedicamento = :nombreMedicamento AND r.fecha = :fecha";
-            Query query = em.createQuery(consulta);
+            Query query = getEntityManager().createQuery(consulta);
             query.setParameter("dniPaciente", dniPaciente);
             query.setParameter("nombreMedicamento", nombreMedicamento);
             query.setParameter("fecha", fecha);
@@ -52,7 +40,7 @@ public class RecetasFacade extends AbstractFacade<Recetas> implements RecetasFac
         List<Recetas> listaRecetas = null;
         try {
             consulta = "SELECT r FROM Recetas r WHERE r.dNIPaciente = :dni";
-            Query query = em.createQuery(consulta);
+            Query query = getEntityManager().createQuery(consulta);
             query.setParameter("dni", dni);
             listaRecetas = query.getResultList();      
         } catch (Exception e) {
