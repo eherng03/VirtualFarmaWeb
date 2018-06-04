@@ -92,10 +92,12 @@ public class IndexController implements Serializable{
     
     public String login() {
         String direction = null;
+        FacesContext context = FacesContext.getCurrentInstance();
         try {
             //ADMIN SESION
             if(username != null && username.equals("admin") && password != null && password.equals("admin")) {
-                direction = "/admin/ventanaAdmin";
+                direction = "./private/admin/ventanaAdmin";
+                context.getExternalContext().getSessionMap().put("user", "admin");
                 return direction;
             } else {
                 //PACIENTE SESION
@@ -103,11 +105,11 @@ public class IndexController implements Serializable{
                     this.paciente = pacienteEJB.findByUsernameAndPass(username, password);
 
                     //Añado el paciente como usuario de esta sesion para los menus
-                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", paciente);
+                    context.getExternalContext().getSessionMap().put("user", paciente);
                     if(this.paciente == null){
-                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Credenciales incorrectas."));
+                        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Credenciales incorrectas."));
                     }else{
-                         direction = "/paciente/ventanaPaciente";
+                         direction = "./private/paciente/ventanaPaciente.xhtml?faces-redirect=true";
                          return direction;
                     }
                 //FARMACIA SESION
@@ -116,21 +118,21 @@ public class IndexController implements Serializable{
                     this.farmacia = farmaciaEJB.findByUsernameAndPass(username, password);
 
                     //Añado el paciente como usuario de esta sesion para los menus
-                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", farmacia);
+                    context.getExternalContext().getSessionMap().put("user", farmacia);
                     if(this.farmacia == null){
-                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Credenciales incorrectas."));
+                         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Credenciales incorrectas."));
                     }else{
-                        direction = "/farmacia/ventanaFarmacia?faces-redirect=true";
+                        direction = "./private/farmacia/ventanaFarmacia?faces-redirect=true";
                     }
                 }else if(this.usertype == "medico"){
                     this.medico = medicoEJB.findByUsernameAndPass(username, password);
 
                     //Añado el paciente como usuario de esta sesion para los menus
-                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", medico);
+                    context.getExternalContext().getSessionMap().put("user", medico);
                     if(this.farmacia == null){
-                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Credenciales incorrectas."));
+                         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Credenciales incorrectas."));
                     }else{
-                        direction = "/medico/ventanaMedico?faces-redirect=true";
+                        direction = "./private/medico/ventanaMedico?faces-redirect=true";
                     }
                 }
             }
