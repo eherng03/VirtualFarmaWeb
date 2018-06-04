@@ -5,14 +5,9 @@
  */
 package com.inso.EJB;
 
-import com.inso.model.Pacientes;
 import com.inso.model.Recetas;
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 
 /**
  *
@@ -21,6 +16,17 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class RecetasFacade extends OwnEntityManager<Recetas> implements RecetasFacadeLocal {
 
+    @Override
+    public void removeIDs(String dniPaciente, String nombreMedicamento, String fecha) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Recetas> findByDNI(String dni) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    /*
     @Override
     public void removeIDs(String dniPaciente, String nombreMedicamento, String fecha) {
         try {
@@ -44,5 +50,6 @@ public class RecetasFacade extends OwnEntityManager<Recetas> implements RecetasF
             throw e;
         }
     }
+*/
     
 }

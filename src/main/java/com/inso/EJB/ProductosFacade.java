@@ -21,7 +21,16 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class ProductosFacade extends OwnEntityManager<Productos> implements ProductosFacadeLocal {
 
+    @Override
+    public void removeByCIFNombre(String cif, String nombre) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
+    @Override
+    public Productos findByCIFNombre(String cif, String nombre) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    /*
     @Override
     public void removeByCIFNombre(String cif, String nombre) {
         try {
@@ -48,4 +57,5 @@ public class ProductosFacade extends OwnEntityManager<Productos> implements Prod
             throw e;
         }
     }
+*/
 }
