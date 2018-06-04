@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -24,6 +25,15 @@ public class PacientesFacade extends AbstractFacade<Pacientes> implements Pacien
     EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("ViartualFarma_Persistence_Unit");
     private EntityManager em = emfactory.createEntityManager();
 
+    @Override
+    public void create(Pacientes p) {
+        EntityTransaction tx = getEntityManager().getTransaction();
+        tx.begin();
+        getEntityManager().persist(p);
+        tx.commit();
+        //getEntityManager().flush();
+    }
+    
     @Override
     public void edit(Pacientes entity) {
         super.edit(entity); //To change body of generated methods, choose Tools | Templates.
@@ -93,5 +103,4 @@ public class PacientesFacade extends AbstractFacade<Pacientes> implements Pacien
         }
         return paciente;
     }
-    
 }
