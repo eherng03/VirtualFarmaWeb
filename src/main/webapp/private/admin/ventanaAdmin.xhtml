@@ -16,33 +16,21 @@ and open the template in the editor.
     </h:head>
     
     <h:body  style="padding-top: 50px; padding-bottom: 20px;">
-        <b:navBar brand="Virtual Farma" brandHref="#" fluid="true" fixed="top" inverse="true">
+               <b:navBar brand="Virtual Farma" brandHref="#" fluid="true" fixed="top" inverse="true">
             <b:navbarLinks>
-                <b:navLink value="Link" href="#"></b:navLink>
-                <b:navLink value="Link" href="#"></b:navLink>
-                <b:dropMenu value="Dropdown" iconAwesome="birthday-cake">
-                    <b:navLink value="Action" href="#"></b:navLink>
-                    <b:navLink value="Another action" href="#"></b:navLink>
-                    <b:navLink value="Something else here" href="#"></b:navLink>
-                    <b:navLink></b:navLink>
-                    <b:navLink header="Nav header"></b:navLink>
-                    <b:navLink value="Separated link" href="#"></b:navLink>
-                    <b:dropMenu value="Nested submenu" iconAwesome="birthday-cake" iconAlign="right">
-                        <b:navLink value="You can nest menus" href="#"></b:navLink>
-                        <b:dropMenu value="Nested sub-submenu">
-                            <b:navLink value="... as deep as ..." href="#"></b:navLink>
-                            <b:dropMenu value="Nested sub-sub-submenu">
-                                <b:navLink value="... you want!" href="#"></b:navLink>
-                            </b:dropMenu>
-                        </b:dropMenu>
-
-                    </b:dropMenu>
-                    <b:navLink value="One more separated link" href="#"></b:navLink>
+                <b:dropMenu value="Añadir" icon="plus">
+                    <b:navLink value="Farmacia" href="#"></b:navLink>
+                    <b:navLink value="Médico" href="#"></b:navLink>
                 </b:dropMenu>
+                   <b:dropMenu value="Ver" icon="eye-open">
+                    <b:navLink value="Farmacias" href="#" ></b:navLink>
+                    <b:navLink value="Médicos" href="#"></b:navLink>
+                </b:dropMenu>
+                <b:navLink value="Copia de seguridad" href="#" icon="saved"></b:navLink>
+                <b:navLink value="Cerrar sesión" href="#" icon="log-out"></b:navLink>
+                <b:navLink value="" href="#" icon="question-sign" style="position: absolute; right: 0%;"></b:navLink>
             </b:navbarLinks>
-           
-            <!-- Following line is needed for TBS 3.0.1 (panel content overflow issue) -->
-            <b:navbarLinks pull="right"><b:navLink value="    " href="#"></b:navLink></b:navbarLinks>
           </b:navBar>
-    </body>
+        <div style="position: absolute; top: 50%; left: 50%;">Bienvenido médico</div>
+    </h:body>
 </html>
