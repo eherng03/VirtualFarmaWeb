@@ -16,21 +16,63 @@ and open the template in the editor.
     </h:head>
     
    <h:body  style="padding-top: 50px; padding-bottom: 20px;">
-               <b:navBar brand="Virtual Farma" brandHref="#" fluid="true" fixed="top" inverse="true">
+            <b:navBar brand="Virtual Farma" brandHref="#" fluid="true" fixed="top" inverse="true">
             <b:navbarLinks>
-                <b:dropMenu value="Añadir" icon="plus">
-                    <b:navLink value="Farmacia" href="#"></b:navLink>
-                    <b:navLink value="Médico" href="#"></b:navLink>
-                </b:dropMenu>
-                   <b:dropMenu value="Ver" icon="eye-open">
-                    <b:navLink value="Farmacias" href="#" ></b:navLink>
-                    <b:navLink value="Médicos" href="#"></b:navLink>
-                </b:dropMenu>
+                <b:navLink value="Farmacias" action="#{adminController.showFarmacias()}"></b:navLink>
+                <b:navLink value="Médicos" action="#{adminController.showMedicos()}"></b:navLink>
                 <b:navLink value="Copia de seguridad" href="#" icon="saved"></b:navLink>
-                <b:navLink value="Cerrar sesión" href="#" icon="log-out"></b:navLink>
+                <b:navLink value="Cerrar sesión" action="#{adminController.logOut()}" icon="log-out"></b:navLink>
                 <b:navLink value="" href="#" icon="question-sign" style="position: absolute; right: 0%;"></b:navLink>
             </b:navbarLinks>
           </b:navBar>
-        <div style="position: absolute; top: 50%; left: 50%;">Bienvenido médico</div>
+       
+       <p:panel visible="#{adminController.farmaciasVisible}">
+           <h:form id="form">
+               <p:repeat value="#{adminController.farmaciasList}" var="farm">
+                    <h:panelGrid columns="3" style="width:100%">
+                        
+                        <p:panel style="align-content: center;border: none;margin: auto">
+                            <p:graphicImage url="/resources/images/farm.jpg" style="width:30px"/>
+                        </p:panel>
+
+                        <p:outputPanel>
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputText value="Nombre"  style="font-weight: bold"/>
+                                <h:outputText value="#{farm.nombre}"/>
+                                
+                                <h:outputText value="CIF:"  style="font-weight: bold"/>
+                                <h:outputText value="#{farm.cif}"/>
+                                
+                                <h:outputText value="Dirección:"  style="font-weight: bold"/>
+                                <h:outputText value="#{farm.direccion}"/>
+                                
+                                <h:outputText value="Email: "  style="font-weight: bold"/>
+                                <h:outputText value="#{farm.email}"/>
+                                
+                                <h:outputText value="Horario: "  style="font-weight: bold"/>
+                                <h:outputText value="#{farm.horario}"/>
+                                
+                                <h:outputText value="Teléfono: "  style="font-weight: bold"/>
+                                <h:outputText value="#{farm.telefono}"/>
+                                
+                                <h:outputText value="Nombre del dueño: "  style="font-weight: bold"/>
+                                <h:outputText value="#{farm.nombreDueno}"/>
+                                
+                                <h:outputText value="Número de cuenta: "  style="font-weight: bold"/>
+                                <h:outputText value="#{farm.numeroCuenta}"/>
+
+                            </h:panelGrid>
+                        </p:outputPanel>
+                            <p:commandButton value="Editar"/>
+                            <p:commandButton value="Eliminar" action="#{adminController.delete(farm)}"/>
+                        <p:outputPanel> 
+                            
+                        </p:outputPanel>
+                    </h:panelGrid>
+                    <hr />
+                </p:repeat>
+           </h:form>
+       </p:panel>
+           
     </h:body>
 </html>
