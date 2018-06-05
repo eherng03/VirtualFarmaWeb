@@ -44,10 +44,6 @@ public class PacientesFacade extends AbstractFacade<Pacientes> implements Pacien
         return em;
     }
 
-    public PacientesFacade() {
-        super(Pacientes.class);
-    }
-
     @Override
     public Pacientes findByUsernameAndPass(String user, String pass) {
         String consulta;
