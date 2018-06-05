@@ -35,6 +35,7 @@ public class PacienteController implements Serializable{
     private List<Farmacia> farmaciasList;
     private boolean showRecetas;
     private boolean showFarmacias;
+    private boolean showPerfil;
     
     @PostConstruct
     public void init(){
@@ -47,6 +48,7 @@ public class PacienteController implements Serializable{
                 Logger.getLogger(PacienteController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        showRecetas = true;
     }
 
     public List<Farmacia> getFarmaciasList() {   
@@ -82,13 +84,33 @@ public class PacienteController implements Serializable{
         this.showFarmacias = showFarmacias;
     }
     
+    public boolean isShowPerfil() {
+        return showPerfil;
+    }
+
+    public void setShowPerfil(boolean showPerfil) {
+        this.showPerfil = showPerfil;
+    }
+    
     public void renderRecetas(){
         showRecetas = true;
         showFarmacias = false;
+        showPerfil = false;
     }
     
     public void renderFarmacias(){
         showRecetas = false;
         showFarmacias = true;
+        showPerfil = false;
+    }
+    
+    public void renderPerfil(){
+        showRecetas = false;
+        showFarmacias = false;
+        showPerfil = true;
+    }
+    
+    public void darBaja(){
+        pacienteEJB.remove(paciente);
     }
 }
