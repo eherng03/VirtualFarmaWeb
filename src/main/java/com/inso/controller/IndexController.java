@@ -14,7 +14,6 @@ import com.inso.EJB.PacientesFacadeLocal;
 import com.inso.model.Farmacia;
 import com.inso.model.Medico;
 import com.inso.model.Pacientes;
-import java.awt.event.ActionEvent;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.annotation.PostConstruct;
@@ -22,8 +21,6 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
-import javax.inject.Named;
-import org.primefaces.PrimeFaces;
 /**
  *
  * @author Eva
@@ -92,10 +89,12 @@ public class IndexController implements Serializable{
     
     public String login() {
         String direction = null;
+        FacesContext context = FacesContext.getCurrentInstance();
         try {
             //ADMIN SESION
             if(username != null && username.equals("admin") && password != null && password.equals("admin")) {
-                direction = "/admin/ventanaAdmin";
+                direction = "/private/admin/ventanaAdmin?faces-redirect=true";
+                context.getExternalContext().getSessionMap().put("user", "admin");
                 return direction;
             } else {
                 //PACIENTE SESION
@@ -103,11 +102,11 @@ public class IndexController implements Serializable{
                     this.paciente = pacienteEJB.findByUsernameAndPass(username, password);
 
                     //Añado el paciente como usuario de esta sesion para los menus
-                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", paciente);
+                    context.getExternalContext().getSessionMap().put("user", paciente);
                     if(this.paciente == null){
-                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Credenciales incorrectas."));
+                        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Credenciales incorrectas."));
                     }else{
-                         direction = "/paciente/ventanaPaciente";
+                         direction = "/private/paciente/ventanaPaciente?faces-redirect=true";
                          return direction;
                     }
                 //FARMACIA SESION
@@ -116,21 +115,21 @@ public class IndexController implements Serializable{
                     this.farmacia = farmaciaEJB.findByUsernameAndPass(username, password);
 
                     //Añado el paciente como usuario de esta sesion para los menus
-                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", farmacia);
+                    context.getExternalContext().getSessionMap().put("user", farmacia);
                     if(this.farmacia == null){
-                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Credenciales incorrectas."));
+                         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Credenciales incorrectas."));
                     }else{
-                        direction = "/farmacia/ventanaFarmacia?faces-redirect=true";
+                        direction = "/private/farmacia/ventanaFarmacia?faces-redirect=true";
                     }
                 }else if(this.usertype == "medico"){
                     this.medico = medicoEJB.findByUsernameAndPass(username, password);
 
                     //Añado el paciente como usuario de esta sesion para los menus
-                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", medico);
+                    context.getExternalContext().getSessionMap().put("user", medico);
                     if(this.farmacia == null){
-                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Credenciales incorrectas."));
+                         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Credenciales incorrectas."));
                     }else{
-                        direction = "/medico/ventanaMedico?faces-redirect=true";
+                        direction = "/private/medico/ventanaMedico?faces-redirect=true";
                     }
                 }
             }

@@ -5,56 +5,57 @@
  */
 package com.inso.EJB;
 
+import com.inso.model.Pacientes;
 import com.inso.model.Productos;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
  * @author Eva y Alba
  */
 @Stateless
-public class ProductosFacade extends AbstractFacade<Productos> implements ProductosFacadeLocal {
-
-    @PersistenceContext(unitName = "ViartualFarma_Persistence_Unit")
-    private EntityManager em;
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-
-    public ProductosFacade() {
-        super(Productos.class);
-    }
+public class ProductosFacade extends OwnEntityManager<Productos> implements ProductosFacadeLocal {
 
     @Override
     public void removeByCIFNombre(String cif, String nombre) {
-        
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Productos findByCIFNombre(String cif, String nombre) {
-        String consulta;
-        Productos producto = null;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    /*
+    @Override
+    public void removeByCIFNombre(String cif, String nombre) {
         try {
-            consulta = "SELECT p FROM Productos p WHERE p.cif = :cif AND p.nombre = :nombre";
-            Query query = em.createQuery(consulta);
+            TypedQuery<Productos> query = getEntityManager().createNamedQuery("Productos.findByCIFNombre", Productos.class);
             query.setParameter("cif", cif);
             query.setParameter("nombre", nombre);
-            List<Productos> listaProductos = query.getResultList();
+            Productos result = query.getSingleResult();
+            remove(result);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    @Override
+    public Productos findByCIFNombre(String cif, String nombre) {
+        try {
+            TypedQuery<Productos> query = getEntityManager().createNamedQuery("Productos.findByCIFNombre", Productos.class);
+            query.setParameter("cif", cif);
+            query.setParameter("nombre", nombre);
             
-            if(!listaProductos.isEmpty()){
-                producto = listaProductos.get(0);
-            }
+            return query.getSingleResult();
             
         } catch (Exception e) {
-            
+            throw e;
         }
-        return producto;
     }
-    
+*/
 }

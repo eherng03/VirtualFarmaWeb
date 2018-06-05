@@ -18,7 +18,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -27,7 +26,10 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "pacientes")
-@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Pacientes.findByUserAndPass", query = "SELECT p FROM Pacientes p WHERE p.dni = :user AND p.password = :pass"),
+    @NamedQuery(name = "Pacientes.findByDNI", query = "SELECT p FROM Pacientes p WHERE p.dni = :dni")
+})
 public class Pacientes implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,6 +54,7 @@ public class Pacientes implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "Password")
     private String password;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pacientes")
     private Collection<Recetas> recetasCollection;
 
@@ -67,6 +70,13 @@ public class Pacientes implements Serializable {
         this.nombre = nombre;
         this.numeroSS = numeroSS;
         this.password = password;
+    }
+    
+    public Pacientes(Pacientes otroPaciente) {
+        this.dni = otroPaciente.dni;
+        this.nombre = otroPaciente.nombre;
+        this.numeroSS = otroPaciente.numeroSS;
+        this.password = otroPaciente.password;
     }
 
     public String getDni() {

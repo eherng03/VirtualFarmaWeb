@@ -5,6 +5,8 @@
  */
 package com.inso.Utils;
 
+import java.util.Objects;
+
 /**
  * Clase que engloba las operaciones de comprobar correccion y estructura de datos
  * @author Eva y Alba
@@ -65,11 +67,7 @@ public class DataChecks {
 				int aux= valor%23;
 				Character letraReal = charDNI[8];
 				Character letraCalculada = letra.charAt(aux);
-				if(letraReal==letraCalculada){
-					return true;
-				}else{
-					return false;
-				}
+                            return Objects.equals(letraCalculada, letraReal);
 			}
 		}
 		return false;

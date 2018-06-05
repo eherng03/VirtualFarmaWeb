@@ -19,11 +19,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Eva
+ * @author Eva y Alba
  */
 @Entity
 @Table(name = "farmacias")
-@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Farmacia.findByUsernameAndPass", query = "SELECT f FROM Farmacia f WHERE f.cif = :user AND f.password = :pass"),
+    @NamedQuery(name = "Farmacia.findByCIF", query = "SELECT f FROM Farmacia f WHERE f.cif = :cif")
+})
 public class Farmacia implements Serializable {
 
     private static final long serialVersionUID = 1L;

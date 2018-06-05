@@ -5,60 +5,51 @@
  */
 package com.inso.EJB;
 
-import com.inso.model.Pacientes;
 import com.inso.model.Recetas;
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 /**
  *
  * @author Eva y Alba
  */
 @Stateless
-public class RecetasFacade extends AbstractFacade<Recetas> implements RecetasFacadeLocal {
-
-    @PersistenceContext(unitName = "ViartualFarma_Persistence_Unit")
-    private EntityManager em;
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-
-    public RecetasFacade() {
-        super(Recetas.class);
-    }
+public class RecetasFacade extends OwnEntityManager<Recetas> implements RecetasFacadeLocal {
 
     @Override
     public void removeIDs(String dniPaciente, String nombreMedicamento, String fecha) {
-        String consulta;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Recetas> findByDNI(String dni) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    /*
+    @Override
+    public void removeIDs(String dniPaciente, String nombreMedicamento, String fecha) {
         try {
-            consulta = "DELETE r FROM Recetas r WHERE r.dNIPaciente = :dniPaciente AND r.nombreMedicamento = :nombreMedicamento AND r.fecha = :fecha";
-            Query query = em.createQuery(consulta);
+            TypedQuery<Recetas> query = getEntityManager().createNamedQuery("Recetas.removeIDs", Recetas.class);
             query.setParameter("dniPaciente", dniPaciente);
             query.setParameter("nombreMedicamento", nombreMedicamento);
             query.setParameter("fecha", fecha);
+            query.executeUpdate();
         } catch (Exception e) {
-            
+            throw e;
         }
     }
 
     @Override
     public List<Recetas> findByDNI(String dni) {
-        String consulta;
-        List<Recetas> listaRecetas = null;
         try {
-            consulta = "SELECT r FROM Recetas r WHERE r.dNIPaciente = :dni";
-            Query query = em.createQuery(consulta);
+            TypedQuery<Recetas> query = getEntityManager().createNamedQuery("Recetas.findByDNI", Recetas.class);
             query.setParameter("dni", dni);
-            listaRecetas = query.getResultList();      
+            return query.getResultList();      
         } catch (Exception e) {
-            
+            throw e;
         }
-        return listaRecetas;
     }
+*/
     
 }
