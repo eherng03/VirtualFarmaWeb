@@ -24,9 +24,17 @@ public class PacienteController implements Serializable{
     @EJB
     private PacientesFacadeLocal pacienteEJB;       //Clase que me permite acceder al patron fachada
     private Pacientes paciente;
-    
+  
     @PostConstruct
     public void init(){
         paciente = (Pacientes) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+    }
+    
+    public Pacientes getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(Pacientes paciente) {
+        this.paciente = paciente;
     }
 }
