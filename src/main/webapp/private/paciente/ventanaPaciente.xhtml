@@ -12,7 +12,6 @@ and open the template in the editor.
       xmlns:b="http://bootsfaces.net/ui">
     <h:head>
         <title>Virtual farma - Paciente</title>
-
     </h:head>
     
     <h:body  style="padding-top: 50px; padding-bottom: 20px;">
@@ -29,6 +28,10 @@ and open the template in the editor.
             </b:navbarLinks>
           </b:navBar>
         <div style="position: absolute; top: 50%; left: 50%;">Bienvenido paciente</div>
-        
     </h:body>
+    <h:form id="recetas">
+        <p:repeat value="#{pacienteController.paciente.recetasCollection}" var="recetas">
+        </p:repeat>
+    </h:form>
+
 </html>
