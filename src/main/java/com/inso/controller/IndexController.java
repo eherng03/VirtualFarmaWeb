@@ -14,7 +14,6 @@ import com.inso.EJB.PacientesFacadeLocal;
 import com.inso.model.Farmacia;
 import com.inso.model.Medico;
 import com.inso.model.Pacientes;
-import java.awt.event.ActionEvent;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.annotation.PostConstruct;
@@ -22,8 +21,6 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
-import javax.inject.Named;
-import org.primefaces.PrimeFaces;
 /**
  *
  * @author Eva
@@ -96,7 +93,7 @@ public class IndexController implements Serializable{
         try {
             //ADMIN SESION
             if(username != null && username.equals("admin") && password != null && password.equals("admin")) {
-                direction = "./private/admin/ventanaAdmin";
+                direction = "/private/admin/ventanaAdmin?faces-redirect=true";
                 context.getExternalContext().getSessionMap().put("user", "admin");
                 return direction;
             } else {
@@ -109,7 +106,7 @@ public class IndexController implements Serializable{
                     if(this.paciente == null){
                         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Credenciales incorrectas."));
                     }else{
-                         direction = "./private/paciente/ventanaPaciente.xhtml?faces-redirect=true";
+                         direction = "/private/paciente/ventanaPaciente?faces-redirect=true";
                          return direction;
                     }
                 //FARMACIA SESION
@@ -122,7 +119,7 @@ public class IndexController implements Serializable{
                     if(this.farmacia == null){
                          context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Credenciales incorrectas."));
                     }else{
-                        direction = "./private/farmacia/ventanaFarmacia?faces-redirect=true";
+                        direction = "/private/farmacia/ventanaFarmacia?faces-redirect=true";
                     }
                 }else if(this.usertype == "medico"){
                     this.medico = medicoEJB.findByUsernameAndPass(username, password);
@@ -132,7 +129,7 @@ public class IndexController implements Serializable{
                     if(this.farmacia == null){
                          context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Credenciales incorrectas."));
                     }else{
-                        direction = "./private/medico/ventanaMedico?faces-redirect=true";
+                        direction = "/private/medico/ventanaMedico?faces-redirect=true";
                     }
                 }
             }

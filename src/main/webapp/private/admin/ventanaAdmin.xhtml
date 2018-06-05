@@ -12,10 +12,10 @@ and open the template in the editor.
       xmlns:b="http://bootsfaces.net/ui">
     <h:head>
         <title>Virtual farma - Admin</title>
-
+        <f:event type="preRenderView" listener="#{adminController.verifySesion()}"></f:event>
     </h:head>
     
-    <h:body  style="padding-top: 50px; padding-bottom: 20px;">
+   <h:body  style="padding-top: 50px; padding-bottom: 20px;">
                <b:navBar brand="Virtual Farma" brandHref="#" fluid="true" fixed="top" inverse="true">
             <b:navbarLinks>
                 <b:dropMenu value="Añadir" icon="plus">

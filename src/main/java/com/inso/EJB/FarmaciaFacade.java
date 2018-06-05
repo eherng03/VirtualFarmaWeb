@@ -6,13 +6,9 @@
 package com.inso.EJB;
 
 import com.inso.model.Farmacia;
-import com.inso.model.Medico;
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
 /**
@@ -23,9 +19,16 @@ import javax.persistence.TypedQuery;
 public class FarmaciaFacade extends OwnEntityManager<Farmacia> implements FarmaciaFacadeLocal {
 
     @Override
+    public void create(Farmacia f) {
+        EntityTransaction tx = getEntityManager().getTransaction();
+        tx.begin();
+        getEntityManager().persist(f);
+        tx.commit();
+    }
+    
+    @Override
     public Farmacia findByUsernameAndPass(String user, String pass) {
-        String consulta;
-        Farmacia farmacia = null;
+         Farmacia farmacia = null;
         try {
             TypedQuery<Farmacia> query = getEntityManager().createNamedQuery("Farmacia.findByUsernameAndPass", Farmacia.class);
             query.setParameter("user", user);
@@ -37,14 +40,13 @@ public class FarmaciaFacade extends OwnEntityManager<Farmacia> implements Farmac
             }
             
         } catch (Exception e) {
-            
+            throw e;
         }
         return farmacia;
     }
 
     @Override
     public Farmacia findByCIF(String cif) {
-        String consulta;
         Farmacia farmacia = null;
         try {
             TypedQuery<Farmacia> query = getEntityManager().createNamedQuery("Farmacia.findByCIF", Farmacia.class);
@@ -56,7 +58,7 @@ public class FarmaciaFacade extends OwnEntityManager<Farmacia> implements Farmac
             }
             
         } catch (Exception e) {
-            
+             throw e;
         }
         return farmacia;
     }

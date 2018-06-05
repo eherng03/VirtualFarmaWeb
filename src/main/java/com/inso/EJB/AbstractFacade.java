@@ -5,17 +5,22 @@
  */
 package com.inso.EJB;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 
 /**
  *
  * @author Eva y Alba
  */
 public abstract class AbstractFacade<T> {
-
     private Class<T> entityClass;
-
+    
+    public AbstractFacade(){
+        this.entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+    }
+    
     protected abstract EntityManager getEntityManager();
 
     public void create(T entity) {

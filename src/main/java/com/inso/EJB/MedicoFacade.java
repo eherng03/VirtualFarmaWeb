@@ -6,12 +6,9 @@
 package com.inso.EJB;
 
 import com.inso.model.Medico;
-import com.inso.model.Pacientes;
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
 /**
@@ -22,6 +19,14 @@ import javax.persistence.TypedQuery;
 public class MedicoFacade extends OwnEntityManager<Medico> implements MedicoFacadeLocal {
 
 
+    @Override
+    public void create(Medico m) {
+        EntityTransaction tx = getEntityManager().getTransaction();
+        tx.begin();
+        getEntityManager().persist(m);
+        tx.commit();
+    }
+    
     @Override
     public void removeByDNI(String dni) {
         try {

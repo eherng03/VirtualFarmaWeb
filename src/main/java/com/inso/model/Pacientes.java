@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Eva
+ * @author Eva y Alba
  */
 @Entity
 @Table(name = "pacientes")
@@ -54,6 +54,7 @@ public class Pacientes implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "Password")
     private String password;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pacientes")
     private Collection<Recetas> recetasCollection;
 

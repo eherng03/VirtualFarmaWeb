@@ -12,27 +12,86 @@ and open the template in the editor.
       xmlns:b="http://bootsfaces.net/ui">
     <h:head>
         <title>Virtual farma - Paciente</title>
-        <f:event type="preRenderView" listener="#{pacienteController.verifySesion()}"></f:event>
-    </h:head>
-    
+    </h:head>   
     <h:body  style="padding-top: 50px; padding-bottom: 20px;">
-        <b:navBar brand="Virtual Farma" brandHref="#" fluid="true" fixed="top" inverse="true">
-            <b:navbarLinks>
-                <b:navLink value="Mis recetas" href="#"></b:navLink>
-                <b:navLink value="Ver farmacias" href="#"></b:navLink>
-                <b:dropMenu value="" icon="user">
-                    <b:navLink value="Ver mi perfil" href="#" icon="eye-open"></b:navLink>
-                    <b:navLink value="Dar de baja" href="#" icon="remove"></b:navLink>
-                    <b:navLink value="Cerrar sesión" href="#" icon="log-out"></b:navLink>
-                </b:dropMenu>
-                <b:navLink value="" href="#" icon="question-sign" style="position: absolute; right: 0%;"></b:navLink>
-            </b:navbarLinks>
-          </b:navBar>
-        <div style="position: absolute; top: 50%; left: 50%;">Bienvenido paciente</div>
+        <h:form>
+            <b:navBar brand="Virtual Farma" brandHref="#" fluid="true" fixed="top" inverse="true">
+                <b:navbarLinks>
+                    <b:navCommandLink value="Mis recetas" actionListener="#{pacienteController.renderRecetas()}" update="@form"></b:navCommandLink>
+                    <b:navCommandLink value="Ver farmacias" actionListener="#{pacienteController.renderFarmacias()}" update="@form"></b:navCommandLink>
+                    <b:dropMenu value="" icon="user">
+                        <b:navLink value="Ver mi perfil" href="#" icon="eye-open"></b:navLink>
+                        <b:navLink value="Dar de baja" href="#" icon="remove"></b:navLink>
+                        <b:navLink value="Cerrar sesión" href="#" icon="log-out"></b:navLink>
+                    </b:dropMenu>
+                    <b:navLink value="" href="#" icon="question-sign" style="position: absolute; right: 0%;"></b:navLink>
+                </b:navbarLinks>
+            </b:navBar>
+<!--                                    RECETAS                                                     -->   
+        
+            <b:panel id="recetas" rendered="#{pacienteController.showRecetas}">
+                <p:repeat value="#{pacienteController.paciente.recetasCollection}" var="receta">
+                    <h:panelGrid columns="3" style="width:100%" cellspacing = "10" columnClasses="nombre, detalle, editarEliminar">
+                        <p:outputPanel>
+                           <h:panelGrid columns="1" cellpadding="5" cellspacing = "10" style="position: relative; left: 20%;" >
+                               <h:outputText value="#{receta.recetasPK.nombreMedicamento}" style="font-weight: bold; left: 10%"/>
+                           </h:panelGrid>
+                        </p:outputPanel>
+                        <p:outputPanel>
+                            <h:panelGrid columns="2" cellpadding="50" cellspacing = "10" style="position: relative; left: 20%;">
+                               <h:outputText value="Médico:" style="font-weight: bold"/>
+                               <h:outputText value="#{receta.medicos.nombre}"/>
+                               <h:outputText value="Fecha:" style="font-weight: bold"/>
+                               <h:outputText value="#{receta.recetasPK.fecha}"/>
+                               <h:outputText value="Crónica:" style="font-weight: bold"/>
+                               <h:outputText value="#{receta.cronica}"/>
+                               <h:outputText value="Unidades de toma:" style="font-weight: bold"/>
+                               <h:outputText value="#{receta.unidadesToma}"/>
+                               <h:outputText value="Frecuencia:" style="font-weight: bold"/>
+                               <h:outputText value="#{receta.frecuencia}"/>
+                               <h:outputText value="Duracion:" style="font-weight: bold"/>
+                               <h:outputText value="#{receta.duracion}"/>
+                               <h:outputText value="Instrucciones:" style="font-weight: bold"/>
+                               <h:outputText value="#{receta.instrucciones}"/>
+                           </h:panelGrid>
+                        </p:outputPanel>
+                        <p:outputPanel>
+                            <h:panelGrid columns="1" cellpadding="5" style="position: relative; left: 20%;">
+                                <b:button icon="search" title="Disponibilidad"></b:button>
+                                <b:button icon="edit" title="Editar"></b:button>
+                                <b:button icon="remove" title="Borrar"></b:button>
+                            </h:panelGrid>
+                       </p:outputPanel>
+                    </h:panelGrid>
+                    <hr />
+               </p:repeat>
+            </b:panel>
+        
+<!--                                    FARMACIAS                                                     -->   
+        <b:panel id="farmacias" rendered="#{pacienteController.showFarmacias}">
+            <p:repeat value="#{pacienteController.farmaciasList}" var="farmacia">
+            <h:panelGrid columns="2" style="width:100%" cellspacing = "10" columnClasses="nombre, detalle">
+                <p:outputPanel>
+                   <h:panelGrid columns="1" cellpadding="5" cellspacing = "10" style="position: relative; left: 20%;" >
+                       <h:outputText value="#{farmacia.nombre}" style="font-weight: bold; left: 10%"/>
+                   </h:panelGrid>
+                </p:outputPanel>
+                <p:outputPanel>
+                    <h:panelGrid columns="2" cellpadding="50" cellspacing = "10" style="position: relative; left: 20%;">
+                       <h:outputText value="Horario:" style="font-weight: bold"/>
+                       <h:outputText value="#{farmacia.horario}"/>
+                       <h:outputText value="Dirección:" style="font-weight: bold"/>
+                       <h:outputText value="#{farmacia.direccion}"/>
+                       <h:outputText value="Teléfono" style="font-weight: bold"/>
+                       <h:outputText value="#{farmacia.telefono}"/>
+                       <h:outputText value="Email:" style="font-weight: bold"/>
+                       <h:outputText value="#{farmacia.email}"/>
+                   </h:panelGrid>
+                </p:outputPanel>
+            </h:panelGrid>
+            <hr />
+           </p:repeat>
+        </b:panel>
+        </h:form>  
     </h:body>
-    <h:form id="recetas">
-        <p:repeat value="#{pacienteController.paciente.recetasCollection}" var="recetas">
-        </p:repeat>
-    </h:form>
-
 </html>

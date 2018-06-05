@@ -7,6 +7,7 @@ package com.inso.EJB;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
 /**
@@ -18,6 +19,7 @@ public class OwnEntityManager<T> extends AbstractFacade<T> {
     EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("ViartualFarma_Persistence_Unit");
     private EntityManager em = emfactory.createEntityManager();
 
+   
     @Override
     protected EntityManager getEntityManager() {
         return em;

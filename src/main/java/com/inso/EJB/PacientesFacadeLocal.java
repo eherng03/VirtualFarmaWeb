@@ -16,7 +16,7 @@ import javax.ejb.Local;
 @Local
 public interface PacientesFacadeLocal {
 
-    public void create(Pacientes p);
+    void create(Pacientes pacientes);
 
     void edit(Pacientes pacientes);
 

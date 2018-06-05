@@ -20,22 +20,26 @@
                 </p:panel>
                 
                 <p:tabView orientation="left">
-                    <p:tab title="Registrarse como paciente">                    
-                        <h:panelGrid columns="2" cellpadding="10" cellspacing="10" >
-                            <h:outputLabel for="dniP" value="DNI: " />
-                            <p:inputText id="dniP" value="#{registerController.dni}" label="DNI" />
+                    <p:tab title="Registrarse como paciente">      
+                        <h:form>
+                            <h:panelGrid columns="2" cellpadding="10" cellspacing="10" >
+                        
+                                <h:outputLabel for="dniP" value="DNI: " />
+                                <p:inputText id="dniP" value="#{registerController.dniP}" label="DNI" />
 
-                            <h:outputLabel for="nameP" value="Nombre y apellidos: " />
-                            <p:inputText id="nameP" value="#{registerController.nombre}" label="Nombre" />
+                                <h:outputLabel for="nameP" value="Nombre y apellidos: " />
+                                <p:inputText id="nameP" value="#{registerController.nombreP}" label="Nombre" />
 
-                            <h:outputLabel for="numeroSSP" value="Número de la Seguridad Social: " />
-                            <p:inputText id="numeroSSP" value="#{registerController.ss}" label="numeroSS" />
-                             
-                            <h:outputLabel for="passwordP" value="Contraseña: " />
-                            <p:password id="passwordP" value="#{registerController.password}" label="password" feedback = "true"/>
-                            
-                            <p:commandButton value="Continuar" action="#{registerController.registerPaciente()}"/>
-                        </h:panelGrid>
+                                <h:outputLabel for="numeroSSP" value="Número de la Seguridad Social: " />
+                                <p:inputText id="numeroSSP" value="#{registerController.ssP}" label="numeroSS" />
+
+                                <h:outputLabel for="passwordP" value="Contraseña: " />
+                                <p:password id="passwordP" value="#{registerController.passwordP}" label="password" feedback = "true"/>
+
+                                <p:commandButton value="Continuar" action="#{registerController.registerPaciente()}"/>
+                           
+                            </h:panelGrid>
+                        </h:form>
                     </p:tab>
                     
                     
@@ -43,26 +47,31 @@
                     <p:tab title="Registrarse como médico">
                         <h:panelGrid columns="2" cellpadding="10" cellspacing="10" >
                             <h:outputLabel for="dniM" value="DNI: " />
-                            <p:inputText id="dniM" value="#{registerController.dni}" label="DNI" />
+                            <p:inputText id="dniM" value="#{registerController.dniM}" label="DNI" />
 
                             <h:outputLabel for="nameM" value="Nombre y apellidos: " />
-                            <p:inputText id="nameM" value="#{registerController.nombre}" label="Nombre" />
+                            <p:inputText id="nameM" value="#{registerController.nombreM}" label="Nombre" />
 
                             <h:outputLabel for="numeroSSM" value="Número de la Seguridad Social: " />
-                            <p:inputText id="numeroSSM" value="#{registerController.ss}" label="numeroSS" />
+                            <p:inputText id="numeroSSM" value="#{registerController.ssM}" label="numeroSS" />
                                                        
                             <h:outputLabel for="centromedicoM" value="Centro médico: " />
                             <p:inputText id="centromedicoM" value="#{registerController.centroMedico}" label="centromedico" />
                             
+                            <h:outputLabel for="emailM" value="E-mail: " />
+                            <p:inputText id="emailM" value="#{registerController.emailM}" label="email" />
+                            
                             <h:outputLabel for="direccionM" value="Dirección: " />
-                            <p:inputText id="direccionM" value="#{registerController.direccion}" label="centromedico" />
+                            <p:inputText id="direccionM" value="#{registerController.direccionM}" label="direccion" />
                             
                             <h:outputLabel for="codigoM" value="Código de registro " />
-                            <p:inputText id="codigoM" value="#{registerController.codigo}" label="codigo" title="Contacta con VirtualFarma para obtener tu código."/>
-                            <p:tooltip id="toolTipFocusX" for="codigoM" showEvent="focus" hideEvent="blur" />
+                            <p:inputText id="codigoM" value="#{registerController.codigoM}" label="codigo" title="Contacta con VirtualFarma para obtener tu código.">
+                                <p:tooltip id="toolTipFocusX" for="codigoM" showEvent="focus" hideEvent="blur" />
+                            </p:inputText>
+                            
                                                         
                             <h:outputLabel for="passwordM" value="Contraseña: " />
-                            <p:password id="passwordM" value="#{registerController.password}" label="password" feedback = "true"/>
+                            <p:password id="passwordM" value="#{registerController.passwordM}" label="password" feedback = "true"/>
                             
                             <p:commandButton value="Continuar" action="#{registerController.registerMedico()}"/>
                         </h:panelGrid>
