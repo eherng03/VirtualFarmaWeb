@@ -16,18 +16,81 @@ and open the template in the editor.
     </h:head>
     
     <h:body  style="padding-top: 50px; padding-bottom: 20px;">
-        <b:navBar brand="Virtual Farma" brandHref="#" fluid="true" fixed="top" inverse="true">
-            <b:navbarLinks>
-                <b:navLink value="Crear receta" href="#" icon="plus"></b:navLink>
-                <b:navLink value="Buscar paciente" href="#" icon="search"></b:navLink>
-                <b:dropMenu value="" icon="user">
-                    <b:navLink value="Ver mi perfil" href="#" icon="eye-open"></b:navLink>
-                    <b:navLink value="Cerrar sesión" href="#" icon="log-out"></b:navLink>
-                </b:dropMenu>
-                <b:navLink value="" href="#" icon="question-sign" style="position: absolute; right: 0%;"></b:navLink>
-            </b:navbarLinks>
-          </b:navBar>
-        <div style="position: absolute; top: 50%; left: 50%;">Bienvenido médico</div>
-        
+        <h:form>
+            <b:navBar brand="Virtual Farma" brandHref="#" fluid="true" fixed="top" inverse="true">
+                <b:navbarLinks>
+                    <b:navCommandLink value="Crear receta" actionListener="#{medicoController.renderAddReceta()}" icon="plus"></b:navCommandLink>
+                    <b:navCommandLink value="Buscar paciente" href="#" icon="search"></b:navCommandLink>
+                    <b:dropMenu value="" icon="user">
+                        <b:navCommandLink value="Ver mi perfil" actionListener="#{medicoController.renderPerfil()}" icon="eye-open"></b:navCommandLink>
+
+                        <b:navCommandLink value="Cerrar sesión" href="#" icon="log-out"></b:navCommandLink>
+                    </b:dropMenu>
+                    <b:navCommandLink value="" href="#" icon="question-sign" style="position: absolute; right: 0%;"></b:navCommandLink>
+                </b:navbarLinks>
+              </b:navBar>
+<!--                                    ADD RECETA                                                 -->
+        <p:messages autoUpdate="true" showDetail="true"/>
+            <p:panel style="width:800px;margin: auto;border: none;" rendered="#{medicoController.showAddReceta}">
+                    <p:panel style="border: none;margin: auto">
+                        <p:graphicImage url="/resources/images/logo.png" style="width:200px; margin: auto"/>
+                    </p:panel>    
+                    <h:form>
+                        <h:panelGrid columns="2" cellpadding="10" cellspacing="10" >
+
+                            <h:outputLabel for="dNIPaciente" value="Nombre: " />
+                            <p:inputText id="dNIPaciente" value="#{medicoController.dNIPaciente}" label="DNI" />
+
+                            <h:outputLabel for="nombreMedicamento" value="Precio: " />
+                            <p:inputText id="nombreMedicamento" value="#{medicoController.nombreMedicamento}" label="Nombre" />
+
+                            <h:outputLabel for="unidadesToma" value="Cantidad: " />
+                            <p:inputText id="unidadesToma" value="#{medicoController.unidadesToma}" label="numeroSS" />
+                            
+                             <h:outputLabel for="frecuencia" value="Nombre: " />
+                            <p:inputText id="frecuencia" value="#{medicoController.frecuencia}" label="DNI" />
+
+                            <h:outputLabel for="duracion" value="Precio: " />
+                            <p:inputText id="duracion" value="#{medicoController.duracion}" label="Nombre" />
+
+                            <h:outputLabel for="numEnvases" value="Cantidad: " />
+                            <p:inputText id="numEnvases" value="#{medicoController.numEnvases}" label="numeroSS" />
+                            
+                            <h:outputLabel for="instrucciones" value="Precio: " />
+                            <p:inputText id="instrucciones" value="#{medicoController.instrucciones}" label="Nombre" />
+
+                            <p:outputLabel for="@next" value="Crónica: " />
+                            <p:selectBooleanCheckbox value="#{medicoController.cronica}" />
+                            
+                            <p:commandButton value="Añadir" actionListener="#{medicoController.addReceta()}"/>
+
+                        </h:panelGrid>
+                    </h:form>
+                </p:panel>
+<!--                                      PERFIL                                                     -->   
+            <b:panel id="perfil" rendered="#{medicoController.showPerfil}">
+                <h:panelGrid columns="2" style="width:100%" cellspacing = "10" columnClasses="nombre, detalle">
+                    <p:outputPanel>
+                       <h:panelGrid columns="1" cellpadding="5" cellspacing = "10" style="position: relative; left: 20%;" >
+                           <h:outputText value="#{medicoController.medico.nombre}" style="font-weight: bold; left: 10%"/>
+                       </h:panelGrid>
+                    </p:outputPanel>
+                    <p:outputPanel>
+                        <h:panelGrid columns="2" cellpadding="50" cellspacing = "10" style="position: relative; left: 20%;">
+                           <h:outputText value="DNI: " style="font-weight: bold"/>
+                           <h:outputText value="#{medicoController.medico.dni}"/>
+                           <h:outputText value="Número de la SS: " style="font-weight: bold"/>
+                           <h:outputText value="#{medicoController.medico.numeroSS}"/>
+                           <h:outputText value="Centro médico: " style="font-weight: bold"/>
+                           <h:outputText value="#{medicoController.medico.centroMedico}"/>
+                           <h:outputText value="Dirección: " style="font-weight: bold"/>
+                           <h:outputText value="#{medicoController.medico.direccion}"/>
+                           <h:outputText value="Email: " style="font-weight: bold"/>
+                           <h:outputText value="#{medicoController.medico.email}"/>
+                       </h:panelGrid>
+                    </p:outputPanel>
+                </h:panelGrid>
+            </b:panel>
+        </h:form>
     </h:body>
 </html>
