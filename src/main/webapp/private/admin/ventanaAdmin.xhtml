@@ -16,12 +16,14 @@ and open the template in the editor.
     </h:head>
     
    <h:body  style="padding-top: 50px; padding-bottom: 20px;">
-            <b:navBar brand="Virtual Farma" brandHref="#" fluid="true" fixed="top" inverse="true">
+
+            <b:navBar brand="Virtual Farma"  fluid="true" fixed="top" inverse="true">
+           
             <b:navbarLinks>
                 <b:navLink value="Farmacias" action="#{adminController.showFarmacias()}"></b:navLink>
                 <b:navLink value="Médicos" action="#{adminController.showMedicos()}"></b:navLink>
                 <b:navLink value="Copia de seguridad" href="#" icon="saved"></b:navLink>
-                <b:navLink value="Cerrar sesión" action="#{adminController.logOut()}" icon="log-out"></b:navLink>
+                <b:navLink value="Cerrar sesión" outcome="/index?faces-redirect=true" icon="log-out"></b:navLink>
                 <b:navLink value="" href="#" icon="question-sign" style="position: absolute; right: 0%;"></b:navLink>
             </b:navbarLinks>
           </b:navBar>
