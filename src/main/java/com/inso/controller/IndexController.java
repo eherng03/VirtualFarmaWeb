@@ -51,6 +51,7 @@ public class IndexController implements Serializable{
     
     @PostConstruct
     public void init(){
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", null);
         paciente = new Pacientes();
         farmacia = new Farmacia();
         medico = new Medico();
@@ -110,7 +111,7 @@ public class IndexController implements Serializable{
                          return direction;
                     }
                 //FARMACIA SESION
-                }else if(this.usertype == "farmacia"){
+                }else if("farmacia".equals(this.usertype)){
 
                     this.farmacia = farmaciaEJB.findByUsernameAndPass(username, password);
 
@@ -121,7 +122,7 @@ public class IndexController implements Serializable{
                     }else{
                         direction = "/private/farmacia/ventanaFarmacia?faces-redirect=true";
                     }
-                }else if(this.usertype == "medico"){
+                }else if("medico".equals(this.usertype)){
                     this.medico = medicoEJB.findByUsernameAndPass(username, password);
 
                     //Añado el paciente como usuario de esta sesion para los menus

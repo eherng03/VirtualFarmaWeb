@@ -86,11 +86,6 @@ public class AdminController implements Serializable{
         }
     }
     
-    public String logOut(){
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", null);
-        return "/index?faces-redirect=true";
-    }
-    
     public void showMedicos(){
         medicosVisible = true;
         farmaciasVisible = false;

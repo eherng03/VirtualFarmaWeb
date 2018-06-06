@@ -30,9 +30,7 @@ import javax.faces.view.ViewScoped;
 @ManagedBean(name = "registerController", eager = true)
 @ViewScoped
 public class RegisterController implements Serializable{
-    
-    //Todo esto no va a ir aqui, va a ir en la pantalla que añada farmacias
-    //TODO buscar como crear patron fachada
+
     @EJB
     private PacientesFacadeLocal pacienteEJB;       //Clase que me permite acceder al patron fachada
     private Pacientes paciente;
