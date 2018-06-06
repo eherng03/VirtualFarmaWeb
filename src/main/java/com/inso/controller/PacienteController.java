@@ -50,6 +50,11 @@ public class PacienteController implements Serializable{
         }
         showRecetas = true;
     }
+    
+    public String logOut(){
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", null);
+        return "/index?faces-redirect=true";
+    }
 
     public List<Farmacia> getFarmaciasList() {   
         farmaciasList = farmaciaEJB.findAll();
