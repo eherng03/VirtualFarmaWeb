@@ -10,6 +10,7 @@ import com.inso.model.Productos;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -30,6 +31,15 @@ public class ProductosFacade extends OwnEntityManager<Productos> implements Prod
     public Productos findByCIFNombre(String cif, String nombre) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    @Override
+    public void create(Productos p) {
+        EntityTransaction tx = getEntityManager().getTransaction();
+        tx.begin();
+        getEntityManager().persist(p);
+        tx.commit();
+    }
+    
     /*
     @Override
     public void removeByCIFNombre(String cif, String nombre) {
