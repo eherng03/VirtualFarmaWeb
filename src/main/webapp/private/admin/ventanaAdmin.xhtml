@@ -16,73 +16,192 @@ and open the template in the editor.
     </h:head>
     
    <h:body  style="padding-top: 50px; padding-bottom: 20px;">
-
+        <h:form id="form">
             <b:navBar brand="Virtual Farma"  fluid="true" fixed="top" inverse="true">
            
-            <b:navbarLinks>
-                <b:navLink value="Farmacias" action="#{adminController.showFarmacias()}"></b:navLink>
-                <b:navLink value="Médicos" action="#{adminController.showMedicos()}"></b:navLink>
-                <b:navLink value="Copia de seguridad" href="#" icon="saved"></b:navLink>
-                <b:navLink value="Cerrar sesión" outcome="/index?faces-redirect=true" icon="log-out"></b:navLink>
-                <b:navLink value="" href="#" icon="question-sign" style="position: absolute; right: 0%;"></b:navLink>
-            </b:navbarLinks>
-          </b:navBar>
+                <b:navbarLinks>
+                    <b:navCommandLink value="Farmacias" action="#{adminController.showFarmacias()}"></b:navCommandLink>
+                    <b:navCommandLink value="Médicos" action="#{adminController.showMedicos()}"></b:navCommandLink>
+                    <b:navCommandLink value="Copia de seguridad" href="#" icon="saved"></b:navCommandLink>
+                    <b:navCommandLink value="Cerrar sesión" outcome="/index?faces-redirect=true" icon="log-out"></b:navCommandLink>
+                    <b:navCommandLink value="" href="#" icon="question-sign" style="position: absolute; right: 0%;"></b:navCommandLink>
+                </b:navbarLinks>
+            </b:navBar>
        
-       <p:panel visible="#{adminController.farmaciasVisible}">
-           <h:form id="form">
-               <p:repeat value="#{adminController.farmaciasList}" var="farm">
-                    <h:panelGrid columns="3" style="width:100%">
-                        
-                        <p:panel style="align-content: center;border: none;margin: auto">
-                            <p:graphicImage url="/resources/images/farm.jpg" style="width:30px"/>
-                        </p:panel>
+            <b:panel rendered="#{adminController.farmaciasVisible}">
 
-                        <p:outputPanel>
-                            <h:panelGrid columns="2" cellpadding="5">
-                                <h:outputText value="Nombre"  style="font-weight: bold"/>
-                                <h:outputText value="#{farm.nombre}"/>
-                                
-                                <h:outputText value="CIF:"  style="font-weight: bold"/>
-                                <h:outputText value="#{farm.cif}"/>
-                                
-                                <h:outputText value="Dirección:"  style="font-weight: bold"/>
-                                <h:outputText value="#{farm.direccion}"/>
-                                
-                                <h:outputText value="Email: "  style="font-weight: bold"/>
-                                <h:outputText value="#{farm.email}"/>
-                                
-                                <h:outputText value="Horario: "  style="font-weight: bold"/>
-                                <h:outputText value="#{farm.horario}"/>
-                                
-                                <h:outputText value="Teléfono: "  style="font-weight: bold"/>
-                                <h:outputText value="#{farm.telefono}"/>
-                                
-                                <h:outputText value="Nombre del dueño: "  style="font-weight: bold"/>
-                                <h:outputText value="#{farm.nombreDueno}"/>
-                                
-                                <h:outputText value="Número de cuenta: "  style="font-weight: bold"/>
-                                <h:outputText value="#{farm.numeroCuenta}"/>
+                    <p:repeat value="#{adminController.farmaciasList}" var="farm">
+                         <h:panelGrid columns="3" style="width:100%">
 
-                            </h:panelGrid>
-                        </p:outputPanel>
-                           
-                        <p:outputPanel> 
-                             <p:commandButton value="Editar"/>
-                            
-                            <p:commandButton value="Eliminar" action="#{adminController.delete(farm)}">
-                                <p:confirm header="Confirmation" message="¿Estas seguro?" icon="ui-icon-alert" />
-                            </p:commandButton>
+                             <p:panel style="align-content: center;border: none;margin: auto">
+                                 <p:graphicImage url="/resources/images/farm.jpg" style="width:50px"/>
+                             </p:panel>
 
-                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-                            </p:confirmDialog>
-                        </p:outputPanel>
-                    </h:panelGrid>
-                    <hr />
-                </p:repeat>
-           </h:form>
-       </p:panel>
-           
+                             <p:outputPanel style="width: 500px">
+                                 <h:panelGrid columns="2" cellpadding="10">
+                                     <h:outputText value="Nombre"  style="font-weight: bold"/>
+                                     <h:outputText value="#{farm.nombre}"/>
+
+                                     <h:outputText value="CIF:"  style="font-weight: bold"/>
+                                     <h:outputText value="#{farm.cif}"/>
+
+                                     <h:outputText value="Dirección:"  style="font-weight: bold"/>
+                                     <h:outputText value="#{farm.direccion}"/>
+
+                                     <h:outputText value="Email: "  style="font-weight: bold"/>
+                                     <h:outputText value="#{farm.email}"/>
+
+                                     <h:outputText value="Horario: "  style="font-weight: bold"/>
+                                     <h:outputText value="#{farm.horario}"/>
+
+                                     <h:outputText value="Teléfono: "  style="font-weight: bold"/>
+                                     <h:outputText value="#{farm.telefono}"/>
+
+                                     <h:outputText value="Nombre del dueño: "  style="font-weight: bold"/>
+                                     <h:outputText value="#{farm.nombreDueno}"/>
+
+                                     <h:outputText value="Número de cuenta: "  style="font-weight: bold"/>
+                                     <h:outputText value="#{farm.numeroCuenta}"/>
+
+                                 </h:panelGrid>
+                             </p:outputPanel>
+
+                             <p:outputPanel> 
+                                 <p:commandButton value="Editar" onclick="PF('editDialog').show()" title="Editar Farmacia"/>
+                                 
+                                 <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+
+                                <p:dialog header="Editar Farmacia" widgetVar="editDialog" resizable="false">
+                                    <form>
+                                        <h:panelGrid columns="2" cellpadding="5">
+                                            <h:outputLabel for="cif" value="CIF: " />
+                                            <p:inputText id="cif" value="#{farm.cif}" label="CIF" />
+
+                                            <h:outputLabel for="direccionF" value="direccion: " />
+                                            <p:inputText id="direccionF" value="#{farm.direccion}" label="direccion" />
+
+                                            <h:outputLabel for="horario" value="Horario: " />
+                                            <p:inputText id="horario" value="#{farm.horario}" label="horario" />
+
+                                            <h:outputLabel for="nombreF" value="Nombre de la farmacia: " />
+                                            <p:inputText id="nombreF" value="#{farm.nombre}" label="nombreFarmacia" />
+
+                                            <h:outputLabel for="nombreD" value="Nombre del dueño: " />
+                                            <p:inputText id="nombreD" value="#{farm.nombreDueno}" label="nombreDue" />
+
+                                            <h:outputLabel for="numeroCue" value="Número de cuenta: " />
+                                            <p:inputText id="numeroCue" value="#{farm.numeroCuenta}" label="numeroCue" />
+
+                                            <h:outputLabel for="telefono" value="Teléfono: " />
+                                            <p:inputText id="telefono" value="#{farm.telefono}" label="telefono" />
+
+                                            <h:outputLabel for="email" value="E-mail " />
+                                            <p:inputText id="email" value="#{farm.email}" label="email" />
+
+                                            <h:outputLabel for="passwordF" value="Contraseña: " />
+                                            <p:password id="password" value="#{farm.password}" label="password" feedback = "true"/>
+
+                                            <p:commandButton value="Continuar" actionListener="#{adminController.editFarmacia(farm)}" update="growl" ajax="false"/>
+                                        </h:panelGrid>
+                                    </form>
+                                </p:dialog>
+
+                                 <p:commandButton value="Eliminar" action="#{adminController.delete(farm)}">
+                                     <p:confirm header="Confirmation" message="¿Estas seguro?" icon="ui-icon-alert" />
+                                 </p:commandButton>
+
+                                 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                     <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                     <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                 </p:confirmDialog>
+                             </p:outputPanel>
+                         </h:panelGrid>
+                         <hr />
+                     </p:repeat>
+                
+            </b:panel>
+            
+            
+            <b:panel rendered="#{adminController.medicosVisible}">
+
+                    <p:repeat value="#{adminController.medicosList}" var="medico">
+                         <h:panelGrid columns="3" style="width:100%">
+
+                             <p:panel style="align-content: center;border: none;margin: auto">
+                                 <p:graphicImage url="/resources/images/farm.jpg" style="width:50px"/>
+                             </p:panel>
+
+                             <p:outputPanel style="width: 500px">
+                                <h:outputLabel for="dniM" value="DNI: " />
+                                <p:inputText id="dniM" value="#{medico.dni}" label="DNI" />
+
+                                <h:outputLabel for="nameM" value="Nombre y apellidos: " />
+                                <p:inputText id="nameM" value="#{medico.nombre}" label="Nombre" />
+
+                                <h:outputLabel for="numeroSSM" value="Número de la Seguridad Social: " />
+                                <p:inputText id="numeroSSM" value="#{medico.numeroSS}" label="numeroSS" />
+
+                                <h:outputLabel for="centromedicoM" value="Centro médico: " />
+                                <p:inputText id="centromedicoM" value="#{medico.centroMedico}" label="centromedico" />
+
+                                <h:outputLabel for="emailM" value="E-mail: " />
+                                <p:inputText id="emailM" value="#{medico.email}" label="email" />
+
+                                <h:outputLabel for="direccionM" value="Dirección: " />
+                                <p:inputText id="direccionM" value="#{medico.direccion}" label="direccion" />
+
+                                <h:outputLabel for="passwordM" value="Contraseña: " />
+                                <p:password id="passwordM" value="#{medico.password}" label="password" feedback = "true"/>
+                            </p:outputPanel>
+
+                             <p:outputPanel> 
+                                 <p:commandButton value="Editar" onclick="PF('editMedicoDialog').show()" title="Editar Medico"/>
+                                 
+                                 <p:growl id="growlM" sticky="true" showDetail="true" life="3000" />
+
+                                <p:dialog header="Editar Médico" widgetVar="editMedicoDialog" resizable="false">
+                                    <form>
+                                        <h:panelGrid columns="2" cellpadding="5">
+                                            <h:outputLabel for="dniM" value="DNI: " />
+                                            <p:inputText id="dniM" value="#{medico.dni}" label="DNI" />
+
+                                            <h:outputLabel for="nameM" value="Nombre y apellidos: " />
+                                            <p:inputText id="nameM" value="#{medico.nombre}" label="Nombre" />
+
+                                            <h:outputLabel for="numeroSSM" value="Número de la Seguridad Social: " />
+                                            <p:inputText id="numeroSSM" value="#{medico.numeroSS}" label="numeroSS" />
+
+                                            <h:outputLabel for="centromedicoM" value="Centro médico: " />
+                                            <p:inputText id="centromedicoM" value="#{medico.centroMedico}" label="centromedico" />
+
+                                            <h:outputLabel for="emailM" value="E-mail: " />
+                                            <p:inputText id="emailM" value="#{medico.email}" label="email" />
+
+                                            <h:outputLabel for="direccionM" value="Dirección: " />
+                                            <p:inputText id="direccionM" value="#{medico.direccion}" label="direccion" />
+
+                                            <h:outputLabel for="passwordM" value="Contraseña: " />
+                                            <p:password id="passwordM" value="#{medico.password}" label="password" feedback = "true"/>
+
+                                            <p:commandButton value="Continuar" actionListener="#{adminController.editMedico(medico)}" update="growlM"/>
+                                        </h:panelGrid>
+                                    </form>
+                                </p:dialog>
+
+                                 <p:commandButton value="Eliminar" action="#{adminController.delete(farm)}">
+                                     <p:confirm header="Confirmation" message="¿Estas seguro?" icon="ui-icon-alert" />
+                                 </p:commandButton>
+
+                                 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                     <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                     <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                 </p:confirmDialog>
+                             </p:outputPanel>
+                         </h:panelGrid>
+                         <hr />
+                     </p:repeat>
+                
+            </b:panel>
+        </h:form>   
     </h:body>
 </html>
