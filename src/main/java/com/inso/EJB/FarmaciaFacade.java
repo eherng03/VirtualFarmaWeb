@@ -27,6 +27,22 @@ public class FarmaciaFacade extends OwnEntityManager<Farmacia> implements Farmac
     }
     
     @Override
+    public void remove(Farmacia farm) {
+        EntityTransaction tx = getEntityManager().getTransaction();
+        tx.begin();
+        getEntityManager().remove(getEntityManager().merge(farm));
+        tx.commit();
+    }
+    
+    @Override
+    public void edit(Farmacia farm) {
+        EntityTransaction tx = getEntityManager().getTransaction();
+        tx.begin();
+        getEntityManager().merge(farm);
+        tx.commit();
+    }
+    
+    @Override
     public Farmacia findByUsernameAndPass(String user, String pass) {
          Farmacia farmacia = null;
         try {
@@ -63,11 +79,4 @@ public class FarmaciaFacade extends OwnEntityManager<Farmacia> implements Farmac
         return farmacia;
     }
     
-    @Override
-    public void remove(Farmacia farm) {
-        EntityTransaction tx = getEntityManager().getTransaction();
-        tx.begin();
-        getEntityManager().remove(getEntityManager().merge(farm));
-        tx.commit();
-    }
 }
