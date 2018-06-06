@@ -9,16 +9,13 @@ import com.inso.EJB.FarmaciaFacade;
 import com.inso.EJB.FarmaciaFacadeLocal;
 import com.inso.EJB.MedicoFacade;
 import com.inso.EJB.MedicoFacadeLocal;
-import com.inso.EJB.PacientesFacadeLocal;
 import com.inso.model.Farmacia;
 import com.inso.model.Medico;
-import com.inso.model.Pacientes;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -33,13 +30,20 @@ public class AdminController implements Serializable{
         
     @EJB
     private FarmaciaFacadeLocal farmaciaEJB;       //Clase que me permite acceder al patron fachada
-    private Farmacia farmacia;
     
     @EJB
     private MedicoFacadeLocal medicoEJB;       //Clase que me permite acceder al patron fachada
-    private Medico  medico;
     
     private List<Farmacia> farmaciasList;
+    private List<Medico> medicosList;
+
+    public List<Medico> getMedicosList() {
+        return medicosList;
+    }
+
+    public void setMedicosList(List<Medico> medicosList) {
+        this.medicosList = medicosList;
+    }
     
     private boolean farmaciasVisible;
     private boolean medicosVisible;
@@ -64,6 +68,10 @@ public class AdminController implements Serializable{
         return farmaciasList;
     }
 
+    /**
+     *
+     * @param farmaciasList
+     */
     public void setFarmaciasList(List<Farmacia> farmaciasList) {
         this.farmaciasList = farmaciasList;
     }
@@ -77,28 +85,61 @@ public class AdminController implements Serializable{
         medicosVisible = false;
     }
     
-    
-    
+    /**
+     *
+     * @throws IOException
+     */
     public void verifySesion() throws IOException{
         String admin = (String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
         if(admin == null || "".equals(admin)){
-            FacesContext.getCurrentInstance().getExternalContext().redirect("/public/errorPermisos.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("./public/errorPermisos?faces-redirect=true");
         }
     }
     
+    /**
+     *
+     */
     public void showMedicos(){
         medicosVisible = true;
         farmaciasVisible = false;
+        medicosList = medicoEJB.findAll();
     }
     
+    /**
+     *
+     */
     public void showFarmacias(){
-        medicosVisible = true;
-        farmaciasVisible = false;
+        medicosVisible = false;
+        farmaciasVisible = true;
     }
     
+    /**
+     *
+     * @param farmacia
+     * @return
+     */
     public String delete(Farmacia farmacia){
-        //TODO estas seguro?
         farmaciaEJB.remove(farmacia);
+        return "/private/admin/ventanaAdmin?faces-redirect=true";
+    }
+    
+    /**
+     *
+     * @param farmacia
+     * @return
+     */
+    public String editFarmacia(Farmacia farmacia){
+        farmaciaEJB.edit(farmacia);
+        return "/private/admin/ventanaAdmin?faces-redirect=true";
+    }
+    
+    /**
+     *
+     * @param medico
+     * @return
+     */
+    public String editMedico(Medico medico){
+        medicoEJB.edit(medico);
         return "/private/admin/ventanaAdmin?faces-redirect=true";
     }
 }
