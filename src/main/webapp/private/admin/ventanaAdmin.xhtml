@@ -65,10 +65,18 @@ and open the template in the editor.
 
                             </h:panelGrid>
                         </p:outputPanel>
-                            <p:commandButton value="Editar"/>
-                            <p:commandButton value="Eliminar" action="#{adminController.delete(farm)}"/>
+                           
                         <p:outputPanel> 
+                             <p:commandButton value="Editar"/>
                             
+                            <p:commandButton value="Eliminar" action="#{adminController.delete(farm)}">
+                                <p:confirm header="Confirmation" message="¿Estas seguro?" icon="ui-icon-alert" />
+                            </p:commandButton>
+
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
                         </p:outputPanel>
                     </h:panelGrid>
                     <hr />
