@@ -7,6 +7,7 @@ package com.inso.controller;
 
 import com.inso.EJB.MedicoFacadeLocal;
 import com.inso.EJB.PacientesFacadeLocal;
+import com.inso.EJB.RecetasFacade;
 import com.inso.EJB.RecetasFacadeLocal;
 import com.inso.model.Medico;
 import com.inso.model.Pacientes;
@@ -14,11 +15,15 @@ import com.inso.model.Recetas;
 import com.inso.model.RecetasPK;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -41,6 +46,7 @@ public class MedicoController implements Serializable{
     
     @EJB
     private PacientesFacadeLocal pacientesEJB;
+    private Pacientes paciente;
     
     private boolean showPerfil;
     private boolean showAddReceta;
@@ -53,7 +59,17 @@ public class MedicoController implements Serializable{
     private String numEnvases;
     private String instrucciones;
     private String dNIPaciente;
+    private String dniSearch;
+
+    public Collection<Recetas> getRecetasList() {
+        return recetasList;
+    }
+
+    public void setRecetasList(Collection<Recetas> recetasList) {
+        this.recetasList = recetasList;
+    }
     
+    private Collection<Recetas> recetasList;
     
     @PostConstruct
     public void init(){
@@ -66,6 +82,24 @@ public class MedicoController implements Serializable{
                 Logger.getLogger(PacienteController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        recetasEJB = new RecetasFacade();
+        dniSearch = "";
+    }
+
+    public String getDniSearch() {
+        return dniSearch;
+    }
+
+    public void setDniSearch(String dniSearch) {
+        this.dniSearch = dniSearch;
+    }
+
+    public Pacientes getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(Pacientes paciente) {
+        this.paciente = paciente;
     }
     
     public MedicoFacadeLocal getMedicoEJB() {
@@ -120,6 +154,10 @@ public class MedicoController implements Serializable{
         return dNIPaciente;
     }
 
+    /**
+     *
+     * @param dNIPaciente
+     */
     public void setdNIPaciente(String dNIPaciente) {
         this.dNIPaciente = dNIPaciente;
     }
@@ -190,12 +228,41 @@ public class MedicoController implements Serializable{
         showAddReceta = true;
     }
     
-    public void addReceta(){
-        Pacientes paciente = pacientesEJB.findByDNI(dNIPaciente);
+    public String addReceta(){
+        paciente = pacientesEJB.findByDNI(dniSearch);
         Date date = new Date();
         RecetasPK recetaPK = new RecetasPK(dNIPaciente, medico.getDni(), nombreMedicamento, date);
-        Recetas receta = new Recetas(recetaPK, cronica, Double.parseDouble(unidadesToma), Integer.parseInt(frecuencia), duracion, instrucciones, Integer.parseInt(numEnvases));
-        paciente.getRecetasCollection().add(receta);
-        recetasEJB.create(receta);
+        Recetas recetaX = new Recetas(recetaPK, cronica, Double.parseDouble(unidadesToma), Integer.parseInt(frecuencia), duracion, instrucciones, Integer.parseInt(numEnvases));
+        paciente.getRecetasCollection().add(recetaX);
+        recetasEJB.create(recetaX);
+        return "ventanaMedicoPaciente?faces-redirect=true";
+    }
+    
+    public void buscarPaciente(){
+        paciente = pacientesEJB.findByDNI(dniSearch);
+        if(paciente == null){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "No se encuentra el paciente."));
+
+        }else{
+            //En el momento que tengo paciente muestro el boton de añadir receta
+            
+            showAddReceta = true;
+            recetasList = paciente.getRecetasCollection();
+        }
+    }
+    
+    public void deleteReceta(Recetas rece){
+        recetasEJB.remove(rece);
+        //return "ventanaMedicoPaciente?faces-redirect=true";
+    }
+    
+    public void editReceta(Recetas rece){
+        recetasEJB.edit(rece);
+        //return "ventanaMedicoPaciente?faces-redirect=true";
+    }
+    
+    public String renderNewReceta(){
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("aux", paciente);
+        return "ventanaMedicoReceta?faces-redirect=true";
     }
 }

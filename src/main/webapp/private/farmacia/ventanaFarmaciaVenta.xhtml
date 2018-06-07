@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Virtual farma - Farmacia</title>
+
+    </h:head>
+    
+    <h:body  style="padding-top: 50px; padding-bottom: 20px;">
+        <h:form>
+            <b:navBar brand="Virtual Farma" brandHref="#" fluid="true" fixed="top" inverse="true">
+                <b:navbarLinks>
+                    <b:navLink value="Buscar recetas" href="#" icon="search"></b:navLink>
+                    <b:dropMenu value="Productos">
+                        <b:navCommandLink value="Añadir producto" outcome="ventanaFarmaciaProducto?faces-redirect=true" icon="plus" ></b:navCommandLink>
+                        <b:navCommandLink value="Ver lista de productos" outcome="ventanaFarmaciaLista?faces-redirect=true" icon="list"></b:navCommandLink>
+                    </b:dropMenu>
+                    <b:navCommandLink value="Realizar venta" icon="euro"></b:navCommandLink>
+                    <b:dropMenu value="" icon="user">
+                        <b:navCommandLink value="Ver mi perfil" outcome="ventanaFarmacia?faces-redirect=true" icon="eye-open"></b:navCommandLink>
+                        <b:navCommandLink value="Cerrar sesión" outcome="/index?faces-redirect=true" icon="log-out"></b:navCommandLink>
+                    </b:dropMenu>
+                    <b:navLink value="" outcome="/public/helpFarmacia?faces-redirect=true" icon="question-sign" style="position: absolute; right: 0%;"></b:navLink>
+                </b:navbarLinks>
+            </b:navBar>
+<!--                                      VENTA                                                       -->  
+            <b:panel id="venta">
+                <p:pickList id="PojoPickList" 
+                            value="#{farmaciaController.productos}"
+                            var="producto"
+                            itemValue="#{producto}" 
+                            itemLabel="#{producto.productosPK.nombre}" 
+                            showSourceControls="true" 
+                            showTargetControls="true" 
+                            showCheckbox="true" 
+                            responsive="true"
+                            showSourceFilter="true" 
+                            showTargetFilter="true" 
+                            filterMatchMode="contains">
+
+                    <f:facet name="sourceCaption">Stock</f:facet>
+                    <f:facet name="targetCaption">Venta</f:facet>
+
+                    <p:ajax event="transfer" onsuccess="#{farmaciaController.sumatorio()}" listener="#{farmaciaController.onTransfer}" update="sumatorio"/>
+                    <p:ajax event="select" listener="#{farmaciaController.onSelect}" update="sumatorio"/>
+                    <p:ajax event="unselect" listener="#{farmaciaController.onUnselect}" update="sumatorio"/>
+                    <p:ajax event="reorder" listener="#{farmaciaController.onReorder}" update="sumatorio"/>
+
+                    <p:column style="width:80%">
+                        <h:outputText value="#{producto.productosPK.nombre}" />
+                    </p:column>
+                    <p:column style="width:20%">
+                        <h:outputText value="#{producto.precio}" />
+                    </p:column>
+                </p:pickList>
+                <p:commandButton id="pojoSubmit" value="Vender" update="displayProductos" oncomplete="PF('ventaDialog').show()" style="margin-top:5px" />
+                <p:inputText id="sumatorio" value="#{farmaciaController.sumatorio}" disabled="true"/>
+                <p:dialog modal="true" showEffect="fade" hideEffect="fade" widgetVar="ventaDialog">
+                    <h:panelGrid id="displayProductos" columns="1">
+                        <h:outputText value="Vendidos: " style="font-weight:bold" />
+                        <ui:repeat value="#{farmaciaController.productos.target}" var="producto">
+                            <h:outputText value="#{producto.productosPK.nombre}" style="margin-right:5px" />
+                        </ui:repeat>
+                    </h:panelGrid>
+                </p:dialog>
+            
+            </b:panel>
+
+        </h:form>
+    </h:body>
+</html>

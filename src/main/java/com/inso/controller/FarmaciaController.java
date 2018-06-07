@@ -189,39 +189,15 @@ public class FarmaciaController implements Serializable{
         this.sumatorio = sumatorio;
     }
     
-    public void renderProductos(){
-        showProductos = true;
-        showPerfil = false;
-        showAddProducto = false;
-        showVenta = false;
-    }
+
     
-    public void renderPerfil(){
-        showProductos = false;
-        showPerfil = true;
-        showAddProducto = false;
-        showVenta = false;
-    }
-    
-    public void renderAddProducto(){
-        showProductos = false;
-        showPerfil = false;
-        showAddProducto = true;
-        showVenta = false;
-    }
-    
-    public void renderVenta(){
-        showProductos = false;
-        showPerfil = false;
-        showAddProducto = false;
-        showVenta = true;
-    }
-    
-    public void addProducto(){
+    public String addProducto(){
         ProductosPK productoPK = new ProductosPK(farmacia.getCif(), nombreP);
         Productos producto = new Productos(productoPK, Long.parseLong(precioP), Integer.parseInt(cuantiaP));
         this.farmacia.getProductosCollection().add(producto);
         productosEJB.create(producto);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Producto añadido con éxito."));
+        return "ventanaFarmaciaProducto?faces-redirect=true";
     }
     
     public void onTransfer(TransferEvent event) {

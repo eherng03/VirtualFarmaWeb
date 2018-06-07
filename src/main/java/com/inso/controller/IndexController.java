@@ -133,10 +133,9 @@ public class IndexController implements Serializable{
                         direction = "/private/medico/ventanaMedico?faces-redirect=true";
                     }
                 }
-            }
-            
+            } 
         } catch (Exception e) {
-            throw e;
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Credenciales incorrectas."));
         }
         
         return direction;

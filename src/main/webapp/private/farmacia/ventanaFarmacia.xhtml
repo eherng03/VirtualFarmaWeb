@@ -8,9 +8,7 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:b="http://bootsfaces.net/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:b="http://bootsfaces.net/ui">
     <h:head>
         <title>Virtual farma - Farmacia</title>
 
@@ -22,111 +20,20 @@ and open the template in the editor.
                 <b:navbarLinks>
                     <b:navLink value="Buscar recetas" href="#" icon="search"></b:navLink>
                     <b:dropMenu value="Productos">
-                        <b:navCommandLink value="Añadir producto" actionListener="#{farmaciaController.renderAddProducto()}" icon="plus" update="@form"></b:navCommandLink>
-                        <b:navCommandLink value="Ver lista de productos" actionListener="#{farmaciaController.renderProductos()}" icon="list" update="@form"></b:navCommandLink>
+                        <b:navCommandLink value="Añadir producto" outcome="ventanaFarmaciaProducto?faces-redirect=true" icon="plus"></b:navCommandLink>
+                        <b:navCommandLink value="Ver lista de productos" outcome="ventanaFarmaciaLista?faces-redirect=true" icon="list"></b:navCommandLink>
                     </b:dropMenu>
-                    <b:navCommandLink value="Realizar venta" actionListener="#{farmaciaController.renderVenta()}" icon="euro" update="@form"></b:navCommandLink>
+                    <b:navCommandLink value="Realizar venta" outcome="ventanaFarmaciaVenta?faces-redirect=true" icon="euro"></b:navCommandLink>
                     <b:dropMenu value="" icon="user">
-                        <b:navCommandLink value="Ver mi perfil" actionListener="#{farmaciaController.renderPerfil()}" icon="eye-open" update="@form"></b:navCommandLink>
+                        <b:navCommandLink value="Ver mi perfil"  icon="eye-open"></b:navCommandLink>
                         <b:navCommandLink value="Cerrar sesión" outcome="/index?faces-redirect=true" icon="log-out"></b:navCommandLink>
                     </b:dropMenu>
                     <b:navLink value="" outcome="/public/helpFarmacia?faces-redirect=true" icon="question-sign" style="position: absolute; right: 0%;"></b:navLink>
                 </b:navbarLinks>
             </b:navBar>
-<!--                                      VENTA                                                       -->  
-            <b:panel id="venta" rendered="#{farmaciaController.showVenta}">
-                <p:pickList id="PojoPickList" 
-                            value="#{farmaciaController.productos}"
-                            var="producto"
-                            itemValue="#{producto}" 
-                            itemLabel="#{producto.productosPK.nombre}" 
-                            showSourceControls="true" 
-                            showTargetControls="true" 
-                            showCheckbox="true" 
-                            responsive="true"
-                            showSourceFilter="true" 
-                            showTargetFilter="true" 
-                            filterMatchMode="contains">
 
-                    <f:facet name="sourceCaption">Stock</f:facet>
-                    <f:facet name="targetCaption">Venta</f:facet>
-
-                    <p:ajax event="transfer" onsuccess="#{farmaciaController.sumatorio()}" listener="#{farmaciaController.onTransfer}" update="sumatorio"/>
-                    <p:ajax event="select" listener="#{farmaciaController.onSelect}" update="sumatorio"/>
-                    <p:ajax event="unselect" listener="#{farmaciaController.onUnselect}" update="sumatorio"/>
-                    <p:ajax event="reorder" listener="#{farmaciaController.onReorder}" update="sumatorio"/>
-
-                    <p:column style="width:80%">
-                        <h:outputText value="#{producto.productosPK.nombre}" />
-                    </p:column>
-                    <p:column style="width:20%">
-                        <h:outputText value="#{producto.precio}" />
-                    </p:column>
-                </p:pickList>
-                <p:commandButton id="pojoSubmit" value="Vender" update="displayProductos" oncomplete="PF('ventaDialog').show()" style="margin-top:5px" />
-                <p:inputText id="sumatorio" value="#{farmaciaController.sumatorio}" disabled="true"/>
-                <p:dialog modal="true" showEffect="fade" hideEffect="fade" widgetVar="ventaDialog">
-                    <h:panelGrid id="displayProductos" columns="1">
-                        <h:outputText value="Vendidos: " style="font-weight:bold" />
-                        <ui:repeat value="#{farmaciaController.productos.target}" var="producto">
-                            <h:outputText value="#{producto.productosPK.nombre}" style="margin-right:5px" />
-                        </ui:repeat>
-                    </h:panelGrid>
-                </p:dialog>
-            
-            </b:panel>
-<!--                                    PRODUCTOS                                                     -->   
-            <b:panel id="recetas" rendered="#{farmaciaController.showProductos}">
-                <p:repeat value="#{farmaciaController.farmacia.productosCollection}" var="producto">
-                    <h:panelGrid columns="3" style="width:100%" cellspacing = "10" columnClasses="nombre, detalle, editarEliminar">
-                        <p:outputPanel>
-                           <h:panelGrid columns="1" cellpadding="5" cellspacing = "10" style="position: relative; left: 20%;" >
-                               <h:outputText value="#{producto.productosPK.nombre}" style="font-weight: bold; left: 10%"/>
-                           </h:panelGrid>
-                        </p:outputPanel>
-                        <p:outputPanel>
-                            <h:panelGrid columns="2" cellpadding="50" cellspacing = "10" style="position: relative; left: 20%;">
-                               <h:outputText value="Precio:" style="font-weight: bold"/>
-                               <h:outputText value="#{producto.precio}"/>
-                               <h:outputText value="Número en stock:" style="font-weight: bold"/>
-                               <h:outputText value="#{producto.cuantia}"/>
-                           </h:panelGrid>
-                        </p:outputPanel>
-                        <p:outputPanel>
-                            <h:panelGrid columns="1" cellpadding="5" style="position: relative; left: 20%;">
-                                <b:button icon="edit" title="Editar"></b:button>
-                                <b:button icon="remove" title="Borrar"></b:button>
-                            </h:panelGrid>
-                       </p:outputPanel>
-                    </h:panelGrid>
-                    <hr />
-               </p:repeat>
-            </b:panel>
-<!--                                    ADD PRODUCTO                                                 -->
-        <p:messages autoUpdate="true" showDetail="true"/>
-            <p:panel style="width:800px;margin: auto;border: none;" rendered="#{farmaciaController.showAddProducto}">
-                    <p:panel style="border: none;margin: auto">
-                        <p:graphicImage url="/resources/images/logo.png" style="width:200px; margin: auto"/>
-                    </p:panel>    
-                    <h:form>
-                        <h:panelGrid columns="2" cellpadding="10" cellspacing="10" >
-
-                            <h:outputLabel for="nombreP" value="Nombre: " />
-                            <p:inputText id="nombreP" value="#{farmaciaController.nombreP}" label="DNI" />
-
-                            <h:outputLabel for="precioP" value="Precio: " />
-                            <p:inputText id="precioP" value="#{farmaciaController.precioP}" label="Nombre" />
-
-                            <h:outputLabel for="cuantiaP" value="Cantidad: " />
-                            <p:inputText id="cuantiaP" value="#{farmaciaController.cuantiaP}" label="numeroSS" />
-
-                            <p:commandButton value="Añadir" actionListener="#{farmaciaController.addProducto()}"/>
-
-                        </h:panelGrid>
-                    </h:form>
-                </p:panel>
 <!--                                      PERFIL                                                     -->   
-            <b:panel id="perfil" rendered="#{farmaciaController.showPerfil}">
+            <b:panel id="perfil">
                 <h:panelGrid columns="2" style="width:100%" cellspacing = "10" columnClasses="nombre, detalle">
                     <p:outputPanel>
                        <h:panelGrid columns="1" cellpadding="5" cellspacing = "10" style="position: relative; left: 20%;" >

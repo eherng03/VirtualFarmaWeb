@@ -8,6 +8,7 @@ package com.inso.EJB;
 import com.inso.model.Recetas;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.persistence.EntityTransaction;
 
 /**
  *
@@ -25,31 +26,29 @@ public class RecetasFacade extends OwnEntityManager<Recetas> implements RecetasF
     public List<Recetas> findByDNI(String dni) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    /*
+    
     @Override
-    public void removeIDs(String dniPaciente, String nombreMedicamento, String fecha) {
-        try {
-            TypedQuery<Recetas> query = getEntityManager().createNamedQuery("Recetas.removeIDs", Recetas.class);
-            query.setParameter("dniPaciente", dniPaciente);
-            query.setParameter("nombreMedicamento", nombreMedicamento);
-            query.setParameter("fecha", fecha);
-            query.executeUpdate();
-        } catch (Exception e) {
-            throw e;
-        }
+    public void create(Recetas f) {
+        EntityTransaction tx = getEntityManager().getTransaction();
+        tx.begin();
+        getEntityManager().persist(f);
+        tx.commit();
+    }
+    
+    @Override
+    public void remove(Recetas rec) {
+        EntityTransaction tx = getEntityManager().getTransaction();
+        tx.begin();
+        getEntityManager().remove(getEntityManager().merge(rec));
+        tx.commit();
     }
 
     @Override
-    public List<Recetas> findByDNI(String dni) {
-        try {
-            TypedQuery<Recetas> query = getEntityManager().createNamedQuery("Recetas.findByDNI", Recetas.class);
-            query.setParameter("dni", dni);
-            return query.getResultList();      
-        } catch (Exception e) {
-            throw e;
-        }
+    public void edit(Recetas rec) {
+        EntityTransaction tx = getEntityManager().getTransaction();
+        tx.begin();
+        getEntityManager().merge(rec);
+        tx.commit();
     }
-*/
     
 }
