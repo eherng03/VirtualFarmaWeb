@@ -138,7 +138,7 @@ public class AdminController implements Serializable{
      */
     public String deleteMed(Medico medico){
         medicoEJB.remove(medico);
-        return "/private/admin/ventanaAdmin?faces-redirect=true";
+        return "/private/admin/ventanaAdminMedicos?faces-redirect=true";
     }
      
     /**
@@ -160,6 +160,6 @@ public class AdminController implements Serializable{
      */
     public String editMedico(Medico medico){
         medicoEJB.edit(medico);
-        return "/private/admin/ventanaAdmin?faces-redirect=true";
+        return "/private/admin/ventanaAdminMedicos?faces-redirect=true";
     }
 }
