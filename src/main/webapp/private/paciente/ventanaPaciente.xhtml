@@ -22,12 +22,12 @@ and open the template in the editor.
             <b:navBar brand="Virtual Farma" brandHref="#" fluid="true" fixed="top" inverse="true">
                 <b:navbarLinks>
                     <b:navCommandLink value="Mis recetas"></b:navCommandLink>
-                    <b:navCommandLink value="Ver farmacias" outcome="ventanaFarmaciasPaciente.xhtml"></b:navCommandLink>
+                    <b:navCommandLink value="Ver farmacias" outcome="ventanaFarmaciasPaciente.xhtml?faces-redirect=true"></b:navCommandLink>
                     <b:dropMenu value="" icon="user">
-                        <b:navCommandLink value="Ver mi perfil" outcome="ventanaPerfilPaciente.xhtml" icon="eye-open"></b:navCommandLink>
-                        <b:navCommandLink value="Cerrar sesión" icon="log-out"></b:navCommandLink>
+                        <b:navCommandLink value="Ver mi perfil" outcome="ventanaPerfilPaciente.xhtml?faces-redirect=true" icon="eye-open"></b:navCommandLink>
+                        <b:navCommandLink value="Cerrar sesión" outcome="/index?faces-redirect=true" icon="log-out"></b:navCommandLink>
                     </b:dropMenu>
-                    <b:navLink value="" href="#" icon="question-sign" style="position: absolute; right: 0%;"></b:navLink>
+                    <b:navLink value="" outcome="/public/helpPaciente?faces-redirect=true" icon="question-sign" style="position: absolute; right: 0%;"></b:navLink>
                 </b:navbarLinks>
             </b:navBar>
 <!--                                    RECETAS                                                     -->   

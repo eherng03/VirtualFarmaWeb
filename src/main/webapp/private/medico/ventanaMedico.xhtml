@@ -24,12 +24,12 @@ and open the template in the editor.
                     <b:dropMenu value="" icon="user">
                         <b:navCommandLink value="Ver mi perfil" actionListener="#{medicoController.renderPerfil()}" icon="eye-open"></b:navCommandLink>
 
-                        <b:navCommandLink value="Cerrar sesión" href="#" icon="log-out"></b:navCommandLink>
+                        <b:navCommandLink value="Cerrar sesión" outcome="/index?faces-redirect=true" icon="log-out"></b:navCommandLink>
                     </b:dropMenu>
-                    <b:navCommandLink value="" href="#" icon="question-sign" style="position: absolute; right: 0%;"></b:navCommandLink>
+                    <b:navCommandLink value="" outcome="/public/helpMedico?faces-redirect=true" icon="question-sign" style="position: absolute; right: 0%;"></b:navCommandLink>
                 </b:navbarLinks>
               </b:navBar>
-<!--                                    ADD RECETA                                                 -->
+        <!--                                    ADD RECETA                                                 -->
         <p:messages autoUpdate="true" showDetail="true"/>
             <p:panel style="width:800px;margin: auto;border: none;" rendered="#{medicoController.showAddReceta}">
                     <p:panel style="border: none;margin: auto">

@@ -28,9 +28,9 @@ and open the template in the editor.
                     <b:navCommandLink value="Realizar venta" actionListener="#{farmaciaController.renderVenta()}" icon="euro" update="@form"></b:navCommandLink>
                     <b:dropMenu value="" icon="user">
                         <b:navCommandLink value="Ver mi perfil" actionListener="#{farmaciaController.renderPerfil()}" icon="eye-open" update="@form"></b:navCommandLink>
-                        <b:navCommandLink value="Cerrar sesión" actionListener="#{farmaciaController.logOut()}" icon="log-out"></b:navCommandLink>
+                        <b:navCommandLink value="Cerrar sesión" outcome="/index?faces-redirect=true" icon="log-out"></b:navCommandLink>
                     </b:dropMenu>
-                    <b:navLink value="" href="#" icon="question-sign" style="position: absolute; right: 0%;"></b:navLink>
+                    <b:navLink value="" outcome="/public/helpFarmacia?faces-redirect=true" icon="question-sign" style="position: absolute; right: 0%;"></b:navLink>
                 </b:navbarLinks>
             </b:navBar>
 <!--                                      VENTA                                                       -->  
