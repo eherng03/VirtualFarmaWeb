@@ -20,9 +20,9 @@ and open the template in the editor.
             <b:navBar brand="Virtual Farma" brandHref="#" fluid="true" fixed="top" inverse="true">
                 <b:navbarLinks>
                     <b:navCommandLink value="Crear receta" outcome="ventanaMedicoReceta?faces-redirect=true" icon="plus"></b:navCommandLink>
-                    <b:navCommandLink value="Buscar paciente" outcome="ventanaMedicoPaciente?faces-redirect=true" icon="search"></b:navCommandLink>
+                    <b:navCommandLink value="Buscar paciente" active="true" icon="search"></b:navCommandLink>
                     <b:dropMenu value="" icon="user">
-                        <b:navCommandLink value="Ver mi perfil" icon="eye-open"></b:navCommandLink>
+                        <b:navCommandLink value="Ver mi perfil" outcome="ventanaMedico?faces-redirect=true" icon="eye-open"></b:navCommandLink>
 
                         <b:navCommandLink value="Cerrar sesión" outcome="/index?faces-redirect=true" icon="log-out"></b:navCommandLink>
                     </b:dropMenu>
@@ -30,20 +30,20 @@ and open the template in the editor.
                 </b:navbarLinks>
               </b:navBar>
         
+            
 <!--                                      PERFIL                                                     -->   
-            <b:panel id="perfil" style="width:500px;margin: auto;border: none;padding-top: 50px">
-                
-                <h:panelGrid columns="2" style="width:100%; margin: auto" cellspacing = "10">
+            <b:panel id="perfil" rendered="#{medicoController.showPerfil}">
+                <h:panelGrid columns="2" style="width:100%" cellspacing = "10">
                     <p:outputPanel style="width:30%">
                        <h:panelGrid columns="1" cellpadding="5" cellspacing = "10">
                            <h:outputText value="#{medicoController.medico.nombre}" style="font-weight: bold;"/>
                        </h:panelGrid>
                     </p:outputPanel>
-                    <p:outputPanel style="width:70%; margin: auto">
-                        <h:panelGrid columns="2" cellpadding="50" cellspacing = "10" style="position: relative;">
+                    <p:outputPanel style="width:70%">
+                        <h:panelGrid columns="2" cellpadding="50" cellspacing = "10" style="position: relative;;">
                            <h:outputText value="DNI: " style="font-weight: bold"/>
                            <h:outputText value="#{medicoController.medico.dni}"/>
-                           <h:outputText value="Número de la SS:  " style="font-weight: bold"/>
+                           <h:outputText value="Número de la SS: " style="font-weight: bold"/>
                            <h:outputText value="#{medicoController.medico.numeroSS}"/>
                            <h:outputText value="Centro médico: " style="font-weight: bold"/>
                            <h:outputText value="#{medicoController.medico.centroMedico}"/>
