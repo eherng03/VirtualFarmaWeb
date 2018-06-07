@@ -8,26 +8,30 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:b="http://bootsfaces.net/ui">
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Virtual farma - Paciente</title>
     </h:head>   
     <h:body  style="padding-top: 50px; padding-bottom: 20px;">
         <h:form>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
             <b:navBar brand="Virtual Farma" brandHref="#" fluid="true" fixed="top" inverse="true">
                 <b:navbarLinks>
-                    <b:navCommandLink value="Mis recetas" actionListener="#{pacienteController.renderRecetas()}" update="@form"></b:navCommandLink>
-                    <b:navCommandLink value="Ver farmacias" actionListener="#{pacienteController.renderFarmacias()}" update="@form"></b:navCommandLink>
+                    <b:navCommandLink value="Mis recetas"></b:navCommandLink>
+                    <b:navCommandLink value="Ver farmacias" outcome="ventanaFarmaciasPaciente.xhtml"></b:navCommandLink>
                     <b:dropMenu value="" icon="user">
-                        <b:navCommandLink value="Ver mi perfil" actionListener="#{pacienteController.renderPerfil()}" icon="eye-open" update="@form"></b:navCommandLink>
-                        <b:navCommandLink value="Cerrar sesión" actionListener="#{pacienteController.logOut()}" icon="log-out"></b:navCommandLink>
+                        <b:navCommandLink value="Ver mi perfil" outcome="ventanaPerfilPaciente.xhtml" icon="eye-open"></b:navCommandLink>
+                        <b:navCommandLink value="Cerrar sesión" icon="log-out"></b:navCommandLink>
                     </b:dropMenu>
                     <b:navLink value="" href="#" icon="question-sign" style="position: absolute; right: 0%;"></b:navLink>
                 </b:navbarLinks>
             </b:navBar>
 <!--                                    RECETAS                                                     -->   
-        
-            <b:panel id="recetas" rendered="#{pacienteController.showRecetas}">
+            <b:panel id="recetas">
                 <p:repeat value="#{pacienteController.paciente.recetasCollection}" var="receta">
                     <h:panelGrid columns="3" style="width:100%" cellspacing = "10" columnClasses="nombre, detalle, editarEliminar">
                         <p:outputPanel>
@@ -55,71 +59,39 @@ and open the template in the editor.
                         </p:outputPanel>
                         <p:outputPanel>
                             <h:panelGrid columns="1" cellpadding="5" style="position: relative; left: 20%;">
-                                <b:button icon="search" title="Disponibilidad"></b:button>
+                                <b:commandButton icon="search" title="Disponibilidad" actionListener="#{pacienteController.renderDisponibilidad(receta.recetasPK.nombreMedicamento)}" ></b:commandButton>
                             </h:panelGrid>
                        </p:outputPanel>
                     </h:panelGrid>
                     <hr />
-               </p:repeat>
-            </b:panel>
-        
-<!--                                    FARMACIAS                                                     -->   
-            <b:panel id="farmacias" rendered="#{pacienteController.showFarmacias}">
-                <p:repeat value="#{pacienteController.farmaciasList}" var="farmacia">
-                <h:panelGrid columns="2" style="width:100%" cellspacing = "10" columnClasses="nombre, detalle">
-                    <p:outputPanel>
-                       <h:panelGrid columns="1" cellpadding="5" cellspacing = "10" style="position: relative; left: 20%;" >
-                           <h:outputText value="#{farmacia.nombre}" style="font-weight: bold; left: 10%"/>
-                       </h:panelGrid>
-                    </p:outputPanel>
-                    <p:outputPanel>
-                        <h:panelGrid columns="2" cellpadding="50" cellspacing = "10" style="position: relative; left: 20%;">
-                           <h:outputText value="Horario:" style="font-weight: bold"/>
-                           <h:outputText value="#{farmacia.horario}"/>
-                           <h:outputText value="Dirección:" style="font-weight: bold"/>
-                           <h:outputText value="#{farmacia.direccion}"/>
-                           <h:outputText value="Teléfono" style="font-weight: bold"/>
-                           <h:outputText value="#{farmacia.telefono}"/>
-                           <h:outputText value="Email:" style="font-weight: bold"/>
-                           <h:outputText value="#{farmacia.email}"/>
-                       </h:panelGrid>
-                    </p:outputPanel>
-                </h:panelGrid>
-                <hr />
-               </p:repeat>
-            </b:panel>
-<!--                                      PERFIL                                                     -->   
-            <b:panel id="perfil" rendered="#{pacienteController.showPerfil}">
-                <h:panelGrid columns="3" style="width:100%" cellspacing = "10" columnClasses="nombre, detalle">
-                    <p:outputPanel>
-                       <h:panelGrid columns="1" cellpadding="5" cellspacing = "10" style="position: relative; left: 20%;" >
-                           <h:outputText value="#{pacienteController.paciente.nombre}" style="font-weight: bold; left: 10%"/>
-                       </h:panelGrid>
-                    </p:outputPanel>
-                    <p:outputPanel>
-                        <h:panelGrid columns="2" cellpadding="50" cellspacing = "10" style="position: relative; left: 20%;">
-                           <h:outputText value="DNI:" style="font-weight: bold"/>
-                           <h:outputText value="#{pacienteController.paciente.dni}"/>
-                           <h:outputText value="Número de la SS:" style="font-weight: bold"/>
-                           <h:outputText value="#{pacienteController.paciente.numeroSS}"/>
-                       </h:panelGrid>
-                    </p:outputPanel>
-                     <p:outputPanel>
-                       <h:panelGrid columns="1" cellpadding="5" cellspacing = "10" style="position: relative; left: 20%;" >
-                           <h:form>
-                                <p:growl id="message" showDetail="true" />
-                                <p:commandButton value="Dar de baja" icon="ui-button-icon-left ui-icon ui-c fa fa-fw fa-remove"  actionListener="#{dialogView.confirmacion}" update="message">
-                                    <p:confirm header="Confirmación" message="¿Estás seguro de que quieres darte de baja?" icon="ui-icon-alert" />
-                                </p:commandButton>
-
-                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-                                </p:confirmDialog>
-                           </h:form>
-                       </h:panelGrid>
-                    </p:outputPanel>
-                </h:panelGrid>
+                </p:repeat>
+                
+                <p:dialog header="Farmacias con este producto" widgetVar="farmaciasProductoDialog" modal="true" showEffect="blind" hideEffect="blind" resizable="true">
+                    <p:repeat value="#{pacienteController.farmaciasProductoList}" var="farmacia">
+                        <p:outputPanel id="farmaciasProducto" style="text-align:center;">
+                            <p:panelGrid  columns="2" rendered="#{not empty pacienteController.farmaciasProductoList}" columnClasses="nombre,detalle">
+                                <p:outputPanel>
+                                    <h:panelGrid columns="1" cellpadding="5" cellspacing = "10" style="position: relative; left: 20%;" >
+                                        <h:outputText value="#{farmacia.nombre}" style="font-weight: bold; left: 10%"/>
+                                    </h:panelGrid>
+                                </p:outputPanel>
+                                <p:outputPanel>
+                                    <h:panelGrid columns="2" cellpadding="50" cellspacing = "10" style="position: relative; left: 20%;">
+                                       <h:outputText value="Horario:" style="font-weight: bold"/>
+                                       <h:outputText value="#{farmacia.horario}"/>
+                                       <h:outputText value="Dirección:" style="font-weight: bold"/>
+                                       <h:outputText value="#{farmacia.direccion}"/>
+                                       <h:outputText value="Teléfono" style="font-weight: bold"/>
+                                       <h:outputText value="#{farmacia.telefono}"/>
+                                       <h:outputText value="Email:" style="font-weight: bold"/>
+                                       <h:outputText value="#{farmacia.email}"/>
+                                   </h:panelGrid>
+                                </p:outputPanel>
+                            </p:panelGrid>
+                        </p:outputPanel>
+                        <hr />
+                    </p:repeat>
+                </p:dialog>
             </b:panel>
         </h:form>  
     </h:body>

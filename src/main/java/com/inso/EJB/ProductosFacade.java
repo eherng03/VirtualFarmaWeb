@@ -5,6 +5,7 @@
  */
 package com.inso.EJB;
 
+import com.inso.model.Farmacia;
 import com.inso.model.Pacientes;
 import com.inso.model.Productos;
 import java.util.List;
@@ -32,6 +33,17 @@ public class ProductosFacade extends OwnEntityManager<Productos> implements Prod
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    @Override
+    public List<Productos> findByNombre(String nombre) {
+         try {
+            TypedQuery<Productos> query = getEntityManager().createNamedQuery("Productos.findByNombre", Productos.class);
+            query.setParameter("nombre", nombre);
+            List<Productos> productos = query.getResultList();
+            return productos;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
     @Override
     public void create(Productos p) {
         EntityTransaction tx = getEntityManager().getTransaction();

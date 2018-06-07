@@ -38,26 +38,26 @@ and open the template in the editor.
                     <h:form>
                         <h:panelGrid columns="2" cellpadding="10" cellspacing="10" >
 
-                            <h:outputLabel for="dNIPaciente" value="Nombre: " />
+                            <h:outputLabel for="dNIPaciente" value="DNI: " />
                             <p:inputText id="dNIPaciente" value="#{medicoController.dNIPaciente}" label="DNI" />
 
-                            <h:outputLabel for="nombreMedicamento" value="Precio: " />
+                            <h:outputLabel for="nombreMedicamento" value="Nombre: " />
                             <p:inputText id="nombreMedicamento" value="#{medicoController.nombreMedicamento}" label="Nombre" />
 
-                            <h:outputLabel for="unidadesToma" value="Cantidad: " />
-                            <p:inputText id="unidadesToma" value="#{medicoController.unidadesToma}" label="numeroSS" />
+                            <h:outputLabel for="unidadesToma" value="Número SS: " />
+                            <p:inputText id="unidadesToma" value="#{medicoController.unidadesToma}" label="Número SS" />
                             
-                             <h:outputLabel for="frecuencia" value="Nombre: " />
-                            <p:inputText id="frecuencia" value="#{medicoController.frecuencia}" label="DNI" />
+                             <h:outputLabel for="frecuencia" value="Frecuencia: " />
+                            <p:inputText id="frecuencia" value="#{medicoController.frecuencia}" label="Frecuencia" />
 
-                            <h:outputLabel for="duracion" value="Precio: " />
-                            <p:inputText id="duracion" value="#{medicoController.duracion}" label="Nombre" />
+                            <h:outputLabel for="duracion" value="Duración: " />
+                            <p:inputText id="duracion" value="#{medicoController.duracion}" label="Duración" />
 
-                            <h:outputLabel for="numEnvases" value="Cantidad: " />
-                            <p:inputText id="numEnvases" value="#{medicoController.numEnvases}" label="numeroSS" />
+                            <h:outputLabel for="numEnvases" value="Número de envases: " />
+                            <p:inputText id="numEnvases" value="#{medicoController.numEnvases}" label="Número envases" />
                             
-                            <h:outputLabel for="instrucciones" value="Precio: " />
-                            <p:inputText id="instrucciones" value="#{medicoController.instrucciones}" label="Nombre" />
+                            <h:outputLabel for="instrucciones" value="Instrucciones: " />
+                            <p:inputText id="instrucciones" value="#{medicoController.instrucciones}" label="Instrucciones" />
 
                             <p:outputLabel for="@next" value="Crónica: " />
                             <p:selectBooleanCheckbox value="#{medicoController.cronica}" />

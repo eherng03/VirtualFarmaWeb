@@ -45,7 +45,6 @@ public class MedicoController implements Serializable{
     private boolean showPerfil;
     private boolean showAddReceta;
     
-    private String dNIPaciente;
     private String nombreMedicamento;
     private String unidadesToma;
     private boolean cronica;
@@ -53,6 +52,7 @@ public class MedicoController implements Serializable{
     private String duracion;
     private String numEnvases;
     private String instrucciones;
+    private String dNIPaciente;
     
     
     @PostConstruct

@@ -12,6 +12,8 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -21,11 +23,11 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "productos")
-/*
+
 @NamedQueries({
-    @NamedQuery(name = "Productos.findByCIFNombre", query = "SELECT p FROM Productos p WHERE p.cif = :cif AND p.nombre = :nombre"),
+    @NamedQuery(name = "Productos.findByCIFNombre", query = "SELECT p FROM Productos p WHERE p.productosPK.cIFFarmacia = :cif AND p.productosPK.nombre = :nombre"),
+    @NamedQuery(name = "Productos.findByNombre", query = "SELECT p FROM Productos p WHERE p.productosPK.nombre = :nombre"),
 })
-*/
 public class Productos implements Serializable {
 
     private static final long serialVersionUID = 1L;

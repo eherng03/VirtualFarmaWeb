@@ -23,6 +23,14 @@ public class PacientesFacade extends OwnEntityManager<Pacientes> implements Paci
     }
 
     @Override
+    public void remove(Pacientes pac) {
+        EntityTransaction tx = getEntityManager().getTransaction();
+        tx.begin();
+        getEntityManager().remove(getEntityManager().merge(pac));
+        tx.commit();
+    }
+    
+    @Override
     public void create(Pacientes p) {
         EntityTransaction tx = getEntityManager().getTransaction();
         tx.begin();

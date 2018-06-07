@@ -12,17 +12,22 @@ import com.inso.model.Farmacia;
 import com.inso.model.Pacientes;
 import com.inso.model.Productos;
 import com.inso.model.ProductosPK;
-import static com.inso.model.Productos_.farmacia;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.TransferEvent;
+import org.primefaces.event.UnselectEvent;
+import org.primefaces.model.DualListModel;
 
 /**
  *
@@ -43,10 +48,14 @@ public class FarmaciaController implements Serializable{
     private boolean showProductos;
     private boolean showPerfil;
     private boolean showAddProducto;
+    private boolean showVenta;
 
     private String nombreP;
     private String precioP;
     private String cuantiaP;
+    private long sumatorio;
+    
+    private DualListModel<Productos> productos;
     
     @PostConstruct
     public void init(){
@@ -63,6 +72,12 @@ public class FarmaciaController implements Serializable{
         nombreP = "";
         precioP = "";
         cuantiaP = "";
+        
+        List<Productos> productosSource = (List<Productos>) farmacia.getProductosCollection();
+        List<Productos> productosTarget = new ArrayList<>();
+         
+        productos = new DualListModel<>(productosSource, productosTarget);
+        sumatorio = 0;
     }
     
     public String logOut(){
@@ -149,23 +164,57 @@ public class FarmaciaController implements Serializable{
     public void setCuantiaP(String cuantiaP) {
         this.cuantiaP = cuantiaP;
     }
+     
+    public boolean isShowVenta() {
+        return showVenta;
+    }
+
+    public void setShowVenta(boolean showVenta) {
+        this.showVenta = showVenta;
+    }
+    
+    public DualListModel<Productos> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(DualListModel<Productos> productos) {
+        this.productos = productos;
+    }
+    
+    public long getSumatorio() {
+        return sumatorio;
+    }
+
+    public void setSumatorio(long sumatorio) {
+        this.sumatorio = sumatorio;
+    }
     
     public void renderProductos(){
         showProductos = true;
         showPerfil = false;
         showAddProducto = false;
+        showVenta = false;
     }
     
     public void renderPerfil(){
         showProductos = false;
         showPerfil = true;
         showAddProducto = false;
+        showVenta = false;
     }
     
     public void renderAddProducto(){
         showProductos = false;
         showPerfil = false;
         showAddProducto = true;
+        showVenta = false;
+    }
+    
+    public void renderVenta(){
+        showProductos = false;
+        showPerfil = false;
+        showAddProducto = false;
+        showVenta = true;
     }
     
     public void addProducto(){
@@ -173,6 +222,41 @@ public class FarmaciaController implements Serializable{
         Productos producto = new Productos(productoPK, Long.parseLong(precioP), Integer.parseInt(cuantiaP));
         this.farmacia.getProductosCollection().add(producto);
         productosEJB.create(producto);
+    }
+    
+    public void onTransfer(TransferEvent event) {
+        StringBuilder builder = new StringBuilder();
+        for(Object item : event.getItems()) {
+            builder.append(((Productos) item).getProductosPK().getNombre()).append("<br />");
+        }
+         
+        FacesMessage msg = new FacesMessage();
+        msg.setSeverity(FacesMessage.SEVERITY_INFO);
+        msg.setSummary("Items Transferred");
+        msg.setDetail(builder.toString());
+         
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+    
+    public void onSelect(SelectEvent event) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Item Selected", event.getObject().toString()));
+    }
+     
+    public void onUnselect(UnselectEvent event) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Item Unselected", event.getObject().toString()));
+    }
+     
+    public void onReorder() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "List Reordered", null));
+    } 
+    
+    public void sumatorio(){
+        for(Productos producto : productos.getTarget()){
+            sumatorio += producto.getPrecio();
+        }
     }
 }
 

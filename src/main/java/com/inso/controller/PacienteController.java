@@ -7,10 +7,13 @@ package com.inso.controller;
 
 import com.inso.EJB.FarmaciaFacadeLocal;
 import com.inso.EJB.PacientesFacadeLocal;
+import com.inso.EJB.ProductosFacadeLocal;
 import com.inso.model.Farmacia;
 import com.inso.model.Pacientes;
+import com.inso.model.Productos;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,11 +22,13 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import org.primefaces.context.RequestContext;
 
 /**
  *
  * @author Eva y Alba
  */
+
 @ManagedBean(name = "pacienteController", eager = true)
 @ViewScoped
 public class PacienteController implements Serializable{
@@ -32,10 +37,12 @@ public class PacienteController implements Serializable{
     private Pacientes paciente;
     @EJB
     private FarmaciaFacadeLocal farmaciaEJB;
+    
+    @EJB
+    private ProductosFacadeLocal productosEJB;
+    
     private List<Farmacia> farmaciasList;
-    private boolean showRecetas;
-    private boolean showFarmacias;
-    private boolean showPerfil;
+    private List<Farmacia> farmaciasProductoList;
     
     @PostConstruct
     public void init(){
@@ -48,7 +55,6 @@ public class PacienteController implements Serializable{
                 Logger.getLogger(PacienteController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        showRecetas = true;
     }
     
     public String logOut(){
@@ -73,49 +79,21 @@ public class PacienteController implements Serializable{
         this.paciente = paciente;
     }
     
-    public boolean isShowRecetas() {
-        return showRecetas;
+    public List<Farmacia> getFarmaciasProductoList() {
+        return farmaciasProductoList;
     }
 
-    public void setShowRecetas(boolean showRecetas) {
-        this.showRecetas = showRecetas;
+    public void setFarmaciasProductoList(List<Farmacia> farmaciasProductoList) {
+        this.farmaciasProductoList = farmaciasProductoList;
     }
-    
-    public boolean isShowFarmacias() {
-        return showFarmacias;
-    }
-
-    public void setShowFarmacias(boolean showFarmacias) {
-        this.showFarmacias = showFarmacias;
-    }
-    
-    public boolean isShowPerfil() {
-        return showPerfil;
+       
+    public void renderDisponibilidad(String nombreMedicamento){
+        List<Productos> productos = productosEJB.findByNombre(nombreMedicamento);
+        farmaciasProductoList = new ArrayList<>();
+        for(Productos producto : productos){
+            farmaciasProductoList.add(producto.getFarmacia());
+        }
+        RequestContext.getCurrentInstance().execute("PF('farmaciasProductoDialog').show();");
     }
 
-    public void setShowPerfil(boolean showPerfil) {
-        this.showPerfil = showPerfil;
-    }
-    
-    public void renderRecetas(){
-        showRecetas = true;
-        showFarmacias = false;
-        showPerfil = false;
-    }
-    
-    public void renderFarmacias(){
-        showRecetas = false;
-        showFarmacias = true;
-        showPerfil = false;
-    }
-    
-    public void renderPerfil(){
-        showRecetas = false;
-        showFarmacias = false;
-        showPerfil = true;
-    }
-    
-    public void darBaja(){
-        pacienteEJB.remove(paciente);
-    }
 }

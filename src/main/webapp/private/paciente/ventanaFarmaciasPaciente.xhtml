@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Virtual farma - Paciente</title>
+    </h:head>   
+    <h:body  style="padding-top: 50px; padding-bottom: 20px;">
+        <h:form>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
+            <b:navBar brand="Virtual Farma" brandHref="#" fluid="true" fixed="top" inverse="true">
+                <b:navbarLinks>
+                    <b:navCommandLink value="Mis recetas" outcome="ventanaPaciente.xhtml"></b:navCommandLink>
+                    <b:navCommandLink value="Ver farmacias" ></b:navCommandLink>
+                    <b:dropMenu value="" icon="user">
+                        <b:navCommandLink value="Ver mi perfil" outcome="ventanaPerfilPaciente.xhtml" icon="eye-open"></b:navCommandLink>
+                        <b:navCommandLink value="Cerrar sesión" icon="log-out"></b:navCommandLink>
+                    </b:dropMenu>
+                    <b:navLink value="" href="#" icon="question-sign" style="position: absolute; right: 0%;"></b:navLink>
+                </b:navbarLinks>
+            </b:navBar>        
+<!--                                    FARMACIAS                                                     -->   
+            <b:panel id="farmacias">
+                <p:repeat value="#{pacienteController.farmaciasList}" var="farmacia">
+                <h:panelGrid columns="2" style="width:100%" cellspacing = "10" columnClasses="nombre, detalle">
+                    <p:outputPanel>
+                       <h:panelGrid columns="1" cellpadding="5" cellspacing = "10" style="position: relative; left: 20%;" >
+                           <h:outputText value="#{farmacia.nombre}" style="font-weight: bold; left: 10%"/>
+                       </h:panelGrid>
+                    </p:outputPanel>
+                    <p:outputPanel>
+                        <h:panelGrid columns="2" cellpadding="50" cellspacing = "10" style="position: relative; left: 20%;">
+                           <h:outputText value="Horario:" style="font-weight: bold"/>
+                           <h:outputText value="#{farmacia.horario}"/>
+                           <h:outputText value="Dirección:" style="font-weight: bold"/>
+                           <h:outputText value="#{farmacia.direccion}"/>
+                           <h:outputText value="Teléfono" style="font-weight: bold"/>
+                           <h:outputText value="#{farmacia.telefono}"/>
+                           <h:outputText value="Email:" style="font-weight: bold"/>
+                           <h:outputText value="#{farmacia.email}"/>
+                       </h:panelGrid>
+                    </p:outputPanel>
+                </h:panelGrid>
+                <hr />
+               </p:repeat>
+            </b:panel>
+        </h:form>  
+    </h:body>
+</html>
