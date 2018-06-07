@@ -20,71 +20,14 @@ and open the template in the editor.
             <b:navBar brand="Virtual Farma"  fluid="true" fixed="top" inverse="true">
            
                 <b:navbarLinks>
-                    <b:navCommandLink value="Farmacias" action="#{adminController.showFarmacias()}" update="@form"></b:navCommandLink>
-                    <b:navCommandLink value="Médicos" action="#{adminController.showMedicos()}" update="@form"></b:navCommandLink>
-                    <b:navCommandLink value="Copia de seguridad" href="#" icon="saved"></b:navCommandLink>
+                    <b:navCommandLink value="Farmacias" active="true"></b:navCommandLink>
+                    <b:navCommandLink value="Médicos" outcome="ventanaAdminMedicos?faces-redirect=true"></b:navCommandLink>
                     <b:navCommandLink value="Cerrar sesión" outcome="/index?faces-redirect=true" icon="log-out"></b:navCommandLink>
-                    <b:navCommandLink value="" href="#" icon="question-sign" style="position: absolute; right: 0%;"></b:navCommandLink>
+                    <b:navCommandLink value="" outcome="/public/helpAdmin?faces-redirect=true" icon="question-sign" style="position: absolute; right: 0%;"></b:navCommandLink>
                 </b:navbarLinks>
             </b:navBar>
-    
-           
-            
-            
-            <b:panel rendered="#{adminController.medicosVisible}">
-
-                    <p:repeat value="#{adminController.medicosList}" var="medico">
-                         <h:panelGrid columns="3" style="width:100%">
-
-                             <p:panel style="align-content: center;border: none;margin: auto">
-                                 <p:graphicImage url="/resources/images/farm.jpg" style="width:50px"/>
-                             </p:panel>
-
-                             <p:outputPanel style="width: 500px">
-                                 <h:panelGrid columns="2" cellpadding="10">
-                                    <h:outputLabel value="DNI: "   style="font-weight: bold"/>
-                                    <p:inputText value="#{medico.dni}"/>
-
-                                    <h:outputLabel value="Nombre y apellidos: "   style="font-weight: bold"/>
-                                    <p:inputText value="#{medico.nombre}"/>
-
-                                    <h:outputLabel value="Número de la Seguridad Social: "   style="font-weight: bold"/>
-                                    <p:inputText value="#{medico.numeroSS}"/>
-
-                                    <h:outputLabel value="Centro médico: "   style="font-weight: bold"/>
-                                    <p:inputText value="#{medico.centroMedico}" />
-
-                                    <h:outputLabel value="E-mail: "   style="font-weight: bold"/>
-                                    <p:inputText value="#{medico.email}"/>
-
-                                    <h:outputLabel value="Dirección: "   style="font-weight: bold"/>
-                                    <p:inputText value="#{medico.direccion}"/>
-
-                                 </h:panelGrid>
-                            </p:outputPanel>
-
-                            <p:outputPanel> 
-
-                                <p:commandButton value="Eliminar" action="#{adminController.deleteMed(medico)}">
-                                     <p:confirm header="Confirmation" message="¿Estas seguro?" icon="ui-icon-alert" />
-                                 </p:commandButton>
-                                
-                                <p:commandButton value="Editar" action="#{adminController.editMedico(medico)}">
-                                     <p:confirm header="Confirmation" message="¿Estas seguro?" icon="ui-icon-alert" />
-                                 </p:commandButton>
-                                
-                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-                                </p:confirmDialog>
-                             </p:outputPanel>
-                         </h:panelGrid>
-                         <hr />
-                     </p:repeat>
-                
-            </b:panel>
-             
-              <b:panel rendered="#{adminController.farmaciasVisible}">
+ 
+              <b:panel>
 
                     <p:repeat value="#{adminController.farmaciasList}" var="farm">
               
@@ -132,7 +75,7 @@ and open the template in the editor.
                                     
                                     <p:commandButton value="Editar" action="#{adminController.editFarmacia(farm)}">
                                      <p:confirm header="Confirmation" message="¿Estas seguro?" icon="ui-icon-alert" />
-                                 </p:commandButton>
+                                    </p:commandButton>
 
                                     <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                                         <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
