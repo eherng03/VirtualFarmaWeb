@@ -35,7 +35,12 @@ and open the template in the editor.
 <!--                                    PRODUCTOS                                                     -->   
             <b:panel id="recetas">
                 <p:repeat value="#{farmaciaController.productos.source}" var="producto">
-                    <h:panelGrid columns="3" style="width:100%" cellspacing = "10" columnClasses="nombre, detalle, editarEliminar">
+                    <h:panelGrid columns="4" style="width:100%;border: black">
+
+                        <p:panel style="align-content: center;border: none;margin: auto">
+                            <p:graphicImage url="/resources/images/product.png" style="width:50px"/>
+                        </p:panel>
+                        
                         <p:outputPanel>
                            <h:panelGrid columns="1" cellpadding="5" cellspacing = "10" style="position: relative;width: 100px" >
                                <h:outputText value="#{producto.productosPK.nombre}" style="font-weight: bold;"/>
@@ -54,7 +59,7 @@ and open the template in the editor.
                                 <p:confirm  header="Confirmation" message="¿Estas seguro?" icon="ui-icon-alert" />
                             </p:commandButton>
 
-                            <p:commandButton value="Editar" action="#{farmaciaController.editProducto(producto)}">
+                            <p:commandButton value="Guardar cambios" action="#{farmaciaController.editProducto(producto)}">
                              <p:confirm header="Confirmation" message="¿Estas seguro?" icon="ui-icon-alert" />
                             </p:commandButton>
 

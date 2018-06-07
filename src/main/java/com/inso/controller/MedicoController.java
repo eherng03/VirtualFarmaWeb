@@ -73,11 +73,11 @@ public class MedicoController implements Serializable{
     
     @PostConstruct
     public void init(){
-        medico = (Medico) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-        
+        Medico aux = (Medico) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        medico = medicoEJB.findByDNI(aux.getDni());
         if(medico == null){
             try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("/public/errorPermisos.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("/public/errorPermisos.xhtml?faces-redirect=true");
             } catch (IOException ex) {
                 Logger.getLogger(PacienteController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -230,12 +230,17 @@ public class MedicoController implements Serializable{
     
     public String addReceta(){
         paciente = pacientesEJB.findByDNI(dniSearch);
-        Date date = new Date();
-        RecetasPK recetaPK = new RecetasPK(dNIPaciente, medico.getDni(), nombreMedicamento, date);
-        Recetas recetaX = new Recetas(recetaPK, cronica, Double.parseDouble(unidadesToma), Integer.parseInt(frecuencia), duracion, instrucciones, Integer.parseInt(numEnvases));
-        paciente.getRecetasCollection().add(recetaX);
-        recetasEJB.create(recetaX);
-        return "ventanaMedicoPaciente?faces-redirect=true";
+        if(paciente == null){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "No se encuentra el paciente."));
+
+        }else{
+            Date date = new Date();
+            RecetasPK recetaPK = new RecetasPK(dniSearch, medico.getDni(), nombreMedicamento, date);
+            Recetas recetaX = new Recetas(recetaPK, cronica, Double.parseDouble(unidadesToma), Integer.parseInt(frecuencia), duracion, instrucciones, Integer.parseInt(numEnvases));
+            recetasEJB.create(recetaX);
+            return "ventanaMedicoPaciente?faces-redirect=true";
+        }
+        return "";
     }
     
     public void buscarPaciente(){
