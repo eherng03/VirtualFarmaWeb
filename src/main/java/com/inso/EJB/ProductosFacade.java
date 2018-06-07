@@ -39,6 +39,18 @@ public class ProductosFacade extends OwnEntityManager<Productos> implements Prod
             throw e;
         }
     }
+    
+    @Override
+    public List<Productos> findByCIF(String cif) {
+         try {
+            TypedQuery<Productos> query = getEntityManager().createNamedQuery("Productos.findByCIF", Productos.class);
+            query.setParameter("cif", cif);
+            List<Productos> productos = query.getResultList();
+            return productos;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
     @Override
     public void create(Productos p) {
         EntityTransaction tx = getEntityManager().getTransaction();
@@ -47,4 +59,20 @@ public class ProductosFacade extends OwnEntityManager<Productos> implements Prod
         tx.commit();
     }
   
+        
+    @Override
+    public void remove(Productos prod) {
+        EntityTransaction tx = getEntityManager().getTransaction();
+        tx.begin();
+        getEntityManager().remove(getEntityManager().merge(prod));
+        tx.commit();
+    }
+    
+    @Override
+    public void edit(Productos prod) {
+        EntityTransaction tx = getEntityManager().getTransaction();
+        tx.begin();
+        getEntityManager().merge(prod);
+        tx.commit();
+    }
 }

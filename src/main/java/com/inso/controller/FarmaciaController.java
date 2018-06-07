@@ -59,8 +59,8 @@ public class FarmaciaController implements Serializable{
     
     @PostConstruct
     public void init(){
-        farmacia = (Farmacia) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-        
+        Farmacia farmaciaAux = (Farmacia) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        farmacia = farmaciaEJB.find(farmaciaAux.getCif());
         if(farmacia == null){
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("/public/errorPermisos.xhtml");
@@ -73,7 +73,7 @@ public class FarmaciaController implements Serializable{
         precioP = "";
         cuantiaP = "";
         
-        List<Productos> productosSource = (List<Productos>) farmacia.getProductosCollection();
+        List<Productos> productosSource = (List<Productos>) productosEJB.findByCIF(farmacia.getCif());
         List<Productos> productosTarget = new ArrayList<>();
          
         productos = new DualListModel<>(productosSource, productosTarget);
@@ -194,7 +194,7 @@ public class FarmaciaController implements Serializable{
     public String addProducto(){
         ProductosPK productoPK = new ProductosPK(farmacia.getCif(), nombreP);
         Productos producto = new Productos(productoPK, Long.parseLong(precioP), Integer.parseInt(cuantiaP));
-        this.farmacia.getProductosCollection().add(producto);
+
         productosEJB.create(producto);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Producto añadido con éxito."));
         return "ventanaFarmaciaProducto?faces-redirect=true";
@@ -233,6 +233,16 @@ public class FarmaciaController implements Serializable{
         for(Productos producto : productos.getTarget()){
             sumatorio += producto.getPrecio();
         }
+    }
+    
+    public String deleteProducto(Productos producto){
+        productosEJB.remove(producto);
+        return "ventanaFarmaciaLista?faces-redirect=true";
+    }
+    
+    public String editProducto(Productos producto){
+        productosEJB.edit(producto);
+        return "ventanaFarmaciaLista?faces-redirect=true";
     }
 }
 

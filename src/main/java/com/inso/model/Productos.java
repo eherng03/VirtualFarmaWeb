@@ -26,6 +26,7 @@ import javax.validation.constraints.NotNull;
 @NamedQueries({
     @NamedQuery(name = "Productos.findByCIFNombre", query = "SELECT p FROM Productos p WHERE p.productosPK.cIFFarmacia = :cif AND p.productosPK.nombre = :nombre"),
     @NamedQuery(name = "Productos.findByNombre", query = "SELECT p FROM Productos p WHERE p.productosPK.nombre = :nombre"),
+    @NamedQuery(name = "Productos.findByCIF", query = "SELECT p FROM Productos p WHERE p.productosPK.cIFFarmacia = :cif")
 })
 public class Productos implements Serializable {
 
