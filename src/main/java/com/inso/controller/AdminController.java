@@ -30,7 +30,15 @@ public class AdminController implements Serializable{
         
     @EJB
     private FarmaciaFacadeLocal farmaciaEJB;       //Clase que me permite acceder al patron fachada
-    
+    private Farmacia selectedFarmacia;
+
+    public Farmacia getSelectedFarmacia() {
+        return selectedFarmacia;
+    }
+
+    public void setSelectedFarmacia(Farmacia selectedFarmacia) {
+        this.selectedFarmacia = selectedFarmacia;
+    }
     @EJB
     private MedicoFacadeLocal medicoEJB;       //Clase que me permite acceder al patron fachada
     
@@ -81,6 +89,7 @@ public class AdminController implements Serializable{
         farmaciaEJB = new FarmaciaFacade();
         medicoEJB = new MedicoFacade();
         farmaciasList = farmaciaEJB.findAll();
+        medicosList = medicoEJB.findAll();
         farmaciasVisible = true;
         medicosVisible = false;
     }
@@ -102,7 +111,6 @@ public class AdminController implements Serializable{
     public void showMedicos(){
         medicosVisible = true;
         farmaciasVisible = false;
-        medicosList = medicoEJB.findAll();
     }
     
     /**
@@ -118,11 +126,21 @@ public class AdminController implements Serializable{
      * @param farmacia
      * @return
      */
-    public String delete(Farmacia farmacia){
+    public String deleteFarm(Farmacia farmacia){
         farmaciaEJB.remove(farmacia);
         return "/private/admin/ventanaAdmin?faces-redirect=true";
     }
     
+    /**
+     *
+     * @param medico
+     * @return
+     */
+    public String deleteMed(Medico medico){
+        medicoEJB.remove(medico);
+        return "/private/admin/ventanaAdmin?faces-redirect=true";
+    }
+     
     /**
      *
      * @param farmacia
@@ -132,6 +150,8 @@ public class AdminController implements Serializable{
         farmaciaEJB.edit(farmacia);
         return "/private/admin/ventanaAdmin?faces-redirect=true";
     }
+    
+    
     
     /**
      *
