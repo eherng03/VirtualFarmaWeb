@@ -30,8 +30,10 @@ CREATE TABLE IF NOT EXISTS `farmacias` (
   PRIMARY KEY (`CIF`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla virtualfarma.farmacias: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla virtualfarma.farmacias: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `farmacias` DISABLE KEYS */;
+INSERT INTO `farmacias` (`CIF`, `Direccion`, `email`, `Horario`, `Nombre`, `NombreDueno`, `NumeroCuenta`, `Password`, `Telefono`) VALUES
+	('S78945612', 'KSJDFHKDSJHJKS', 'caca', 'de', 'vaca', 'pepe', '64654564564646456', 'pedo', '123456789');
 /*!40000 ALTER TABLE `farmacias` ENABLE KEYS */;
 
 -- Volcando estructura para tabla virtualfarma.medicos
@@ -46,8 +48,11 @@ CREATE TABLE IF NOT EXISTS `medicos` (
   PRIMARY KEY (`DNI`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla virtualfarma.medicos: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla virtualfarma.medicos: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `medicos` DISABLE KEYS */;
+INSERT INTO `medicos` (`DNI`, `CentroMedico`, `Direccion`, `email`, `Nombre`, `NumeroSS`, `Password`) VALUES
+	('32165498K', 'mucho', 'virutas', 'aydioh@gmail.com', 'me aburro', '789456123254', 'amigos'),
+	('71475368Q', 'Narnia', 'TomiCulo', 'hola@hola.com', 'Pepe', '5454543', 'medico');
 /*!40000 ALTER TABLE `medicos` ENABLE KEYS */;
 
 -- Volcando estructura para tabla virtualfarma.pacientes
@@ -59,14 +64,19 @@ CREATE TABLE IF NOT EXISTS `pacientes` (
   PRIMARY KEY (`DNI`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla virtualfarma.pacientes: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla virtualfarma.pacientes: ~4 rows (aproximadamente)
 /*!40000 ALTER TABLE `pacientes` DISABLE KEYS */;
+INSERT INTO `pacientes` (`DNI`, `Nombre`, `NumeroSS`, `Password`) VALUES
+	('12345678Z', 'virutas eh uh', '123456789456', 'jelou'),
+	('71475368Q', 'Eva', '656165651', 'hola'),
+	('Y7430553A', 'pepe liviin', '123456789', 'jamon'),
+	('Z0930095A', 'jamon', '789456123', 'ejejeje');
 /*!40000 ALTER TABLE `pacientes` ENABLE KEYS */;
 
 -- Volcando estructura para tabla virtualfarma.productos
 CREATE TABLE IF NOT EXISTS `productos` (
   `Cuantia` int(11) DEFAULT NULL,
-  `Precio` bigint(20) DEFAULT NULL,
+  `Precio` double DEFAULT NULL,
   `CIF_Farmacia` varchar(255) NOT NULL,
   `Nombre` varchar(255) NOT NULL,
   PRIMARY KEY (`CIF_Farmacia`,`Nombre`),
