@@ -36,7 +36,7 @@ and open the template in the editor.
 <!--                                      VENTA                                                       -->  
             <b:panel id="venta">
                 <p:pickList id="PojoPickList" 
-                            value="#{farmaciaController.productos}"
+                            value="#{farmaciaController.dualProductos}"
                             var="producto"
                             itemValue="#{producto}" 
                             itemLabel="#{producto.productosPK.nombre}" 
@@ -46,12 +46,13 @@ and open the template in the editor.
                             responsive="true"
                             showSourceFilter="true" 
                             showTargetFilter="true" 
-                            filterMatchMode="contains">
+                            filterMatchMode="contains"
+                            converter="#{productoConverter}">
 
                     <f:facet name="sourceCaption">Stock</f:facet>
                     <f:facet name="targetCaption">Venta</f:facet>
 
-                    <p:ajax event="transfer" onsuccess="#{farmaciaController.sumatorio()}" listener="#{farmaciaController.onTransfer}" update="sumatorio"/>
+                    <p:ajax event="transfer" listener="#{farmaciaController.onTransfer}" update="sumatorio"/>
                     <p:ajax event="select" listener="#{farmaciaController.onSelect}" update="sumatorio"/>
                     <p:ajax event="unselect" listener="#{farmaciaController.onUnselect}" update="sumatorio"/>
                     <p:ajax event="reorder" listener="#{farmaciaController.onReorder}" update="sumatorio"/>
@@ -63,18 +64,16 @@ and open the template in the editor.
                         <h:outputText value="#{producto.precio}" />
                     </p:column>
                 </p:pickList>
-                <p:commandButton id="pojoSubmit" value="Vender" update="displayProductos" oncomplete="PF('ventaDialog').show()" style="margin-top:5px" />
+                <p:commandButton id="pojoSubmit" value="Vender" update="displayProductos" actionListener="#{farmaciaController.vender()}" oncomplete="PF('ventaDialog').show()" style="margin-top:5px" />
                 <p:inputText id="sumatorio" value="#{farmaciaController.sumatorio}" disabled="true"/>
                 <p:dialog modal="true" showEffect="fade" hideEffect="fade" widgetVar="ventaDialog">
                     <h:panelGrid id="displayProductos" columns="1">
-                        <h:outputText value="No vendidos: " style="font-weight:bold" />
-                        <ui:repeat value="#{farmaciaController.productos.source}" var="producto">
-                            <h:outputText value="#{producto.productosPK.nombre}" style="margin-right:5px" />
-                        </ui:repeat>
                         <h:outputText value="Vendidos: " style="font-weight:bold" />
-                        <ui:repeat value="#{farmaciaController.productos.target}" var="producto">
+                        <ui:repeat value="#{farmaciaController.dualProductos.target}" var="producto">
                             <h:outputText value="#{producto.productosPK.nombre}" style="margin-right:5px" />
                         </ui:repeat>
+                        <h:outputText value="Precio: " style="font-weight:bold" />
+                        <h:outputText value= "#{farmaciaController.sumatorio}" />
                     </h:panelGrid>
                 </p:dialog>
             
