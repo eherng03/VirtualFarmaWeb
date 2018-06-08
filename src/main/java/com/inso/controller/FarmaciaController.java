@@ -53,9 +53,9 @@ public class FarmaciaController implements Serializable{
     private String nombreP;
     private String precioP;
     private String cuantiaP;
-    private long sumatorio;
+    private double sumatorio;
     
-    private DualListModel<Productos> productos;
+    private DualListModel<Productos> dualProductos;
     
     @PostConstruct
     public void init(){
@@ -73,10 +73,18 @@ public class FarmaciaController implements Serializable{
         precioP = "";
         cuantiaP = "";
         
-        List<Productos> productosSource = (List<Productos>) productosEJB.findByCIF(farmacia.getCif());
+        List<Productos> productos = (List<Productos>) productosEJB.findByCIF(farmacia.getCif());
+        List<Productos> productosSource = new ArrayList<>();
         List<Productos> productosTarget = new ArrayList<>();
+        for(Productos producto : productos){
+            if(producto.getCuantia() > 0){
+                for(int i = 0; i < producto.getCuantia(); i++){
+                    productosSource.add(producto);
+                }
+            }
+        }
          
-        productos = new DualListModel<>(productosSource, productosTarget);
+        dualProductos = new DualListModel<>(productosSource, productosTarget);
         sumatorio = 0;
     }
     
@@ -173,27 +181,28 @@ public class FarmaciaController implements Serializable{
         this.showVenta = showVenta;
     }
     
-    public DualListModel<Productos> getProductos() {
-        return productos;
+    public DualListModel<Productos> getDualProductos() {
+        return dualProductos;
     }
 
-    public void setProductos(DualListModel<Productos> productos) {
-        this.productos = productos;
+    public void setDualProductos(DualListModel<Productos> dualProductos) {
+        this.dualProductos = dualProductos;
     }
     
-    public long getSumatorio() {
+    public double getSumatorio() {
+        for(Productos producto : dualProductos.getTarget()){
+            sumatorio += producto.getPrecio();
+        }
         return sumatorio;
     }
 
-    public void setSumatorio(long sumatorio) {
+    public void setSumatorio(double sumatorio) {
         this.sumatorio = sumatorio;
     }
     
-
-    
     public String addProducto(){
         ProductosPK productoPK = new ProductosPK(farmacia.getCif(), nombreP);
-        Productos producto = new Productos(productoPK, Long.parseLong(precioP), Integer.parseInt(cuantiaP));
+        Productos producto = new Productos(productoPK, Double.parseDouble(precioP), Integer.parseInt(cuantiaP));
 
         productosEJB.create(producto);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Producto añadido con éxito."));
@@ -229,12 +238,6 @@ public class FarmaciaController implements Serializable{
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "List Reordered", null));
     } 
     
-    public void sumatorio(){
-        for(Productos producto : productos.getTarget()){
-            sumatorio += producto.getPrecio();
-        }
-    }
-    
     public String deleteProducto(Productos producto){
         productosEJB.remove(producto);
         return "ventanaFarmaciaLista?faces-redirect=true";
@@ -243,6 +246,13 @@ public class FarmaciaController implements Serializable{
     public String editProducto(Productos producto){
         productosEJB.edit(producto);
         return "ventanaFarmaciaLista?faces-redirect=true";
+    }
+    
+    public void vender(){
+        for(Productos producto : dualProductos.getTarget()){
+            producto.setCuantia(producto.getCuantia() - 1);
+            productosEJB.edit(producto);
+        }    
     }
 }
 
