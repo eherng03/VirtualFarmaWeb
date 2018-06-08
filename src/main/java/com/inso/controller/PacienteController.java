@@ -91,7 +91,9 @@ public class PacienteController implements Serializable{
         List<Productos> productos = productosEJB.findByNombre(nombreMedicamento);
         farmaciasProductoList = new ArrayList<>();
         for(Productos producto : productos){
-            farmaciasProductoList.add(producto.getFarmacia());
+            if(producto.getCuantia() != 0){
+                farmaciasProductoList.add(producto.getFarmacia());
+            }
         }
         RequestContext.getCurrentInstance().execute("PF('farmaciasProductoDialog').show();");
     }
