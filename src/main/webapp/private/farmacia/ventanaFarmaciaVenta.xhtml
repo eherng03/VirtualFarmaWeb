@@ -20,12 +20,12 @@ and open the template in the editor.
         <h:form>
             <b:navBar brand="Virtual Farma" brandHref="#" fluid="true" fixed="top" inverse="true">
                 <b:navbarLinks>
-                    <b:navLink value="Buscar recetas" href="#" icon="search"></b:navLink>
+                    <b:navLink value="Buscar recetas" outcome="ventanaFarmaciaRecetas?faces-redirect=true" icon="search"></b:navLink>
                     <b:dropMenu value="Productos">
                         <b:navCommandLink value="Añadir producto" outcome="ventanaFarmaciaProducto?faces-redirect=true" icon="plus" ></b:navCommandLink>
                         <b:navCommandLink value="Ver lista de productos" outcome="ventanaFarmaciaLista?faces-redirect=true" icon="list"></b:navCommandLink>
                     </b:dropMenu>
-                    <b:navCommandLink value="Realizar venta" icon="euro"></b:navCommandLink>
+                    <b:navCommandLink value="Realizar venta" active="true" icon="euro"></b:navCommandLink>
                     <b:dropMenu value="" icon="user">
                         <b:navCommandLink value="Ver mi perfil" outcome="ventanaFarmacia?faces-redirect=true" icon="eye-open"></b:navCommandLink>
                         <b:navCommandLink value="Cerrar sesión" outcome="/index?faces-redirect=true" icon="log-out"></b:navCommandLink>

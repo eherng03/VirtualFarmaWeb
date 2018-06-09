@@ -5,12 +5,97 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+    <h:head>
+        <title>Virtual farma - Farmacia</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <b:navBar brand="Virtual Farma" brandHref="#" fluid="true" fixed="top" inverse="true">
+                <b:navbarLinks>
+                    <b:navLink value="Buscar recetas" outcome="ventanaFarmaciaRecetas?faces-redirect=true" icon="search"></b:navLink>
+                    <b:dropMenu value="Productos">
+                        <b:navCommandLink value="Añadir producto" outcome="ventanaFarmaciaProducto?faces-redirect=true" icon="plus"></b:navCommandLink>
+                        <b:navCommandLink value="Ver lista de productos" outcome="ventanaFarmaciaLista?faces-redirect=true" icon="list"></b:navCommandLink>
+                    </b:dropMenu>
+                    <b:navCommandLink value="Realizar venta" outcome="ventanaFarmaciaVenta?faces-redirect=true" icon="euro"></b:navCommandLink>
+                    <b:dropMenu value="" icon="user">
+                        <b:navCommandLink value="Ver mi perfil"  icon="eye-open"></b:navCommandLink>
+                        <b:navCommandLink value="Cerrar sesión" outcome="/index?faces-redirect=true" icon="log-out"></b:navCommandLink>
+                    </b:dropMenu>
+                    <b:navLink value="" outcome="/public/helpFarmacia?faces-redirect=true" icon="question-sign" style="position: absolute; right: 0%;"></b:navLink>
+                </b:navbarLinks>
+            </b:navBar>
+            <b:panel id="search" style="width:80%;margin: auto;border: none;padding-top: 50px">
+                
+                <h:panelGrid columns="3" style="width:100%; margin: auto; padding: 20px" cellspacing = "10">
+                    <h:outputText value="DNI del paciente: " style="font-weight: bold"/>
+                    <h:inputText value="#{farmaciaController.dniSearch}"/>
+                    <p:commandButton value="Buscar" action="#{farmaciaController.buscarPaciente()}" update="@form"/>
+                </h:panelGrid>
+                 <br></br>
+                <h:panelGrid columns="2" rendered="#{farmaciaController.showAddReceta}" style="padding-top: 20px;margin: auto">
+                    <h:outputText value="Paciente encontrado: " style="font-weight: bold;"/>
+                    <h:outputText value="#{farmaciaController.paciente.nombre}"/>
+                </h:panelGrid>
+                    <br></br>   
+                <h:panelGrid columns="1" style="padding: 20px;margin: auto">
+                    <p:commandButton value="Añadir receta" action="#{farmaciaController.renderNewReceta()}"/>
+                </h:panelGrid>
+                <br></br> 
+                <p:repeat value="#{farmaciaController.recetasList}" var="receta" id="recetasPanel">
+              
+                        <h:panelGrid columns="3" style="width:100%;border: black">
+
+                                <p:panel style="align-content: center;border: none;margin: auto">
+                                    <p:graphicImage url="/resources/images/receta.jpg" style="width:50px"/>
+                                </p:panel>
+
+                                <p:outputPanel style="width: 500px">
+                                    <h:panelGrid columns="2" cellpadding="10">
+                                        <h:outputText value="Nombre: "  style="font-weight: bold"/>
+                                        <h:outputText value="#{receta.recetasPK.nombreMedicamento}"/>
+
+                                        <h:outputLabel for="unidadesToma" value="Unidades por toma: " />
+                                        <h:outputText id="unidadesToma" value="#{receta.unidadesToma}"/>
+
+                                        <h:outputLabel for="frecuencia" value="Frecuencia: " />
+                                        <h:outputText id="frecuencia" value="#{receta.frecuencia}"/>
+
+                                        <h:outputLabel for="duracion" value="Duración: " />
+                                        <h:outputText id="duracion" value="#{receta.duracion}"/>
+
+                                        <h:outputLabel for="numEnvases" value="Número de envases: " />
+                                        <h:outputText id="numEnvases" value="#{receta.numEnvases}" />
+
+                                        <h:outputLabel for="instrucciones" value="Instrucciones: " />
+                                        <h:outputText id="instrucciones" value="#{receta.instrucciones}"/>
+
+                                        <p:outputLabel for="@next" value="Crónica: " />
+                                        <p:selectBooleanCheckbox value="#{receta.cronica}" disabled="true"/>
+
+                                    </h:panelGrid>
+                                </p:outputPanel>
+
+                                <p:outputPanel> 
+                                    <p:commandButton value="Eliminar" disabled="#{receta.cronica}" action="#{farmaciaController.deleteReceta(receta)}">
+                                        <p:confirm  header="Confirmation" message="¿Estas seguro?" icon="ui-icon-alert" />
+                                    </p:commandButton>
+
+                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                    </p:confirmDialog>
+                                </p:outputPanel>
+
+                        </h:panelGrid>
+                  
+                         <hr />
+                     </p:repeat>
+            </b:panel>
+        </h:form>
+    </h:body>
 </html>
