@@ -60,14 +60,6 @@ public class MedicoController implements Serializable{
     private String instrucciones;
     private String dNIPaciente;
     private String dniSearch;
-
-    public Collection<Recetas> getRecetasList() {
-        return recetasList;
-    }
-
-    public void setRecetasList(Collection<Recetas> recetasList) {
-        this.recetasList = recetasList;
-    }
     
     private Collection<Recetas> recetasList;
     
@@ -153,11 +145,15 @@ public class MedicoController implements Serializable{
     public String getdNIPaciente() {
         return dNIPaciente;
     }
+    
+    public Collection<Recetas> getRecetasList() {
+        return recetasList;
+    }
 
-    /**
-     *
-     * @param dNIPaciente
-     */
+    public void setRecetasList(Collection<Recetas> recetasList) {
+        this.recetasList = recetasList;
+    }
+    
     public void setdNIPaciente(String dNIPaciente) {
         this.dNIPaciente = dNIPaciente;
     }
@@ -256,9 +252,8 @@ public class MedicoController implements Serializable{
         }
     }
     
-    public void deleteReceta(Recetas rece){
-        recetasEJB.remove(rece);
-        //return "ventanaMedicoPaciente?faces-redirect=true";
+    public void deleteReceta(Recetas receta){
+        recetasEJB.remove(receta);
     }
     
     public void editReceta(Recetas rece){

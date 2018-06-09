@@ -8,13 +8,16 @@ package com.inso.controller;
 import com.inso.EJB.FarmaciaFacadeLocal;
 import com.inso.EJB.PacientesFacadeLocal;
 import com.inso.EJB.ProductosFacadeLocal;
+import com.inso.EJB.RecetasFacadeLocal;
 import com.inso.model.Farmacia;
 import com.inso.model.Pacientes;
 import com.inso.model.Productos;
 import com.inso.model.ProductosPK;
+import com.inso.model.Recetas;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,6 +48,9 @@ public class FarmaciaController implements Serializable{
     private Farmacia farmacia;
     @EJB
     private ProductosFacadeLocal productosEJB;
+    @EJB
+    private RecetasFacadeLocal recetasEJB;   
+    
     private boolean showProductos;
     private boolean showPerfil;
     private boolean showAddProducto;
@@ -56,6 +62,11 @@ public class FarmaciaController implements Serializable{
     private double sumatorio;
     
     private DualListModel<Productos> dualProductos;
+    
+    private String dniSearch;
+    private boolean showAddReceta;
+    
+    private Collection<Recetas> recetasList;
     
     @PostConstruct
     public void init(){
@@ -200,6 +211,14 @@ public class FarmaciaController implements Serializable{
         this.sumatorio = sumatorio;
     }
     
+    public String getDniSearch() {
+        return dniSearch;
+    }
+
+    public void setDniSearch(String dniSearch) {
+        this.dniSearch = dniSearch;
+    }
+    
     public String addProducto(){
         ProductosPK productoPK = new ProductosPK(farmacia.getCif(), nombreP);
         Productos producto = new Productos(productoPK, Double.parseDouble(precioP), Integer.parseInt(cuantiaP));
@@ -207,6 +226,22 @@ public class FarmaciaController implements Serializable{
         productosEJB.create(producto);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Producto añadido con éxito."));
         return "ventanaFarmaciaProducto?faces-redirect=true";
+    }
+    
+    public boolean isShowAddReceta() {
+        return showAddReceta;
+    }
+
+    public void setShowAddReceta(boolean showAddReceta) {
+        this.showAddReceta = showAddReceta;
+    }
+
+    public Collection<Recetas> getRecetasList() {
+        return recetasList;
+    }
+
+    public void setRecetasList(Collection<Recetas> recetasList) {
+        this.recetasList = recetasList;
     }
     
     public void onTransfer(TransferEvent event) {
@@ -253,6 +288,28 @@ public class FarmaciaController implements Serializable{
             producto.setCuantia(producto.getCuantia() - 1);
             productosEJB.edit(producto);
         }    
+    }
+    
+    public void buscarPaciente(){
+        paciente = pacienteEJB.findByDNI(dniSearch);
+        if(paciente == null){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "No se encuentra el paciente."));
+
+        }else{
+            //En el momento que tengo paciente muestro el boton de añadir receta
+            
+            showAddReceta = true;
+            recetasList = paciente.getRecetasCollection();
+        }
+    }
+    
+    public String renderNewReceta(){
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("aux", paciente);
+        return "ventanaMedicoReceta?faces-redirect=true";
+    }
+    
+    public void deleteReceta(Recetas receta){
+        recetasEJB.remove(receta);
     }
 }
 
