@@ -41,10 +41,7 @@ and open the template in the editor.
                     <h:outputText value="Paciente encontrado: " style="font-weight: bold;"/>
                     <h:outputText value="#{farmaciaController.paciente.nombre}"/>
                 </h:panelGrid>
-                    <br></br>   
-                <h:panelGrid columns="1" style="padding: 20px;margin: auto">
-                    <p:commandButton value="Añadir receta" action="#{farmaciaController.renderNewReceta()}"/>
-                </h:panelGrid>
+                    <br></br>
                 <br></br> 
                 <p:repeat value="#{farmaciaController.recetasList}" var="receta" id="recetasPanel">
               
