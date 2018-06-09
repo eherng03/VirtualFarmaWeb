@@ -303,11 +303,6 @@ public class FarmaciaController implements Serializable{
         }
     }
     
-    public String renderNewReceta(){
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("aux", paciente);
-        return "ventanaMedicoReceta?faces-redirect=true";
-    }
-    
     public void deleteReceta(Recetas receta){
         recetasEJB.remove(receta);
     }
