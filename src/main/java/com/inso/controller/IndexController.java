@@ -21,12 +21,14 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 /**
  *
  * @author Eva
  */
 @ManagedBean(name = "indexController", eager = true)
 @ViewScoped
+@Named
 public class IndexController implements Serializable{
     
     //Todo esto no va a ir aqui, va a ir en la pantalla que añada farmacias

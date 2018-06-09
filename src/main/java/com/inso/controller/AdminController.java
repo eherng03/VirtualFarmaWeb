@@ -19,6 +19,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 /**
  *
@@ -26,6 +27,7 @@ import javax.faces.view.ViewScoped;
  */
 @ManagedBean(name = "adminController", eager = true)
 @ViewScoped
+@Named
 public class AdminController implements Serializable{
         
     @EJB

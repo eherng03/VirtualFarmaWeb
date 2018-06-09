@@ -22,6 +22,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -31,6 +32,7 @@ import org.primefaces.context.RequestContext;
 
 @ManagedBean(name = "pacienteController", eager = true)
 @ViewScoped
+@Named
 public class PacienteController implements Serializable{
     @EJB
     private PacientesFacadeLocal pacienteEJB;       //Clase que me permite acceder al patron fachada

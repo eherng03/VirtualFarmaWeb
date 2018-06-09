@@ -27,6 +27,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 /**
  *
@@ -35,6 +36,7 @@ import javax.faces.view.ViewScoped;
 
 @ManagedBean(name = "medicoController", eager = true)
 @ViewScoped
+@Named
 public class MedicoController implements Serializable{
     @EJB
     private MedicoFacadeLocal medicoEJB;       //Clase que me permite acceder al patron fachada

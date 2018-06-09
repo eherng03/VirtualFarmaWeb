@@ -78,7 +78,7 @@ and open the template in the editor.
                                 </p:outputPanel>
 
                                 <p:outputPanel> 
-                                    <p:commandButton value="Eliminar" disabled="#{receta.cronica}" action="#{farmaciaController.deleteReceta(receta)}">
+                                    <p:commandButton value="Eliminar" disabled="#{receta.cronica}" action="#{farmaciaController.deleteReceta(receta)}" update="@form">
                                         <p:confirm  header="Confirmation" message="¿Estas seguro?" icon="ui-icon-alert" />
                                     </p:commandButton>
 
