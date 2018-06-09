@@ -8,6 +8,7 @@ package com.inso.controller;
 import com.inso.EJB.FarmaciaFacadeLocal;
 import com.inso.EJB.PacientesFacadeLocal;
 import com.inso.EJB.ProductosFacadeLocal;
+import com.inso.EJB.RecetasFacade;
 import com.inso.EJB.RecetasFacadeLocal;
 import com.inso.model.Farmacia;
 import com.inso.model.Pacientes;
@@ -79,6 +80,7 @@ public class FarmaciaController implements Serializable{
                 Logger.getLogger(PacienteController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        recetasEJB = new RecetasFacade();
         showProductos = true;
         nombreP = "";
         precioP = "";
