@@ -12,7 +12,7 @@ and open the template in the editor.
     <h:head>
         <title>Virtual farma - Farmacia</title>
     </h:head>
-    <h:body>
+    <h:body  style="padding-top: 50px; padding-bottom: 20px;">
         <h:form>
             <b:navBar brand="Virtual Farma" brandHref="#" fluid="true" fixed="top" inverse="true">
                 <b:navbarLinks>
@@ -29,6 +29,7 @@ and open the template in the editor.
                     <b:navLink value="" outcome="/public/helpFarmacia?faces-redirect=true" icon="question-sign" style="position: absolute; right: 0%;"></b:navLink>
                 </b:navbarLinks>
             </b:navBar>
+            <p:messages autoUpdate="true" showDetail="true"/>
             <b:panel id="search" style="width:80%;margin: auto;border: none;padding-top: 50px">
                 
                 <h:panelGrid columns="3" style="width:100%; margin: auto; padding: 20px" cellspacing = "10">

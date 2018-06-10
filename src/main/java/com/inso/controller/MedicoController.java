@@ -227,31 +227,45 @@ public class MedicoController implements Serializable{
     }
     
     public String addReceta(){
-        paciente = pacientesEJB.findByDNI(dniSearch);
-        if(paciente == null){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "No se encuentra el paciente."));
+        try{
+            paciente = pacientesEJB.findByDNI(dniSearch);
+            if(paciente == null){
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "No se encuentra el paciente."));
 
-        }else{
-            Date date = new Date();
-            RecetasPK recetaPK = new RecetasPK(dniSearch, medico.getDni(), nombreMedicamento, date);
-            Recetas recetaX = new Recetas(recetaPK, cronica, Double.parseDouble(unidadesToma), Integer.parseInt(frecuencia), duracion, instrucciones, Integer.parseInt(numEnvases));
-            recetasEJB.create(recetaX);
-            return "ventanaMedicoPaciente?faces-redirect=true";
+            }else{
+                Date date = new Date();
+                RecetasPK recetaPK = new RecetasPK(dniSearch, medico.getDni(), nombreMedicamento, date);
+                Recetas recetaX = new Recetas(recetaPK, cronica, Double.parseDouble(unidadesToma), Integer.parseInt(frecuencia), duracion, instrucciones, Integer.parseInt(numEnvases));
+                recetasEJB.create(recetaX);
+                return "ventanaMedicoPaciente?faces-redirect=true";
+            }
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "No se encuentra el paciente."));
         }
+        
+        
         return "";
     }
     
     public void buscarPaciente(){
-        paciente = pacientesEJB.findByDNI(dniSearch);
-        if(paciente == null){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "No se encuentra el paciente."));
+        try {
+            paciente = pacientesEJB.findByDNI(dniSearch);
+            if(paciente == null){
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "No se encuentra el paciente."));
 
-        }else{
-            //En el momento que tengo paciente muestro el boton de añadir receta
+            }else{
+                //En el momento que tengo paciente muestro el boton de añadir receta
+
+                showAddReceta = true;
+                recetasList = paciente.getRecetasCollection();
+            }
             
-            showAddReceta = true;
-            recetasList = paciente.getRecetasCollection();
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "No se encuentra el paciente."));
         }
+        
+        
+        
     }
     
     public void deleteReceta(Recetas receta){

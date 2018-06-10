@@ -205,6 +205,7 @@ public class FarmaciaController implements Serializable{
     }
     
     public double getSumatorio() {
+        sumatorio = 0;
         for(Productos producto : dualProductos.getTarget()){
             sumatorio += producto.getPrecio();
         }
@@ -295,15 +296,20 @@ public class FarmaciaController implements Serializable{
     }
     
     public void buscarPaciente(){
-        paciente = pacienteEJB.findByDNI(dniSearch);
-        if(paciente == null){
+        
+        try {
+            paciente = pacienteEJB.findByDNI(dniSearch);
+            if (paciente == null) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "No se encuentra el paciente."));
+                
+            } else {
+                //En el momento que tengo paciente muestro el boton de añadir receta
+                
+                showAddReceta = true;
+                recetasList = paciente.getRecetasCollection();
+            }
+        } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "No se encuentra el paciente."));
-
-        }else{
-            //En el momento que tengo paciente muestro el boton de añadir receta
-            
-            showAddReceta = true;
-            recetasList = paciente.getRecetasCollection();
         }
     }
     

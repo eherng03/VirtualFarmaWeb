@@ -16,6 +16,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -130,6 +131,7 @@ public class AdminController implements Serializable{
      */
     public String deleteFarm(Farmacia farmacia){
         farmaciaEJB.remove(farmacia);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Farmacia borrada correctamente."));
         return "/private/admin/ventanaAdmin?faces-redirect=true";
     }
     
@@ -140,6 +142,7 @@ public class AdminController implements Serializable{
      */
     public String deleteMed(Medico medico){
         medicoEJB.remove(medico);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Médico borrado correctamente."));
         return "/private/admin/ventanaAdminMedicos?faces-redirect=true";
     }
      
@@ -150,6 +153,8 @@ public class AdminController implements Serializable{
      */
     public String editFarmacia(Farmacia farmacia){
         farmaciaEJB.edit(farmacia);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Farmacia editada correctamente."));
+
         return "/private/admin/ventanaAdmin?faces-redirect=true";
     }
     
@@ -162,6 +167,7 @@ public class AdminController implements Serializable{
      */
     public String editMedico(Medico medico){
         medicoEJB.edit(medico);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Médico editado correctamente."));
         return "/private/admin/ventanaAdminMedicos?faces-redirect=true";
     }
 }

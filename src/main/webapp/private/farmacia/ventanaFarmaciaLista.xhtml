@@ -31,7 +31,7 @@ and open the template in the editor.
                     <b:navLink value="" outcome="/public/helpFarmacia?faces-redirect=true" icon="question-sign" style="position: absolute; right: 0%;"></b:navLink>
                 </b:navbarLinks>
             </b:navBar>
-
+            <p:messages autoUpdate="true" showDetail="true"/>
 <!--                                    PRODUCTOS                                                     -->   
             <b:panel id="recetas">
                 <p:repeat value="#{farmaciaController.dualProductos.source}" var="producto">
