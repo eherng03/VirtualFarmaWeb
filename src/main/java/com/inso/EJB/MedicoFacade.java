@@ -5,6 +5,7 @@
  */
 package com.inso.EJB;
 
+import com.inso.model.Farmacia;
 import com.inso.model.Medico;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -24,6 +25,22 @@ public class MedicoFacade extends OwnEntityManager<Medico> implements MedicoFaca
         EntityTransaction tx = getEntityManager().getTransaction();
         tx.begin();
         getEntityManager().persist(m);
+        tx.commit();
+    }
+    
+    @Override
+    public void remove(Medico m) {
+        EntityTransaction tx = getEntityManager().getTransaction();
+        tx.begin();
+        getEntityManager().remove(getEntityManager().merge(m));
+        tx.commit();
+    }
+    
+    @Override
+    public void edit(Medico m) {
+        EntityTransaction tx = getEntityManager().getTransaction();
+        tx.begin();
+        getEntityManager().merge(m);
         tx.commit();
     }
     

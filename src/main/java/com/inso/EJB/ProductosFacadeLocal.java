@@ -27,6 +27,10 @@ public interface ProductosFacadeLocal {
     Productos find(Object id);
     
     Productos findByCIFNombre(String cif, String nombre);
+    
+    List<Productos> findByCIF(String cif);
+    
+    List<Productos> findByNombre(String nombre);
 
     List<Productos> findAll();
 

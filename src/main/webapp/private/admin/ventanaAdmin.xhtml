@@ -16,21 +16,79 @@ and open the template in the editor.
     </h:head>
     
    <h:body  style="padding-top: 50px; padding-bottom: 20px;">
-               <b:navBar brand="Virtual Farma" brandHref="#" fluid="true" fixed="top" inverse="true">
-            <b:navbarLinks>
-                <b:dropMenu value="Añadir" icon="plus">
-                    <b:navLink value="Farmacia" href="#"></b:navLink>
-                    <b:navLink value="Médico" href="#"></b:navLink>
-                </b:dropMenu>
-                   <b:dropMenu value="Ver" icon="eye-open">
-                    <b:navLink value="Farmacias" href="#" ></b:navLink>
-                    <b:navLink value="Médicos" href="#"></b:navLink>
-                </b:dropMenu>
-                <b:navLink value="Copia de seguridad" href="#" icon="saved"></b:navLink>
-                <b:navLink value="Cerrar sesión" href="#" icon="log-out"></b:navLink>
-                <b:navLink value="" href="#" icon="question-sign" style="position: absolute; right: 0%;"></b:navLink>
-            </b:navbarLinks>
-          </b:navBar>
-        <div style="position: absolute; top: 50%; left: 50%;">Bienvenido médico</div>
+         <h:form id="form"> 
+            <b:navBar brand="Virtual Farma"  fluid="true" fixed="top" inverse="true">
+           
+                <b:navbarLinks>
+                    <b:navCommandLink value="Farmacias" active="true"></b:navCommandLink>
+                    <b:navCommandLink value="Médicos" outcome="ventanaAdminMedicos?faces-redirect=true"></b:navCommandLink>
+                    <b:navCommandLink value="Cerrar sesión" outcome="/index?faces-redirect=true" icon="log-out"></b:navCommandLink>
+                    <b:navCommandLink value="" outcome="/public/helpAdmin?faces-redirect=true" icon="question-sign" style="position: absolute; right: 0%;"></b:navCommandLink>
+                </b:navbarLinks>
+            </b:navBar>
+             <p:messages autoUpdate="true" showDetail="true"/>
+              <b:panel>
+
+                    <p:repeat value="#{adminController.farmaciasList}" var="farm">
+              
+                        <h:panelGrid columns="3" style="width:100%;border: black">
+
+                                <p:panel style="align-content: center;border: none;margin: auto">
+                                    <p:graphicImage url="/resources/images/farm.jpg" style="width:50px"/>
+                                </p:panel>
+
+                                <p:outputPanel style="width: 500px">
+                                    <h:panelGrid columns="2" cellpadding="10">
+                                        <h:outputText value="Nombre"  style="font-weight: bold"/>
+                                        <p:inputText value="#{farm.nombre}"/>
+
+                                        <h:outputText value="CIF:"  style="font-weight: bold"/>
+                                        <p:inputText value="#{farm.cif}"/>
+
+                                        <h:outputText value="Dirección:"  style="font-weight: bold"/>
+                                        <p:inputText value="#{farm.direccion}"/>
+
+                                        <h:outputText value="Email: "  style="font-weight: bold"/>
+                                        <p:inputText value="#{farm.email}"/>
+
+                                        <h:outputText value="Horario: "  style="font-weight: bold"/>
+                                        <p:inputText value="#{farm.horario}"/>
+
+                                        <h:outputText value="Teléfono: "  style="font-weight: bold"/>
+                                        <p:inputText value="#{farm.telefono}"/>
+
+                                        <h:outputText value="Nombre del dueño: "  style="font-weight: bold"/>
+                                        <p:inputText value="#{farm.nombreDueno}"/>
+
+                                        <h:outputText value="Número de cuenta: "  style="font-weight: bold"/>
+                                        <p:inputText value="#{farm.numeroCuenta}"/>
+
+                                    </h:panelGrid>
+                                </p:outputPanel>
+
+                                <p:outputPanel> 
+
+
+                                    <p:commandButton value="Eliminar" action="#{adminController.deleteFarm(farm)}">
+                                        <p:confirm  header="Confirmation" message="¿Estas seguro?" icon="ui-icon-alert" />
+                                    </p:commandButton>
+                                    
+                                    <p:commandButton value="Editar" action="#{adminController.editFarmacia(farm)}">
+                                     <p:confirm header="Confirmation" message="¿Estas seguro?" icon="ui-icon-alert" />
+                                    </p:commandButton>
+
+                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                    </p:confirmDialog>
+                             </p:outputPanel>
+
+                        </h:panelGrid>
+                  
+                         <hr />
+                     </p:repeat>
+                               
+            </b:panel>
+        </h:form>   
     </h:body>
 </html>

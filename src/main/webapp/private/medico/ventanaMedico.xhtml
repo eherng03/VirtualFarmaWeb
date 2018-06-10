@@ -16,18 +16,44 @@ and open the template in the editor.
     </h:head>
     
     <h:body  style="padding-top: 50px; padding-bottom: 20px;">
-        <b:navBar brand="Virtual Farma" brandHref="#" fluid="true" fixed="top" inverse="true">
-            <b:navbarLinks>
-                <b:navLink value="Crear receta" href="#" icon="plus"></b:navLink>
-                <b:navLink value="Buscar paciente" href="#" icon="search"></b:navLink>
-                <b:dropMenu value="" icon="user">
-                    <b:navLink value="Ver mi perfil" href="#" icon="eye-open"></b:navLink>
-                    <b:navLink value="Cerrar sesión" href="#" icon="log-out"></b:navLink>
-                </b:dropMenu>
-                <b:navLink value="" href="#" icon="question-sign" style="position: absolute; right: 0%;"></b:navLink>
-            </b:navbarLinks>
-          </b:navBar>
-        <div style="position: absolute; top: 50%; left: 50%;">Bienvenido médico</div>
+        <h:form>
+            <b:navBar brand="Virtual Farma" brandHref="#" fluid="true" fixed="top" inverse="true">
+                <b:navbarLinks>
+                    <b:navCommandLink value="Buscar paciente" outcome="ventanaMedicoPaciente?faces-redirect=true" icon="search"></b:navCommandLink>
+                    <b:dropMenu value="" icon="user">
+                        <b:navCommandLink value="Ver mi perfil" icon="eye-open"></b:navCommandLink>
+
+                        <b:navCommandLink value="Cerrar sesión" outcome="/index?faces-redirect=true" icon="log-out"></b:navCommandLink>
+                    </b:dropMenu>
+                    <b:navCommandLink value="" outcome="/public/helpMedico?faces-redirect=true" icon="question-sign" style="position: absolute; right: 0%;"></b:navCommandLink>
+                </b:navbarLinks>
+              </b:navBar>
         
+<!--                                      PERFIL                                                     -->   
+            <b:panel id="perfil" style="width:500px;margin: auto;border: none;padding-top: 50px">
+                
+                <h:panelGrid columns="2" style="width:100%; margin: auto" cellspacing = "10">
+                    <p:outputPanel style="width:30%">
+                       <h:panelGrid columns="1" cellpadding="5" cellspacing = "10">
+                           <h:outputText value="#{medicoController.medico.nombre}" style="font-weight: bold;"/>
+                       </h:panelGrid>
+                    </p:outputPanel>
+                    <p:outputPanel style="width:70%; margin: auto">
+                        <h:panelGrid columns="2" cellpadding="50" cellspacing = "10" style="position: relative;">
+                           <h:outputText value="DNI: " style="font-weight: bold"/>
+                           <h:outputText value="#{medicoController.medico.dni}"/>
+                           <h:outputText value="Número de la SS:  " style="font-weight: bold"/>
+                           <h:outputText value="#{medicoController.medico.numeroSS}"/>
+                           <h:outputText value="Centro médico: " style="font-weight: bold"/>
+                           <h:outputText value="#{medicoController.medico.centroMedico}"/>
+                           <h:outputText value="Dirección: " style="font-weight: bold"/>
+                           <h:outputText value="#{medicoController.medico.direccion}"/>
+                           <h:outputText value="Email: " style="font-weight: bold"/>
+                           <h:outputText value="#{medicoController.medico.email}"/>
+                       </h:panelGrid>
+                    </p:outputPanel>
+                </h:panelGrid>
+            </b:panel>
+        </h:form>
     </h:body>
 </html>

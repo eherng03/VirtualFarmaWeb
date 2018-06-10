@@ -12,6 +12,8 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -21,11 +23,11 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "productos")
-/*
 @NamedQueries({
-    @NamedQuery(name = "Productos.findByCIFNombre", query = "SELECT p FROM Productos p WHERE p.cif = :cif AND p.nombre = :nombre"),
+    @NamedQuery(name = "Productos.findByCIFNombre", query = "SELECT p FROM Productos p WHERE p.productosPK.cIFFarmacia = :cif AND p.productosPK.nombre = :nombre"),
+    @NamedQuery(name = "Productos.findByNombre", query = "SELECT p FROM Productos p WHERE p.productosPK.nombre = :nombre"),
+    @NamedQuery(name = "Productos.findByCIF", query = "SELECT p FROM Productos p WHERE p.productosPK.cIFFarmacia = :cif")
 })
-*/
 public class Productos implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -34,7 +36,7 @@ public class Productos implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "Precio")
-    private long precio;
+    private double precio;
     @Basic(optional = false)
     @NotNull
     @Column(name = "Cuantia")
@@ -50,7 +52,7 @@ public class Productos implements Serializable {
         this.productosPK = productosPK;
     }
 
-    public Productos(ProductosPK productosPK, long precio, int cuantia) {
+    public Productos(ProductosPK productosPK, double precio, int cuantia) {
         this.productosPK = productosPK;
         this.precio = precio;
         this.cuantia = cuantia;
@@ -68,11 +70,11 @@ public class Productos implements Serializable {
         this.productosPK = productosPK;
     }
 
-    public long getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(long precio) {
+    public void setPrecio(double precio) {
         this.precio = precio;
     }
 

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+    <h:head>
+        <title>Virtual farma - Medico</title>
+
+    </h:head>
+    
+    <h:body  style="padding-top: 50px; padding-bottom: 20px;">
+        <h:form>
+            <b:navBar brand="Virtual Farma" brandHref="#" fluid="true" fixed="top" inverse="true">
+                <b:navbarLinks>
+                    <b:navCommandLink value="Crear receta" active="true" icon="plus"></b:navCommandLink>
+                    <b:navCommandLink value="Buscar paciente" outcome="ventanaMedicoPaciente?faces-redirect=true" icon="search"></b:navCommandLink>
+                    <b:dropMenu value="" icon="user">
+                        <b:navCommandLink value="Ver mi perfil" outcome="ventanaMedico?faces-redirect=true" icon="eye-open"></b:navCommandLink>
+
+                        <b:navCommandLink value="Cerrar sesión" outcome="/index?faces-redirect=true" icon="log-out"></b:navCommandLink>
+                    </b:dropMenu>
+                    <b:navCommandLink value="" outcome="/public/helpMedico?faces-redirect=true" icon="question-sign" style="position: absolute; right: 0%;"></b:navCommandLink>
+                </b:navbarLinks>
+              </b:navBar>
+        <!--                                    ADD RECETA                                                 -->
+        <p:messages autoUpdate="true" showDetail="true"/>
+            <p:panel style="width:800px;margin: auto;border: none;" >
+                    <p:panel style="border: none;margin: auto">
+                        <p:graphicImage url="/resources/images/logo.png" style="width:200px; margin: auto"/>
+                    </p:panel>    
+                    <h:form>
+                        <h:panelGrid columns="2" cellpadding="10" cellspacing="10" >
+
+                            <h:outputLabel for="dni" value="DNI del paciente: " />
+                            <p:inputText id="dni" value="#{medicoController.dniSearch}" label="dni" />
+                            
+                            <h:outputLabel for="nombreMedicamento" value="Nombre del medicamento: " />
+                            <p:inputText id="nombreMedicamento" value="#{medicoController.nombreMedicamento}" label="Nombre" />
+
+                            <h:outputLabel for="unidadesToma" value="Unidades por toma: " />
+                            <p:inputText id="unidadesToma" value="#{medicoController.unidadesToma}" label="Unidades toma" />
+                            
+                             <h:outputLabel for="frecuencia" value="Frecuencia: " />
+                            <p:inputText id="frecuencia" value="#{medicoController.frecuencia}" label="Frecuencia" />
+
+                            <h:outputLabel for="duracion" value="Duración: " />
+                            <p:inputText id="duracion" value="#{medicoController.duracion}" label="Duración" />
+
+                            <h:outputLabel for="numEnvases" value="Número de envases: " />
+                            <p:inputText id="numEnvases" value="#{medicoController.numEnvases}" label="Número envases" />
+                            
+                            <h:outputLabel for="instrucciones" value="Instrucciones: " />
+                            <p:inputText id="instrucciones" value="#{medicoController.instrucciones}" label="Instrucciones" />
+
+                            <p:outputLabel for="@next" value="Crónica: " />
+                            <p:selectBooleanCheckbox value="#{medicoController.cronica}" />
+                            
+                            <p:commandButton value="Añadir" action="#{medicoController.addReceta()}"/>
+
+                        </h:panelGrid>
+                    </h:form>
+                </p:panel>
+
+        </h:form>
+    </h:body>
+</html>

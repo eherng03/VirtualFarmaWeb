@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+    <h:head>
+        <title>Virtual farma - Farmacia</title>
+
+    </h:head>
+    
+    <h:body  style="padding-top: 50px; padding-bottom: 20px;">
+        <h:form>
+            <b:navBar brand="Virtual Farma" brandHref="#" fluid="true" fixed="top" inverse="true">
+                <b:navbarLinks>
+                    <b:navLink value="Buscar recetas" outcome="ventanaFarmaciaRecetas?faces-redirect=true" icon="search"></b:navLink>
+                    <b:dropMenu value="Productos">
+                        <b:navCommandLink value="Añadir producto" outcome="ventanaFarmaciaProducto?faces-redirect=true" icon="plus"></b:navCommandLink>
+                        <b:navCommandLink value="Ver lista de productos" icon="list"></b:navCommandLink>
+                    </b:dropMenu>
+                    <b:navCommandLink value="Realizar venta" outcome="ventanaFarmaciaVenta?faces-redirect=true" icon="euro"></b:navCommandLink>
+                    <b:dropMenu value="" icon="user">
+                        <b:navCommandLink value="Ver mi perfil" outcome="ventanaFarmacia?faces-redirect=true" icon="eye-open"></b:navCommandLink>
+                        <b:navCommandLink value="Cerrar sesión" outcome="/index?faces-redirect=true" icon="log-out"></b:navCommandLink>
+                    </b:dropMenu>
+                    <b:navLink value="" outcome="/public/helpFarmacia?faces-redirect=true" icon="question-sign" style="position: absolute; right: 0%;"></b:navLink>
+                </b:navbarLinks>
+            </b:navBar>
+            <p:messages autoUpdate="true" showDetail="true"/>
+<!--                                    PRODUCTOS                                                     -->   
+            <b:panel id="recetas">
+                <p:repeat value="#{farmaciaController.dualProductos.source}" var="producto">
+                    <h:panelGrid columns="4" style="width:100%;border: black">
+
+                        <p:panel style="align-content: center;border: none;margin: auto">
+                            <p:graphicImage url="/resources/images/product.png" style="width:50px"/>
+                        </p:panel>
+                        
+                        <p:outputPanel>
+                           <h:panelGrid columns="1" cellpadding="5" cellspacing = "10" style="position: relative;width: 100px" >
+                               <h:outputText value="#{producto.productosPK.nombre}" style="font-weight: bold;"/>
+                           </h:panelGrid>
+                        </p:outputPanel>
+                        <p:outputPanel>
+                            <h:panelGrid columns="2" cellpadding="50" cellspacing = "10" style="position: relative;">
+                               <h:outputText value="Precio:" style="font-weight: bold"/>
+                               <h:inputText value="#{producto.precio}"/>
+                               <h:outputText value="Número en stock:" style="font-weight: bold"/>
+                               <h:inputText value="#{producto.cuantia}"/>
+                           </h:panelGrid>
+                        </p:outputPanel>
+                        <p:outputPanel>
+                            <p:commandButton value="Eliminar" action="#{farmaciaController.deleteProducto(producto)}">
+                                <p:confirm  header="Confirmation" message="¿Estas seguro?" icon="ui-icon-alert" />
+                            </p:commandButton>
+
+                            <p:commandButton value="Guardar cambios" action="#{farmaciaController.editProducto(producto)}">
+                             <p:confirm header="Confirmation" message="¿Estas seguro?" icon="ui-icon-alert" />
+                            </p:commandButton>
+
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+                       </p:outputPanel>
+                    </h:panelGrid>
+                    <hr />
+               </p:repeat>
+            </b:panel>
+
+
+        </h:form>
+    </h:body>
+</html>

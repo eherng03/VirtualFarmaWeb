@@ -5,13 +5,10 @@
  */
 package com.inso.EJB;
 
-import com.inso.model.Pacientes;
 import com.inso.model.Productos;
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
 /**
@@ -30,32 +27,52 @@ public class ProductosFacade extends OwnEntityManager<Productos> implements Prod
     public Productos findByCIFNombre(String cif, String nombre) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    /*
+    
     @Override
-    public void removeByCIFNombre(String cif, String nombre) {
-        try {
-            TypedQuery<Productos> query = getEntityManager().createNamedQuery("Productos.findByCIFNombre", Productos.class);
-            query.setParameter("cif", cif);
+    public List<Productos> findByNombre(String nombre) {
+         try {
+            TypedQuery<Productos> query = getEntityManager().createNamedQuery("Productos.findByNombre", Productos.class);
             query.setParameter("nombre", nombre);
-            Productos result = query.getSingleResult();
-            remove(result);
+            List<Productos> productos = query.getResultList();
+            return productos;
         } catch (Exception e) {
             throw e;
         }
     }
-
+    
     @Override
-    public Productos findByCIFNombre(String cif, String nombre) {
-        try {
-            TypedQuery<Productos> query = getEntityManager().createNamedQuery("Productos.findByCIFNombre", Productos.class);
+    public List<Productos> findByCIF(String cif) {
+         try {
+            TypedQuery<Productos> query = getEntityManager().createNamedQuery("Productos.findByCIF", Productos.class);
             query.setParameter("cif", cif);
-            query.setParameter("nombre", nombre);
-            
-            return query.getSingleResult();
-            
+            List<Productos> productos = query.getResultList();
+            return productos;
         } catch (Exception e) {
             throw e;
         }
     }
-*/
+    @Override
+    public void create(Productos p) {
+        EntityTransaction tx = getEntityManager().getTransaction();
+        tx.begin();
+        getEntityManager().persist(p);
+        tx.commit();
+    }
+  
+        
+    @Override
+    public void remove(Productos prod) {
+        EntityTransaction tx = getEntityManager().getTransaction();
+        tx.begin();
+        getEntityManager().remove(getEntityManager().merge(prod));
+        tx.commit();
+    }
+    
+    @Override
+    public void edit(Productos prod) {
+        EntityTransaction tx = getEntityManager().getTransaction();
+        tx.begin();
+        getEntityManager().merge(prod);
+        tx.commit();
+    }
 }

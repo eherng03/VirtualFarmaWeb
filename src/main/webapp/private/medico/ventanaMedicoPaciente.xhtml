@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+    <h:head>
+        <title>Virtual farma - Medico</title>
+
+    </h:head>
+    
+    <h:body  style="padding-top: 50px; padding-bottom: 20px;">
+        <h:form>
+            <b:navBar brand="Virtual Farma" brandHref="#" fluid="true" fixed="top" inverse="true">
+                <b:navbarLinks>
+                    <b:navCommandLink value="Buscar paciente" active="true" icon="search"></b:navCommandLink>
+                    <b:dropMenu value="" icon="user">
+                        <b:navCommandLink value="Ver mi perfil" outcome="ventanaMedico?faces-redirect=true" icon="eye-open"></b:navCommandLink>
+
+                        <b:navCommandLink value="Cerrar sesión" outcome="/index?faces-redirect=true" icon="log-out"></b:navCommandLink>
+                    </b:dropMenu>
+                    <b:navCommandLink value="" outcome="/public/helpMedico?faces-redirect=true" icon="question-sign" style="position: absolute; right: 0%;"></b:navCommandLink>
+                </b:navbarLinks>
+              </b:navBar>
+        
+            <p:messages autoUpdate="true" showDetail="true"/>
+            <b:panel id="search" style="width:80%;margin: auto;border: none;padding-top: 50px">
+                
+                <h:panelGrid columns="3" style="width:100%; margin: auto; padding: 20px" cellspacing = "10">
+                    <h:outputText value="DNI del paciente: " style="font-weight: bold"/>
+                    <h:inputText value="#{medicoController.dniSearch}"/>
+                    <p:commandButton value="Buscar" action="#{medicoController.buscarPaciente()}" update="@form"/>
+                </h:panelGrid>
+                 <br></br>    
+                <h:panelGrid columns="2" rendered="#{medicoController.showAddReceta}" style="padding-top: 20px;margin: auto">
+                    <h:outputText value="Paciente encontrado: " style="font-weight: bold;"/>
+                    <h:outputText value="#{medicoController.paciente.nombre}"/>
+                </h:panelGrid>
+                    <br></br>   
+                <h:panelGrid columns="1" style="padding: 20px;margin: auto">
+                    <p:commandButton value="Añadir receta" action="#{medicoController.renderNewReceta()}"/>
+                </h:panelGrid>
+                <br></br> 
+                <p:repeat value="#{medicoController.recetasList}" var="receta" id="recetasPanel">
+              
+                        <h:panelGrid columns="3" style="width:100%;border: black">
+
+                                <p:panel style="align-content: center;border: none;margin: auto">
+                                    <p:graphicImage url="/resources/images/receta.jpg" style="width:50px"/>
+                                </p:panel>
+
+                                <p:outputPanel style="width: 500px">
+                                    <h:panelGrid columns="2" cellpadding="10">
+                                        <h:outputText value="Nombre: "  style="font-weight: bold"/>
+                                        <p:inputText value="#{receta.recetasPK.nombreMedicamento}"/>
+
+                                        <h:outputLabel for="unidadesToma" value="Unidades por toma: " />
+                                        <p:inputText id="unidadesToma" value="#{receta.unidadesToma}" label="Unidades toma" />
+
+                                         <h:outputLabel for="frecuencia" value="Frecuencia: " />
+                                        <p:inputText id="frecuencia" value="#{receta.frecuencia}" label="Frecuencia" />
+
+                                        <h:outputLabel for="duracion" value="Duración: " />
+                                        <p:inputText id="duracion" value="#{receta.duracion}" label="Duración" />
+
+                                        <h:outputLabel for="numEnvases" value="Número de envases: " />
+                                        <p:inputText id="numEnvases" value="#{receta.numEnvases}" label="Número envases" />
+
+                                        <h:outputLabel for="instrucciones" value="Instrucciones: " />
+                                        <p:inputText id="instrucciones" value="#{receta.instrucciones}" label="Instrucciones" />
+
+                                        <p:outputLabel for="@next" value="Crónica: " />
+                                        <p:selectBooleanCheckbox value="#{receta.cronica}" />
+
+                                    </h:panelGrid>
+                                </p:outputPanel>
+
+                                <p:outputPanel> 
+
+
+                                    <p:commandButton value="Eliminar" action="#{medicoController.deleteReceta(receta)}">
+                                        <p:confirm  header="Confirmation" message="¿Estas seguro?" icon="ui-icon-alert" />
+                                    </p:commandButton>
+                                    
+                                    <p:commandButton value="Guardar cambios" action="#{medicoController.editReceta(receta)}">
+                                        <p:confirm header="Confirmation" message="¿Estas seguro?" icon="ui-icon-alert" />
+                                    </p:commandButton>
+
+                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                    </p:confirmDialog>
+                                </p:outputPanel>
+
+                        </h:panelGrid>
+                  
+                         <hr />
+                     </p:repeat>
+            </b:panel>
+        </h:form>
+    </h:body>
+</html>

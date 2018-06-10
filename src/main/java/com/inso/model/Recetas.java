@@ -64,7 +64,7 @@ public class Recetas implements Serializable {
     @Column(name = "NumEnvases")
     private int numEnvases;
     @JoinColumn(name = "DNI_Paciente", referencedColumnName = "DNI", insertable = false, updatable = false)
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     private Pacientes pacientes;
     @JoinColumn(name = "DNI_Medico", referencedColumnName = "DNI", insertable = false, updatable = false)
     @ManyToOne(optional = false)

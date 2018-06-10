@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Eva
+ * @author Eva y Alba
  */
 @Embeddable
 public class ProductosPK implements Serializable {

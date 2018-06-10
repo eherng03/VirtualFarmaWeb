@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+    <h:head>
+        <title>Virtual farma - Paciente</title>
+    </h:head>   
+    <h:body  style="padding-top: 50px; padding-bottom: 20px;">
+        <h:form prependId="false">
+            <b:navBar brand="Virtual Farma" brandHref="#" fluid="true" fixed="top" inverse="true">
+                <b:navbarLinks>
+                    <b:navCommandLink value="Mis recetas" outcome="ventanaPaciente.xhtml"></b:navCommandLink>
+                    <b:navCommandLink value="Ver farmacias" outcome="ventanaFarmaciasPaciente.xhtml"></b:navCommandLink>
+                    <b:dropMenu value="" icon="user">
+                        <b:navCommandLink value="Ver mi perfil" icon="eye-open" ></b:navCommandLink>
+                        <b:navCommandLink value="Cerrar sesión" outcome="/index?faces-redirect=true" icon="log-out"></b:navCommandLink>
+                    </b:dropMenu>
+                    <b:navLink value="" outcome="/public/helpPaciente?faces-redirect=true" icon="question-sign" style="position: absolute; right: 0%;"></b:navLink>
+                </b:navbarLinks>
+            </b:navBar>
+<!--                                      PERFIL                                                     -->   
+            <p:panel id="perfil">
+                <h:panelGrid columns="3" style="width:100%" cellspacing = "10" columnClasses="nombre, detalle">
+                    <p:outputPanel>
+                       <h:panelGrid columns="1" cellpadding="5" cellspacing = "10" style="position: relative; left: 20%;" >
+                           <h:outputText value="#{perfilPacienteController.paciente.nombre}" style="font-weight: bold; left: 10%"/>
+                       </h:panelGrid>
+                    </p:outputPanel>
+                    <p:outputPanel>
+                        <h:panelGrid columns="2" cellpadding="50" cellspacing = "10" style="position: relative; left: 20%;">
+                           <h:outputText value="DNI:" style="font-weight: bold"/>
+                           <h:outputText value="#{perfilPacienteController.paciente.dni}"/>
+                           <h:outputText value="Número de la SS:" style="font-weight: bold"/>
+                           <h:outputText value="#{perfilPacienteController.paciente.numeroSS}"/>
+                       </h:panelGrid>
+                    </p:outputPanel>
+                     <p:outputPanel id = "confirmacionBaja">
+                       <h:panelGrid columns="1" cellpadding="5" cellspacing = "10" style="position: relative; left: 20%;" >
+                           <p:commandButton id="darBajaPanciente" icon="ui-button-icon-left ui-icon ui-c fa fa-fw fa-remove" value="Dar Baja" title="DarBajaButton" onclick="PF('darBajaConfirm').show()"></p:commandButton>
+                           <p:confirmDialog message="¿Estás seguro?" showEffect="fade" hideEffect="fade" widgetVar="darBajaConfirm">
+                                <p:commandButton title="yesButton" value="Sí" action="#{perfilPacienteController.darBaja()}" oncomplete="PF('darBajaConfirm').hide()" update="perfil"/>
+                                <p:commandButton title="noButton" value="No" oncomplete="PF('darBajaConfirm').hide()"/>
+                           </p:confirmDialog>
+                       </h:panelGrid>
+                    </p:outputPanel>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>  
+    </h:body>
+</html>

@@ -6,16 +6,19 @@
 package com.inso.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -78,6 +81,9 @@ public class Farmacia implements Serializable {
     @Column(name = "Password")
     private String password;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "farmacia")
+    private Collection<Productos> productosCollection;
+    
     public Farmacia() {
     }
 
@@ -174,6 +180,15 @@ public class Farmacia implements Serializable {
         int hash = 0;
         hash += (cif != null ? cif.hashCode() : 0);
         return hash;
+    }
+    
+    @XmlTransient
+    public Collection<Productos> getProductosCollection() {
+        return productosCollection;
+    }
+
+    public void setProductosCollection(Collection<Productos> productosCollection) {
+        this.productosCollection = productosCollection;
     }
 
     @Override

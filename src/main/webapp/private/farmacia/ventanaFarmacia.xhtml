@@ -8,7 +8,6 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:b="http://bootsfaces.net/ui">
     <h:head>
         <title>Virtual farma - Farmacia</title>
@@ -16,21 +15,52 @@ and open the template in the editor.
     </h:head>
     
     <h:body  style="padding-top: 50px; padding-bottom: 20px;">
-        <b:navBar brand="Virtual Farma" brandHref="#" fluid="true" fixed="top" inverse="true">
-            <b:navbarLinks>
-                <b:navLink value="Buscar recetas" href="#" icon="search"></b:navLink>
-                <b:dropMenu value="Productos">
-                    <b:navLink value="Añadir producto" href="#" icon="plus"></b:navLink>
-                    <b:navLink value="Ver lista de productos" href="#" icon="list"></b:navLink>
-                </b:dropMenu>
-                <b:navLink value="Realizar venta" href="#" icon="euro"></b:navLink>
-                <b:dropMenu value="" icon="user">
-                    <b:navLink value="Ver mi perfil" href="#" icon="eye-open"></b:navLink>
-                    <b:navLink value="Cerrar sesión" href="#" icon="log-out"></b:navLink>
-                </b:dropMenu>
-                <b:navLink value="" href="#" icon="question-sign" style="position: absolute; right: 0%;"></b:navLink>
-            </b:navbarLinks>
-        </b:navBar>
-        <div style="position: absolute; top: 50%; left: 50%;">Bienvenid farmacia</div>
+        <h:form>
+            <b:navBar brand="Virtual Farma" brandHref="#" fluid="true" fixed="top" inverse="true">
+                <b:navbarLinks>
+                    <b:navLink value="Buscar recetas" outcome="ventanaFarmaciaRecetas?faces-redirect=true" icon="search"></b:navLink>
+                    <b:dropMenu value="Productos">
+                        <b:navCommandLink value="Añadir producto" outcome="ventanaFarmaciaProducto?faces-redirect=true" icon="plus"></b:navCommandLink>
+                        <b:navCommandLink value="Ver lista de productos" outcome="ventanaFarmaciaLista?faces-redirect=true" icon="list"></b:navCommandLink>
+                    </b:dropMenu>
+                    <b:navCommandLink value="Realizar venta" outcome="ventanaFarmaciaVenta?faces-redirect=true" icon="euro"></b:navCommandLink>
+                    <b:dropMenu value="" icon="user">
+                        <b:navCommandLink value="Ver mi perfil"  icon="eye-open"></b:navCommandLink>
+                        <b:navCommandLink value="Cerrar sesión" outcome="/index?faces-redirect=true" icon="log-out"></b:navCommandLink>
+                    </b:dropMenu>
+                    <b:navLink value="" outcome="/public/helpFarmacia?faces-redirect=true" icon="question-sign" style="position: absolute; right: 0%;"></b:navLink>
+                </b:navbarLinks>
+            </b:navBar>
+            <p:messages autoUpdate="true" showDetail="true"/>
+
+<!--                                      PERFIL                                                     -->   
+            <b:panel id="perfil">
+                <h:panelGrid columns="2" style="width:100%" cellspacing = "10" columnClasses="nombre, detalle">
+                    <p:outputPanel>
+                       <h:panelGrid columns="1" cellpadding="5" cellspacing = "10" style="position: relative; left: 20%;" >
+                           <h:outputText value="#{farmaciaController.farmacia.nombre}" style="font-weight: bold; left: 10%"/>
+                       </h:panelGrid>
+                    </p:outputPanel>
+                    <p:outputPanel>
+                        <h:panelGrid columns="2" cellpadding="50" cellspacing = "10" style="position: relative; left: 20%;">
+                           <h:outputText value="CIF:" style="font-weight: bold"/>
+                           <h:outputText value="#{farmaciaController.farmacia.cif}"/>
+                           <h:outputText value="Horario:" style="font-weight: bold"/>
+                           <h:outputText value="#{farmaciaController.farmacia.horario}"/>
+                           <h:outputText value="Direccion:" style="font-weight: bold"/>
+                           <h:outputText value="#{farmaciaController.farmacia.direccion}"/>
+                           <h:outputText value="Número de cuenta" style="font-weight: bold"/>
+                           <h:outputText value="#{farmaciaController.farmacia.numeroCuenta}"/>
+                           <h:outputText value="Dueño:" style="font-weight: bold"/>
+                           <h:outputText value="#{farmaciaController.farmacia.nombreDueno}"/>
+                           <h:outputText value="Teléfono" style="font-weight: bold"/>
+                           <h:outputText value="#{farmaciaController.farmacia.telefono}"/>
+                           <h:outputText value="Email" style="font-weight: bold"/>
+                           <h:outputText value="#{farmaciaController.farmacia.email}"/>
+                       </h:panelGrid>
+                    </p:outputPanel>
+                </h:panelGrid>
+            </b:panel>
+        </h:form>
     </h:body>
 </html>
